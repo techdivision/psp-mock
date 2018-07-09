@@ -21,3 +21,7 @@ yarn-error.log
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+
+### Bootstrap assets
+/public/css/bootstrap.min.css
+/public/js/bootstrap.js

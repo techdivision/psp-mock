@@ -23,7 +23,8 @@
         "symfony/validator": "^4.1",
         "symfony/web-link": "^4.1",
         "symfony/webpack-encore-pack": "*",
-        "symfony/yaml": "^4.1"
+        "symfony/yaml": "^4.1",
+        "twitter/bootstrap": "4.*"
     },
     "require-dev": {
         "symfony/debug-pack": "*",
@@ -60,10 +61,18 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
+        "copy-assets" : [
+            "mkdir -p assets/css/",
+            "mkdir -p assets/js/",
+            "cp vendor/twitter/bootstrap/dist/css/bootstrap.min.css assets/css/bootstrap.min.css",
+            "cp vendor/twitter/bootstrap/dist/js/bootstrap.js assets/js/bootstrap.js"
+        ],
         "post-install-cmd": [
+            "@copy-assets",
             "@auto-scripts"
         ],
         "post-update-cmd": [
+            "@copy-assets",
             "@auto-scripts"
         ]
     },
