@@ -7,26 +7,23 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Controller;
+namespace TechDivision\PspMock\Service\Payone\ClientApi\Request;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @category   TechDivision
  * @package    PspMock
- * @subpackage Controller
+ * @subpackage Service
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class IndexController extends AbstractController
+interface ProcessorInterface
 {
     /**
-     * @Route("/index/index")
+     * @param Request $request
+     * @return OutputInterface
      */
-    public function index()
-    {
-        return $this->render('index.html.twig');
-    }
+    public function execute(Request $request): OutputInterface;
 }

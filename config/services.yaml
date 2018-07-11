@@ -27,5 +27,10 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    TechDivision\PspMock\Service\:
+        resource: '../src/Service'
+        tags: ['service.service_arguments']
+    TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactory:
+        arguments:
+            $processors:
+                creditcardcheck: '@TechDivision\PspMock\Service\Payone\ClientApi\Request\Processor\CreditCardCheck'
