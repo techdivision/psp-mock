@@ -19,4 +19,35 @@ namespace TechDivision\PspMock\Service\Payone\ClientApi\Request;
  */
 class Output implements OutputInterface
 {
+    /**
+     * @var array
+     */
+    private $data = [];
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @param string $key
+     * @param null|mixed $default
+     * @return mixed
+     */
+    public function getData(string $key = '', $default = null)
+    {
+        if (empty($key)) {
+            return $this->data;
+        }
+
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
+        }
+
+        return $default;
+    }
 }

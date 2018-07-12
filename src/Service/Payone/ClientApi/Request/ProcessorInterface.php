@@ -22,8 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
 interface ProcessorInterface
 {
     /**
-     * @param Request $request
+     * @param InputInterface $input
      * @return OutputInterface
      */
-    public function execute(Request $request): OutputInterface;
+    public function execute(InputInterface $input): OutputInterface;
 }

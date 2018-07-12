@@ -7,10 +7,9 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service\Payone\ClientApi\StaticFile;
+namespace TechDivision\PspMock\Service\Payone\ClientApi\Request;
 
 use Symfony\Component\HttpFoundation\Request;
-use TechDivision\PspMock\Service\DomainProvider;
 
 /**
  * @category   TechDivision
@@ -25,23 +24,23 @@ class RequestToInputAdapter
     /**
      * @var InputInterface
      */
-    private $secureDataRequest;
+    private $input;
 
     /**
-     * @var DomainProvider
+     * @var array
      */
-    private $domainProvider;
+    private $dataKeys = [];
 
     /**
-     * @param InputInterface $secureDataRequest
-     * @param DomainProvider $domainProvider
+     * @param InputInterface $input
+     * @param array $dataKeys
      */
     public function __construct(
-        InputInterface $secureDataRequest,
-        DomainProvider $domainProvider
+        InputInterface $input,
+        array $dataKeys
     ) {
-        $this->secureDataRequest = $secureDataRequest;
-        $this->domainProvider = $domainProvider;
+        $this->input = $input;
+        $this->dataKeys = $dataKeys;
     }
 
     /**
@@ -49,14 +48,11 @@ class RequestToInputAdapter
      */
     public function convert(Request $request): InputInterface
     {
-        $uri = $request->getUri();
-        $uri = str_replace(
-            sprintf('%s/payone/client-api', $this->domainProvider->get()),
-            'secure.pay1.de/client-api',
-            $uri
-        );
-        $this->secureDataRequest->setUri($uri);
-
-        return $this->secureDataRequest;
+        $data = [];
+        foreach ($this->dataKeys as $key) {
+            $data[$key] = $request->get($key, null);
+        }
+        $this->input->setData($data);
+        return $this->input;
     }
 }

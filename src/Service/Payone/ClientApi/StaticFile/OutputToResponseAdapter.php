@@ -10,6 +10,7 @@
 namespace TechDivision\PspMock\Service\Payone\ClientApi\StaticFile;
 
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Service\DomainProvider;
 
 /**
  * @category   TechDivision
@@ -29,10 +30,17 @@ class OutputToResponseAdapter
     private $response;
 
     /**
+     * @var DomainProvider
      */
-    public function __construct()
+    private $domainProvider;
+
+    /**
+     * @param DomainProvider $domainProvider
+     */
+    public function __construct(DomainProvider $domainProvider)
     {
         $this->response = new Response();
+        $this->domainProvider = $domainProvider;
     }
 
     /**
@@ -77,7 +85,7 @@ class OutputToResponseAdapter
     {
         return str_replace(
             'secure.pay1.de/client-api',
-            'psp-mock.test/payone/client-api',
+            sprintf('%s/payone/client-api', $this->domainProvider->get()),
             $body
         );
     }

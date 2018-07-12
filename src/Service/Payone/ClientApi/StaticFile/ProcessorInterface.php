@@ -20,8 +20,8 @@ namespace TechDivision\PspMock\Service\Payone\ClientApi\StaticFile;
 interface ProcessorInterface
 {
     /**
-     * @param InputInterface $request
+     * @param InputInterface $input
      * @return OutputInterface
      */
-    public function execute(InputInterface $request): OutputInterface;
+    public function execute(InputInterface $input): OutputInterface;
 }

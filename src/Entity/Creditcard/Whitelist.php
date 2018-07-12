@@ -7,16 +7,14 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Entity;
+namespace TechDivision\PspMock\Entity\Creditcard;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\PostRepository")
- * @ORM\Table(name="psp_mock_order")
+ * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\Creditcard\WhitelistRepository")
+ * @ORM\Table(name="creditcard_whitelist")
  *
  * @category   TechDivision
  * @package    PspMock
@@ -25,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class Order
+class Whitelist
 {
     /**
      * @var int
@@ -42,14 +40,15 @@ class Order
      * @ORM\Column(type="string")
      * @Assert\NotBlank
      */
-    private $orderNumber;
+    private $cardtype;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
-    private $paymentMethod;
+    private $cardpan;
 
     /**
      * @return int
@@ -60,18 +59,42 @@ class Order
     }
 
     /**
-     * @return string
+     * @param int $id
      */
-    public function getOrderNumber(): string
+    public function setId(int $id): void
     {
-        return $this->orderNumber;
+        $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getPaymentMethod(): string
+    public function getCardtype(): string
     {
-        return $this->paymentMethod;
+        return $this->cardtype;
+    }
+
+    /**
+     * @param string $cardtype
+     */
+    public function setCardtype(string $cardtype): void
+    {
+        $this->cardtype = $cardtype;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCardpan(): string
+    {
+        return $this->cardpan;
+    }
+
+    /**
+     * @param string $cardpan
+     */
+    public function setCardpan(string $cardpan): void
+    {
+        $this->cardpan = $cardpan;
     }
 }

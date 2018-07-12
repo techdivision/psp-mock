@@ -2,17 +2,14 @@ index:
     path: /
     controller: TechDivision\PspMock\Controller\IndexController::index
 
-payone-api:
-  path: /payone/post-gateway/{req}
+payone-post-gateway:
+  path: /payone/post-gateway/
   defaults: { _controller: TechDivision\PspMock\Controller\Payone\PostGatewayController::execute }
-  requirements:
-      req: ".+?"
+  methods: [GET, POST]
 
 payone-client-api:
   path: /payone/client-api/
   defaults: { _controller: TechDivision\PspMock\Controller\Payone\ClientApi\RequestController::execute }
-  requirements:
-      req: ".+?"
 
 payone-client-api-static:
   path: /payone/client-api/{req}

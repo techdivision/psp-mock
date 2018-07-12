@@ -24,7 +24,8 @@
         "symfony/web-link": "^4.1",
         "symfony/webpack-encore-pack": "*",
         "symfony/yaml": "^4.1",
-        "twitter/bootstrap": "4.*"
+        "twitter/bootstrap": "4.*",
+        "doctrine/doctrine-fixtures-bundle": "^3.0"
     },
     "require-dev": {
         "symfony/debug-pack": "*",
@@ -62,10 +63,10 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "copy-assets" : [
-            "mkdir -p assets/css/",
-            "mkdir -p assets/js/",
-            "cp vendor/twitter/bootstrap/dist/css/bootstrap.min.css assets/css/bootstrap.min.css",
-            "cp vendor/twitter/bootstrap/dist/js/bootstrap.js assets/js/bootstrap.js"
+            "mkdir -p public/css/",
+            "mkdir -p public/js/",
+            "cp vendor/twitter/bootstrap/dist/css/bootstrap.min.css public/css/bootstrap.min.css",
+            "cp vendor/twitter/bootstrap/dist/js/bootstrap.js public/js/bootstrap.js"
         ],
         "post-install-cmd": [
             "@copy-assets",

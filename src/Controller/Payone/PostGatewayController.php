@@ -44,7 +44,7 @@ class PostGatewayController extends AbstractController
      */
     public function execute(Request $request)
     {
-        $this->logger->debug($request->getUri());
-        $this->render('index.html.twig');
+        $this->logger->debug(var_export($_POST, true));
+        return $this->render('index.html.twig');
     }
 }

@@ -25,7 +25,7 @@ class Processor implements ProcessorInterface
     private $output;
 
     /**
-     * @param OutputInterface $response
+     * @param OutputInterface $output
      */
     public function __construct(
         OutputInterface $output
@@ -34,12 +34,12 @@ class Processor implements ProcessorInterface
     }
 
     /**
-     * @param InputInterface $request
+     * @param InputInterface $input
      * @return OutputInterface
      */
-    public function execute(InputInterface $request): OutputInterface
+    public function execute(InputInterface $input): OutputInterface
     {
-        $body = file_get_contents($request->getUri());
+        $body = file_get_contents($input->getUri());
         $this->output->setContent($body);
         return $this->output;
     }

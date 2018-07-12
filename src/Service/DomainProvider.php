@@ -7,28 +7,23 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service\Payone\ClientApi\Request;
+namespace TechDivision\PspMock\Service;
 
 /**
  * @category   TechDivision
  * @package    PspMock
- * @subpackage Service
+ * @subpackage Repository
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-interface OutputInterface
+class DomainProvider
 {
     /**
-     * @param array $data
-     * @return void
+     * @return string
      */
-    public function setData(array $data);
-
-    /**
-     * @param string $key
-     * @param null|mixed $default
-     * @return mixed
-     */
-    public function getData(string $key = '', $default = null);
+    public function get(): string
+    {
+        return 'psp-mock.test';
+    }
 }

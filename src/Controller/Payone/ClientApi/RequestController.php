@@ -13,8 +13,10 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Service\Payone\ClientApi\Request\OutputToResponseAdapter;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactory;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactoryException;
+use TechDivision\PspMock\Service\Payone\ClientApi\Request\RequestToInputAdapter;
 
 /**
  * @category   TechDivision
@@ -37,15 +39,31 @@ class RequestController extends AbstractController
     private $processorFactory;
 
     /**
+     * @var RequestToInputAdapter
+     */
+    private $requestToInputAdapter;
+
+    /**
+     * @var OutputToResponseAdapter
+     */
+    private $outputToResponseAdapter;
+
+    /**
      * @param LoggerInterface $logger
      * @param ProcessorFactory $processorFactory
+     * @param RequestToInputAdapter $requestToInputAdapter
+     * @param OutputToResponseAdapter $outputToResponseAdapter
      */
     public function __construct(
         LoggerInterface $logger,
-        ProcessorFactory $processorFactory
+        ProcessorFactory $processorFactory,
+        RequestToInputAdapter $requestToInputAdapter,
+        OutputToResponseAdapter $outputToResponseAdapter
     ) {
         $this->logger = $logger;
         $this->processorFactory = $processorFactory;
+        $this->requestToInputAdapter = $requestToInputAdapter;
+        $this->outputToResponseAdapter = $outputToResponseAdapter;
     }
 
     /**
@@ -56,7 +74,9 @@ class RequestController extends AbstractController
     {
         try {
             $processor = $this->processorFactory->create((string)$request->get('request'));
-            return new Response('foobar', Response::HTTP_OK, []);
+            $input = $this->requestToInputAdapter->convert($request);
+            $output = $processor->execute($input);
+            return $this->outputToResponseAdapter->convert($output);
         } catch (ProcessorFactoryException $exception) {
             $this->logger->error($exception);
             return new Response($exception->getMessage(), Response::HTTP_BAD_GATEWAY);

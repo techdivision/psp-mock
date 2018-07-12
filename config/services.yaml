@@ -34,3 +34,15 @@ services:
         arguments:
             $processors:
                 creditcardcheck: '@TechDivision\PspMock\Service\Payone\ClientApi\Request\Processor\CreditCardCheck'
+    TechDivision\PspMock\Service\Payone\ClientApi\Request\RequestToInputAdapter:
+        arguments:
+            $dataKeys:
+              - request
+              - responsetype
+              - mode
+              - cardpan
+              - cardexpiremonth
+              - cardexpireyear
+              - cardtype
+              - cardcvc2
+              - callback_method

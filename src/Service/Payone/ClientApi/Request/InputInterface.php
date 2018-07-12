@@ -17,7 +17,7 @@ namespace TechDivision\PspMock\Service\Payone\ClientApi\Request;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-interface OutputInterface
+interface InputInterface
 {
     /**
      * @param array $data
