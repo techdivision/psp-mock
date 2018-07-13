@@ -7,26 +7,27 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Controller;
+namespace TechDivision\PspMock\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use TechDivision\PspMock\Entity\Order;
 
 /**
  * @category   TechDivision
  * @package    PspMock
- * @subpackage Controller
+ * @subpackage Repository
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class IndexController extends AbstractController
+class OrderRepository extends ServiceEntityRepository
 {
     /**
-     * @Route("/index/index")
+     * @param ManagerRegistry $registry
      */
-    public function index()
+    public function __construct(ManagerRegistry $registry)
     {
-        return $this->render('index.html.twig');
+        parent::__construct($registry, Order::class);
     }
 }

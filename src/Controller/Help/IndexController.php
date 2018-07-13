@@ -7,12 +7,11 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Controller\Payone;
+namespace TechDivision\PspMock\Controller\Help;
 
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Service\DomainProvider;
 
 /**
  * @category   TechDivision
@@ -22,29 +21,29 @@ use Symfony\Component\HttpFoundation\Response;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class PostGatewayController extends AbstractController
+class IndexController extends AbstractController
 {
     /**
-     * @var LoggerInterface
+     * @var DomainProvider
      */
-    private $logger;
+    private $domainProvider;
 
     /**
-     * @param LoggerInterface $logger
+     * @param DomainProvider $domainProvider
      */
     public function __construct(
-        LoggerInterface $logger
+        DomainProvider $domainProvider
     ) {
-        $this->logger = $logger;
+        $this->domainProvider = $domainProvider;
     }
 
     /**
-     * @param Request $request
      * @return Response
      */
-    public function execute(Request $request)
+    public function index()
     {
-        $this->logger->debug(var_export($_POST, true));
-        return $this->render('index.html.twig');
+        return $this->render('help/index.html.twig', ['settings' => [
+            'domain' => $this->domainProvider->get(),
+        ]]);
     }
 }

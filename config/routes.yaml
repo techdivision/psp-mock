@@ -1,16 +1,25 @@
-index:
+gui-index:
     path: /
-    controller: TechDivision\PspMock\Controller\IndexController::index
+    controller: TechDivision\PspMock\Controller\Gui\IndexController::index
+gui-order-list:
+    path: /order/list/
+    controller: TechDivision\PspMock\Controller\Gui\OrderController::list
 
-payone-post-gateway:
+help-index:
+    path: /help/
+    controller: TechDivision\PspMock\Controller\Help\IndexController::index
+
+payone-server-api-post-gateway:
   path: /payone/post-gateway/
-  defaults: { _controller: TechDivision\PspMock\Controller\Payone\PostGatewayController::execute }
+  defaults: { _controller: TechDivision\PspMock\Controller\Payone\ServerApi\PostGatewayController::execute }
   methods: [GET, POST]
-
+payone-server-api-transactionstatus:
+  path: /payone/server-api/transactionstatus/{order}/{action}
+  defaults: { _controller: TechDivision\PspMock\Controller\Payone\ServerApi\TransactionStatusController::execute }
+  methods: [GET]
 payone-client-api:
   path: /payone/client-api/
   defaults: { _controller: TechDivision\PspMock\Controller\Payone\ClientApi\RequestController::execute }
-
 payone-client-api-static:
   path: /payone/client-api/{req}
   defaults: { _controller: TechDivision\PspMock\Controller\Payone\ClientApi\StaticFileController::execute }

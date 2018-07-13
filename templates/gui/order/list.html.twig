@@ -1,0 +1,43 @@
+{% extends 'default.html.twig' %}
+
+{% block main_title %}Orders{% endblock %}
+
+{% block main_content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Reference</th>
+            <th scope="col">Total</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Clearing Type</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <th scope="row">{{ order.getId() }}</th>
+                    <td>{{ order.getReference() }}</td>
+                    <td>{{ order.getTotal() }}</td>
+                    <td>{{ order.getFirstName() }}</td>
+                    <td>{{ order.getLastName() }}</td>
+                    <td>{{ order.getClearingType() }}</td>
+                    <td>{{ order.getStatus() }}</td>
+                    <td>{{ order.getCreated().format('Y-m-d H:i:s') }}</td>
+                    <td>
+                        {% for action in order.getStatusManager().getActions() %}
+                        <a class="btn btn-success" role="button" aria-pressed="true"
+                           href="{{ path( (order.getStatusManager().getProviderKey() ~ '-server-api-transactionstatus'), {'order': order.getId(), 'action': action.action} ) }}">
+                            {{ action.label }}
+                        </a>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

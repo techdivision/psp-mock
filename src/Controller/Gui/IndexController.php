@@ -7,36 +7,26 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service;
+namespace TechDivision\PspMock\Controller\Gui;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @category   TechDivision
  * @package    PspMock
- * @subpackage Service
+ * @subpackage Controller
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class DomainProvider
+class IndexController extends AbstractController
 {
     /**
-     * @var string
+     * @return RedirectResponse
      */
-    private $domain;
-
-    /**
-     * @param string $domain
-     */
-    public function __construct(string $domain)
+    public function index()
     {
-        $this->domain = $domain;
-    }
-
-    /**
-     * @return string
-     */
-    public function get(): string
-    {
-        return $this->domain;
+        return $this->redirectToRoute('gui-order-list');
     }
 }

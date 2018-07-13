@@ -9,7 +9,58 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% block page_header %}
+                <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+                    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">PSP Mock</a>
+                </nav>
+            {% endblock %}
+
+            {% block body_container %}
+            <div class="container-fluid">
+                <div class="row">
+                    {% block body_container_content %}
+                        {% block nav %}
+                            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                                <div class="sidebar-sticky">
+                                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                                        <span>Mock Service</span>
+                                        <a class="d-flex align-items-center text-muted" href="#">
+                                            <span data-feather="plus-circle"></span>
+                                        </a>
+                                    </h6>
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ path('gui-order-list') }}">
+                                                Orders
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                                        <span>Help</span>
+                                        <a class="d-flex align-items-center text-muted" href="#">
+                                            <span data-feather="plus-circle"></span>
+                                        </a>
+                                    </h6>
+                                    <ul class="nav flex-column mb-2">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ path('help-index') }}">
+                                                <span data-feather="file-text"></span>
+                                                How does it work?
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        {% endblock %}
+
+                        {% block main %}{% endblock %}
+                    {% endblock %}
+                </div>
+            </div>
+            {% endblock %}
+        {% endblock %}
         {% block javascripts %}
             <script src="{{ asset('js/bootstrap.js') }}"></script>
             <script src="{{ asset('js/app.js') }}"></script>

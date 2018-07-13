@@ -7,7 +7,9 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service;
+namespace TechDivision\PspMock\Service\Payone\ServerApi;
+
+use TechDivision\PspMock\Entity\Order;
 
 /**
  * @category   TechDivision
@@ -17,26 +19,14 @@ namespace TechDivision\PspMock\Service;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class DomainProvider
+class CallbackExecutor
 {
     /**
-     * @var string
+     * @param Order $order
+     * @param string $action
      */
-    private $domain;
-
-    /**
-     * @param string $domain
-     */
-    public function __construct(string $domain)
+    public function execute(Order $order, string $action): void
     {
-        $this->domain = $domain;
-    }
 
-    /**
-     * @return string
-     */
-    public function get(): string
-    {
-        return $this->domain;
     }
 }

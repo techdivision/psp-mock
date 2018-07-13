@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    domain: '%env(SERVICE_DOMAIN)%'
 
 services:
     # default configuration for services in *this* file
@@ -30,10 +31,16 @@ services:
     TechDivision\PspMock\Service\:
         resource: '../src/Service'
         tags: ['service.service_arguments']
+
+    TechDivision\PspMock\Service\DomainProvider:
+        arguments:
+            $domain: '%domain%'
+
     TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactory:
         arguments:
             $processors:
                 creditcardcheck: '@TechDivision\PspMock\Service\Payone\ClientApi\Request\Processor\CreditCardCheck'
+
     TechDivision\PspMock\Service\Payone\ClientApi\Request\RequestToInputAdapter:
         arguments:
             $dataKeys:
