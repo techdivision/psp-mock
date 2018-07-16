@@ -31,20 +31,12 @@ class CreditCardCheck implements ProcessorInterface
     private $output;
 
     /**
-     * @var WhitelistRepository
-     */
-    private $whitelistRepository;
-
-    /**
      * @param OutputInterface $output
-     * @param WhitelistRepository $whitelistRepository
      */
     public function __construct(
-        OutputInterface $output,
-        WhitelistRepository $whitelistRepository
+        OutputInterface $output
     ) {
         $this->output = $output;
-        $this->whitelistRepository = $whitelistRepository;
     }
 
     /**
@@ -53,14 +45,8 @@ class CreditCardCheck implements ProcessorInterface
      */
     public function execute(InputInterface $input): OutputInterface
     {
-        /** @var Whitelist $card */
-        $card = $this->whitelistRepository->findOneBy([
-            'cardtype' => $input->getData('cardtype'),
-            'cardpan' => $input->getData('cardpan'),
-        ]);
-
-        if ($card) {
-            $this->output->setData($this->getValidData($card, $input));
+        if (preg_match('/^[123456]/', $input->getData('cardpan'))) {
+            $this->output->setData($this->getValidData($input));
         } else {
             $this->output->setData($this->getInvalidData($input));
         }
@@ -90,15 +76,15 @@ class CreditCardCheck implements ProcessorInterface
      * @param InputInterface $input
      * @return array
      */
-    private function getValidData(Whitelist $card, InputInterface $input)
+    private function getValidData(InputInterface $input)
     {
         return [
             'callback' => $input->getData('callback_method'),
             'data' => [
                 'status' => 'VALID',
                 'pseudocardpan' => '9410010000076' . rand(210000, 299999),
-                'truncatedcardpan' => $this->getTrundcatedCardPan($card->getCardpan()),
-                'cardtype' => $card->getCardtype(),
+                'truncatedcardpan' => $this->getTrundcatedCardPan($input->getData('cardpan')),
+                'cardtype' => $input->getData('catdtype'),
                 'cardexpiredate' => $this->getCardExpireDate($input),
             ]
         ];

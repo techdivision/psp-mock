@@ -3,20 +3,8 @@
 {% block main_title %}Help{% endblock %}
 
 {% block main_content %}
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Key</th>
-            <th scope="col">Value</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for key,value in settings %}
-            <tr>
-                <th scope="row">{{ key }}</th>
-                <td>{{ value }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h3>Valid Credit Cards</h3>
+    <p>
+        This mock service will accept every credit card number, which match the regular expression: <code>/^[123456]/</code>
+    </p>
 {% endblock %}
