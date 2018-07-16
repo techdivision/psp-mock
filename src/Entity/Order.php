@@ -26,6 +26,12 @@ use TechDivision\PspMock\Service\StatusManager;
  */
 class Order
 {
+    const STATUS_NEW = 'NEW';
+    const STATUS_APPOINTED = 'APPOINTED';
+    const STATUS_UNDERPAID = 'UNDERPAID';
+    const STATUS_COMPLETE = 'COMPLETE';
+    const STATUS_REFUNDED = 'REFUNDED';
+
     /**
      * @var int
      *
@@ -35,6 +41,13 @@ class Order
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $transactionId;
 
     /**
      * @var string
@@ -130,6 +143,13 @@ class Order
     /**
      * @var string
      *
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $balance;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     private $currency;
@@ -148,6 +168,14 @@ class Order
      * @Assert\NotBlank
      */
     private $status;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(options={"default":0})
+     * @Assert\NotBlank
+     */
+    private $sequence;
 
     /**
      * @var \DateTime
@@ -455,7 +483,7 @@ class Order
      */
     public function setCreated(\DateTime $created): void
     {
-        $this->created = $created->format('Y-m-d H:i:s');
+        $this->created = $created;
     }
 
     /**
@@ -468,5 +496,53 @@ class Order
             $this->statusManager->setOrder($this);
         }
         return $this->statusManager;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBalance(): string
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param string $balance
+     */
+    public function setBalance(string $balance): void
+    {
+        $this->balance = $balance;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param int $sequence
+     */
+    public function setSequence(int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionId(): string
+    {
+        return $this->transactionId;
+    }
+
+    /**
+     * @param string $transactionId
+     */
+    public function setTransactionId(string $transactionId): void
+    {
+        $this->transactionId = $transactionId;
     }
 }

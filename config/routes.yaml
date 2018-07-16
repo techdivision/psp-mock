@@ -4,6 +4,9 @@ gui-index:
 gui-order-list:
     path: /order/list/
     controller: TechDivision\PspMock\Controller\Gui\OrderController::list
+gui-order-detail:
+    path: /order/detail/{order}
+    controller: TechDivision\PspMock\Controller\Gui\OrderController::detail
 
 help-index:
     path: /help/

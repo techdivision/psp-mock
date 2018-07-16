@@ -8,7 +8,12 @@
  */
 
 namespace TechDivision\PspMock\Service;
+
 use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\Appoint;
+use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\PayFull;
+use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\PayPartial;
+use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\Refund;
 
 /**
  * @category   TechDivision
@@ -20,43 +25,39 @@ use TechDivision\PspMock\Entity\Order;
  */
 class StatusManager
 {
-    const STATUS_NEW = 'NEW';
-    const STATUS_APPOINTED = 'APPOINTED';
-    const STATUS_PAID = 'PAID';
-    const STATUS_DEBIT = 'DEBIT';
-
-    const ACTION_APPOINT = 'appoint';
-    const ACTION_PAY = 'pay';
-    const ACTION_RETURN = 'return';
-
     /**
      * @var array
      */
     private $statusActions = [
-        StatusManager::STATUS_NEW => [
+        Order::STATUS_NEW => [
             [
-                'action' => StatusManager::ACTION_APPOINT,
-                'status' => StatusManager::STATUS_APPOINTED,
-                'remote_action' => 'appointed',
-                'label' => 'Send Appointed',
+                'action' => Appoint::ACTION_KEY,
+                'label' => 'Appoint',
             ],
         ],
-        StatusManager::STATUS_APPOINTED => [
+        Order::STATUS_APPOINTED => [
             [
-                'action' => StatusManager::ACTION_PAY,
-                'status' => StatusManager::STATUS_PAID,
-                'remote_action' => 'paid',
-                'label' => 'Send Paid',
+                'action' => PayFull::ACTION_KEY,
+                'label' => 'Pay 100%',
             ],
         ],
-        StatusManager::STATUS_PAID => [
+        Order::STATUS_UNDERPAID => [
             [
-                'action' => StatusManager::ACTION_RETURN,
-                'status' => StatusManager::STATUS_DEBIT,
-                'remote_action' => 'debit',
-                'label' => 'Send Debit',
+                'action' => PayFull::ACTION_KEY,
+                'label' => 'Pay 100%',
+            ],
+            [
+                'action' => Refund::ACTION_KEY,
+                'label' => 'Refund',
             ],
         ],
+        Order::STATUS_COMPLETE => [
+            [
+                'action' => Refund::ACTION_KEY,
+                'label' => 'Refund',
+            ],
+        ],
+        Order::STATUS_REFUNDED => [],
     ];
 
     /**

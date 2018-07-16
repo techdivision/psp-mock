@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Service\Payone\ServerApi;
 
 use Symfony\Component\HttpFoundation\Request;
 use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Service\TransactionIdProvider;
 
 /**
  * @category   TechDivision
@@ -23,25 +24,48 @@ use TechDivision\PspMock\Entity\Order;
 class RequestToOrderMapper
 {
     /**
+     * @var TransactionIdProvider
+     */
+    private $transactionIdProvider;
+
+    /**
+     * @param TransactionIdProvider $transactionIdProvider
+     */
+    public function __construct(TransactionIdProvider $transactionIdProvider)
+    {
+        $this->transactionIdProvider = $transactionIdProvider;
+    }
+
+    /**
      * @param Request $request
      * @param $order
      */
     public function map(Request $request, Order $order): void
     {
         $order->setAmount((string)$request->get('amount'));
+        $order->setBalance($order->getAmount());
         $order->setCurrency((string)$request->get('currency'));
         $order->setClearingType((string)$request->get('clearingtype'));
         $order->setRequestType((string)$request->get('request'));
         $order->setReference((string)$request->get('reference'));
+        $order->setTransactionId($this->transactionIdProvider->get());
+
         $order->setFirstName((string)$request->get('firstname'));
         $order->setLastName((string)$request->get('lastname'));
         $order->setStreet((string)$request->get('street'));
         $order->setZip((string)$request->get('zip'));
         $order->setCity((string)$request->get('city'));
         $order->setCountry((string)$request->get('country'));
+
         $order->setSuccessUrl((string)$request->get('successurl'));
         $order->setBackUrl((string)$request->get('backurl'));
         $order->setErrorUrl((string)$request->get('errorurl'));
+
         $order->setRequestData((string)json_encode($request->request->all()));
+
+        $order->setStatus(Order::STATUS_NEW);
+        $order->setCreated(new \DateTime());
+
+        $order->setSequence(0);
     }
 }

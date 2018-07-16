@@ -76,11 +76,9 @@ class TransactionStatusController extends AbstractController
         try {
             /** @var Order $order */
             $order = $this->getOrderById((int)$order);
-            $nextStatus = $this->getNextStatus($order, $action);
 
             $this->callbackExecutor->execute($order, $action);
 
-            $order->setStatus($nextStatus);
             $this->objectManager->persist($order);
             $this->objectManager->flush();
         } catch (\Throwable $exception) {

@@ -20,7 +20,7 @@
         <tbody>
             {% for order in orders %}
                 <tr>
-                    <th scope="row">{{ order.getId() }}</th>
+                    <th scope="row">{{ order.getTransactionId() }}</th>
                     <td>{{ order.getReference() }}</td>
                     <td>{{ order.getTotal() }}</td>
                     <td>{{ order.getFirstName() }}</td>

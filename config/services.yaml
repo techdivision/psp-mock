@@ -53,3 +53,12 @@ services:
               - cardtype
               - cardcvc2
               - callback_method
+
+    TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionFactory:
+        arguments:
+            $actions:
+                appoint: '@TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\Appoint'
+                pay_partial: '@TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\PayPartial'
+                pay_full: '@TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\PayFull'
+                refund: '@TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\Refund'
+

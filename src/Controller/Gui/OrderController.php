@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Controller\Gui;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Entity\Order;
 use TechDivision\PspMock\Repository\OrderRepository;
 use TechDivision\PspMock\Service\StatusManager;
 
@@ -51,7 +52,19 @@ class OrderController extends AbstractController
     public function list()
     {
         return $this->render('gui/order/list.html.twig', [
-            'orders' => $this->orderRepository->findAll()
+            'orders' => $this->orderRepository->findBy([], ['created' => 'DESC'])
         ]);
+    }
+
+    /**
+     * @param Order $order
+     * @return Response
+     */
+    public function detail(Order $order)
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/plain');
+        $response->setContent(var_export(json_decode($order->getRequestData(), true), true));
+        return $response;
     }
 }

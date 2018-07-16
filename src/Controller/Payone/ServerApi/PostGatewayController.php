@@ -76,13 +76,16 @@ class PostGatewayController extends AbstractController
     public function execute(Request $request)
     {
         try {
-            $order = new Order();
-            $this->requestToOrderMapper->map($request, $order);
-
-            $this->objectManager->persist($order);
-            $this->objectManager->flush();
-
-            return $this->approve($order->getId());
+            $txId = 0;
+            $requestType = $request->get('request');
+            if (in_array($requestType, ['authorization', 'preauthorization'])) {
+                $order = new Order();
+                $this->requestToOrderMapper->map($request, $order);
+                $this->objectManager->persist($order);
+                $this->objectManager->flush();
+                $txId = $order->getTransactionId();
+            }
+            return $this->approve($txId);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage());
             $this->logger->debug($exception->getTraceAsString());
