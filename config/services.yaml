@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     domain: '%env(SERVICE_DOMAIN)%'
+    payoneCallbackUri: '%env(PAYONE_CALLBACK_URI)%'
 
 services:
     # default configuration for services in *this* file
@@ -53,6 +54,10 @@ services:
               - cardtype
               - cardcvc2
               - callback_method
+
+    TechDivision\PspMock\Service\Payone\CallbackUriProvider:
+        arguments:
+            $callbackUri: '%payoneCallbackUri%'
 
     TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionFactory:
         arguments:

@@ -12,6 +12,7 @@ namespace TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action;
 use TechDivision\PspMock\Entity\Order;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionInterface;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\DataProvider;
+use TechDivision\PspMock\Service\Payone\CallbackUriProvider;
 
 /**
  * @category   TechDivision
@@ -32,11 +33,18 @@ class Appoint implements ActionInterface
     private $dataProvider;
 
     /**
-     * @param DataProvider $dataProvider
+     * @var CallbackUriProvider
      */
-    public function __construct(DataProvider $dataProvider)
+    private $callbackUriProvider;
+
+    /**
+     * @param DataProvider $dataProvider
+     * @param CallbackUriProvider $callbackUriProvider
+     */
+    public function __construct(DataProvider $dataProvider, CallbackUriProvider $callbackUriProvider)
     {
         $this->dataProvider = $dataProvider;
+        $this->callbackUriProvider = $callbackUriProvider;
     }
 
     /**
@@ -61,7 +69,7 @@ class Appoint implements ActionInterface
         ]);
 
         return new Result(
-            'https://test-psp-mock.test/payone/transactionstatus',
+            $this->callbackUriProvider->get(),
             'POST',
             [
                 'form_params' => $data
