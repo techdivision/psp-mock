@@ -48,4 +48,5 @@ This project is licensed under the OSL 3.0 License.
 | **PAYONE - Address Check** | X         |
 | **PAYONE - Credit rating** | X         |
 | **Rule based automation**  | X         |
+| **other PSPs**             | X         |
 
