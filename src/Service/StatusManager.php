@@ -32,29 +32,29 @@ class StatusManager
         Order::STATUS_NEW => [
             [
                 'action' => Appoint::ACTION_KEY,
-                'label' => 'Appoint',
+                'label' => 'Appointed',
             ],
         ],
         Order::STATUS_APPOINTED => [
             [
                 'action' => PayFull::ACTION_KEY,
-                'label' => 'Pay 100%',
+                'label' => 'Paid',
             ],
         ],
         Order::STATUS_UNDERPAID => [
             [
                 'action' => PayFull::ACTION_KEY,
-                'label' => 'Pay 100%',
+                'label' => 'Paid',
             ],
             [
                 'action' => Refund::ACTION_KEY,
-                'label' => 'Refund',
+                'label' => 'Debit',
             ],
         ],
         Order::STATUS_COMPLETE => [
             [
                 'action' => Refund::ACTION_KEY,
-                'label' => 'Refund',
+                'label' => 'Debit',
             ],
         ],
         Order::STATUS_REFUNDED => [],
