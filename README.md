@@ -30,6 +30,10 @@ PAYONE_CALLBACK_URI=https://test.my-shop.local/payone/transactionstatus
 In order to use this mock service with a Magento 2 installation you need to manipulate the endpoints within the
 `payone-gmbh/magento2` extension. Therefore you can use the module: https://github.com/techdivision/magento2-payone-mockable
 
+```bash
+composer require --dev techdivision/payone-mockable
+```
+
 ## License
 
 This project is licensed under the OSL 3.0 License.
