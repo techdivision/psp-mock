@@ -23,14 +23,23 @@ class Result implements ResultInterface
      * @var string
      */
     private $url;
+
     /**
      * @var string
      */
     private $method;
+
     /**
      * @var array
      */
     private $options;
+
+    /**
+     * @var array
+     */
+    private $defaultOptions = [
+        'verify' => false
+    ];
 
     /**
      * @param string $url
@@ -44,7 +53,7 @@ class Result implements ResultInterface
     ) {
         $this->url = $url;
         $this->method = $method;
-        $this->options = $options;
+        $this->options = array_merge($this->defaultOptions, $options);
     }
 
     /**

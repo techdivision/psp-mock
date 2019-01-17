@@ -17,6 +17,17 @@ valet link --secure
 cp .env.dist .env
 ```
 
+### If composer install fails run this
+```
+composer update symfony/flex --no-plugins
+```
+
+### Instantiate database
+```
+bin/console doctrine:database:create
+bin/console doctrine:schema:create
+```
+
 ### Configuration
 
 Change the settings within the `.env` file in order to configure the endpoints.
