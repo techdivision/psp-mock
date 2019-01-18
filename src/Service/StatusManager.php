@@ -40,6 +40,10 @@ class StatusManager
                 'action' => PayFull::ACTION_KEY,
                 'label' => 'Paid',
             ],
+            [
+                'action' => PayPartial::ACTION_KEY,
+                'label' => 'Pay Partial',
+            ],
         ],
         Order::STATUS_UNDERPAID => [
             [

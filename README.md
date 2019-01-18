@@ -54,7 +54,7 @@ This project is licensed under the OSL 3.0 License.
 | Feature / Task             | Status    |
 |----------------------------|-----------|
 | **PAYONE - Payments**      |           |
-| - Creditcard               | ✓         |
+| - Visa, Mastercard         | ✓         |
 | - Debit Payment            | X         |
 | - PayPal                   | X         |
 | - Cash on Delivery         | X         |
