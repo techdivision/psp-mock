@@ -51,17 +51,26 @@ This project is licensed under the OSL 3.0 License.
 
 ## Roadmap
 
-| Feature / Task             | Status    |
-|----------------------------|-----------|
-| **PAYONE - Payments**      |           |
-| - Visa, Mastercard         | ✓         |
-| - Debit Payment            | X         |
-| - PayPal                   | X         |
-| - Cash on Delivery         | X         |
-| - Advance Payment          | X         |
-| - Invoice                  | X         |
-| **PAYONE - Address Check** | X         |
-| **PAYONE - Credit rating** | X         |
-| **Rule based automation**  | X         |
-| **other PSPs**             | X         |
+| Feature / Task                | Status    |
+|-------------------------------|-----------|
+| **PAYONE - Payments**         |           |
+| - Creditcard(Visa, Mastercard)| ✓         |
+| - Debit Payment               | X         |
+| - PayPal                      | X         |
+| - Cash on Delivery            | X         |
+| - Advance Payment             | X         |
+| - Invoice                     | X         |
+| **PAYONE - Address Check**    | X         |
+| **PAYONE - Credit rating**    | X         |
+| **Rule based automation**     | X         |
+| **other PSPs**                | X         |
+
+### Creditcard
+
+| Feature / Task                | Status    |
+|-------------------------------|-----------|
+| - Appoint                     | ✓         |
+| - Fully paid                  | ✓         |
+| - Partially paid              | ✓         |
+| - Debit                       | ✓         |
 
