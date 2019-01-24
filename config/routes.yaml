@@ -7,6 +7,12 @@ gui-order-list:
 gui-order-detail:
     path: /order/detail/{order}
     controller: TechDivision\PspMock\Controller\Gui\OrderController::detail
+gui-paymentFrame-index:
+  path: /ngw/paymentFrame
+  controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\IndexController::index
+heidelpay-payment-frame:
+  path: /heidelpay/payment/frame
+  controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\FrameController::list
 
 help-index:
     path: /help/
@@ -28,3 +34,8 @@ payone-client-api-static:
   defaults: { _controller: TechDivision\PspMock\Controller\Payone\ClientApi\StaticFileController::execute }
   requirements:
       req: ".+?"
+
+ngw/paymentFrame/sendData:
+  path: /ngw/paymentFrame/sendData
+  defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\PostGateWayController::execute }
+  methods: [GET, POST]
