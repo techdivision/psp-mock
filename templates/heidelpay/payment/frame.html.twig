@@ -5,7 +5,7 @@
 
 {% block main_content %}
     <body>
-    <div id="paymentFrameConf" frontend-payment-frame-origin="https://magento-ba-test-instance.test" payment-frame-url="https://psp-mock.test/ngw/paymentFrame/sendData" lang="en"></div>
+    <div id="paymentFrameConf" frontend-payment-frame-origin="https://project-community-edition.test" payment-frame-url="https://psp-mock.test/ngw/paymentFrame/sendData" lang="en"></div>
     <form id="paymentFrameForm">
         <input type="hidden" id="stateId" name="stateId" value="58b1d6beffffffff5f09b58b" />
         <div id="accountHolderContainer" class="form-row">
@@ -26,7 +26,7 @@
 
                     <img class="creditCardImage" src="{{ asset('images/MASTER.gif') }}">
 
-                    <img class="creditCardImage" src="{{ asset('VISA.gif') }}">
+                    <img class="creditCardImage" src="{{ asset('images/VISA.gif') }}">
                 {% endblock %}
 
             </div>
