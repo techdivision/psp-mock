@@ -11,20 +11,20 @@ namespace TechDivision\PspMock\Repository\Heidelpay;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Entity\Account;
 
 /**
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class OrderRepository extends ServiceEntityRepository
+class AccountRepository extends ServiceEntityRepository
 {
     /**
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Order::class);
+        parent::__construct($registry, Account::class);
     }
 }
