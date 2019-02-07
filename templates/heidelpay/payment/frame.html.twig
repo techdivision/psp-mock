@@ -5,9 +5,9 @@
 
 {% block main_content %}
     <body>
-    <div id="paymentFrameConf" frontend-payment-frame-origin="https://project-community-edition.test" payment-frame-url="https://psp-mock.test/ngw/paymentFrame/sendData" lang="en"></div>
+    <div id="paymentFrameConf" frontend-payment-frame-origin="https://project-community-edition.test" payment-frame-url="https://psp-mock.test/ngw/paymentFrame/sendData?{{ state }}" lang="en"></div>
     <form id="paymentFrameForm">
-        <input type="hidden" id="stateId" name="stateId" value="58b1d6beffffffff5f09b58b" />
+        <input type="hidden" id="stateId" name="stateId" value="{{ state }}" />
         <div id="accountHolderContainer" class="form-row">
             <label for="cardName" class="form-label">Card holder</label>
             <input tabindex="1" class="form-input fullWidth" id="cardName" name="account.holder" maxlength="50" type="text" value="Lukas Kiederle" autocomplete="off">
