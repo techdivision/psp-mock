@@ -14,7 +14,7 @@
         </div>
         <div id="accountNumberContainer" class="form-row">
             <label for="cardNumber" class="form-label">Card No.</label>
-            <input tabindex="2" class="form-input fullWidth" id="cardNumber" name="account.number" maxlength="20" type="text" autocomplete="off">
+            <input tabindex="2" class="form-input fullWidth" id="cardNumber" name="account.number" maxlength="20" type="text" autocomplete="off" value="4711100000000000">
         </div>
         <div id="accountBrandContainer" class="form-row">
             <label for="brand" class="form-label">Card Brand</label>
@@ -40,7 +40,7 @@
 
                     <option value="JCB"  >JCB</option>
 
-                    <option value="VISA"  >Visa</option>
+                    <option value="VISA" selected="selected"  >Visa</option>
 
                     <option value="DISCOVERY"  >Discover</option>
 
@@ -54,7 +54,7 @@
         <div id="accountVerificationContainer" class="form-row">
             <label for="verification" class="form-label">CVV</label>
             <div class="verificationInlineHintWrapper">
-                <input tabindex="6" class="form-input fullWidth" maxlength="4" id="verification" name="account.verification" type="text" autocomplete="off">
+                <input tabindex="6" class="form-input fullWidth" maxlength="4" value="123" id="verification" name="account.verification" type="text" autocomplete="off">
                 <a tabindex="7" id="verificationInlineHint" href="#"><img src="{{ asset('images/questionMark.png') }}"></a>
             </div>
             <br />
@@ -66,7 +66,7 @@
                     <option value="">Month</option>
                     <option value="1">01</option>
                     <option value="2">02</option>
-                    <option value="3">03</option>
+                    <option value="3" selected="selected">03</option>
                     <option value="4">04</option>
                     <option value="5">05</option>
                     <option value="6">06</option>
@@ -80,7 +80,8 @@
             </div><!-- comment white space
              --><div class="halfWidth">
                 <select tabindex="5" class="form-select fullWidth" id="expirationYear" name="account.expiry_year">
-                    <option value="">Year</option>
+                    <option value="" >Year</option>
+                    <option value="2025" selected="selected" >2025</option>
                 </select>
             </div>
         </div>
