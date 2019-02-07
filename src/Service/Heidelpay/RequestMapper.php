@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Service\Heidelpay;
 
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
+use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Service\TransactionIdProvider;
@@ -20,7 +21,7 @@ use TechDivision\PspMock\Service\TransactionIdProvider;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class RequestToOrderMapper
+class RequestMapper
 {
     /**
      * @var TransactionIdProvider
@@ -40,7 +41,7 @@ class RequestToOrderMapper
      * @param Order $order
      * @param Address $address
      */
-    public function map(Request $request, Order $order, Address $address): void
+    public function mapRequestToOrder(Request $request, Order $order, Address $address): void
     {
         $order->setTransactionId($request->get(Order::IDENTIFICATION . 'TRANSACTIONID'));
 
@@ -102,5 +103,19 @@ class RequestToOrderMapper
 
 
         $order->setAddress($address);
+    }
+
+    /**
+     * @param Request $request
+     * @param Account $account
+     */
+    public function mapRequestToAccount(Request $request, Account $account): void
+    {
+        $account->setBrand((string)$request->get(Order::ACCOUNT . 'BRAND'));
+        $account->setExpiryMonth((string)$request->get(Order::ACCOUNT . 'EXPIRY_MONTH'));
+        $account->setExpiryYear((string)$request->get(Order::ACCOUNT . 'EXPIRY_YEAR'));
+        $account->setHolder((string)$request->get(Order::ACCOUNT . 'HOLDER'));
+        $account->setNumber((string)$request->get(Order::ACCOUNT . 'NUMBER'));
+        $account->setVerification((string)$request->get(Order::ACCOUNT . 'VERIFICATION'));
     }
 }

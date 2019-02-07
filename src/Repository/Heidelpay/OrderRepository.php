@@ -14,7 +14,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 
 /**
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */

@@ -11,6 +11,8 @@ namespace TechDivision\PspMock\Entity\Heidelpay;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use TechDivision\PspMock\Entity\Account;
+use TechDivision\PspMock\Entity\Address;
 
 /**
  * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\Heidelpay\OrderRepository")
@@ -22,6 +24,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Order
 {
+    /**
+     * Status
+     */
+    const STATUS_NEW = 'NEW';
+
+    /**
+     * Prefixes
+     */
+    const IDENTIFICATION = 'IDENTIFICATION_';
+    const ADDRESS = 'ADDRESS_';
+    const CONFIG = 'CONFIG_';
+    const ACCOUNT = 'ACCOUNT_';
+    const NAME = 'NAME_';
+    const CRITERION = 'CRITERION_';
+    const PRESENTATION = 'PRESENTATION_';
+    const CURRENCY = 'CURRENCY_';
+    const TRANSACTION = 'TRANSACTION_';
+    const CONTACT = 'CONTACT_';
+    const FRONTEND = 'FRONTEND_';
+    const REQUEST = 'REQUEST_';
+    const SECURITY = 'SECURITY_';
+    const PROCESSING = 'PROCESSING_';
+    const PAYMENT = 'PAYMENT_';
+    const USER = 'USER_';
+
+
     /**
      * IDENTIFICATION_
      */
@@ -46,14 +74,14 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $ShortId;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $uniqueId;
 
@@ -190,13 +218,6 @@ class Order
      * @ORM\Column(type="string", nullable=true)
      */
     private $requestData;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $created;
 
     /**
      * PRESENTATION_
@@ -340,7 +361,7 @@ class Order
      *
      * @ORM\Column(type="string")
      */
-    private $version= '1.0';
+    private $version = '1.0';
 
     /**
      * PROCESSING_
@@ -386,28 +407,28 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(type="string", options={"default":"ACK"})
+     * @ORM\Column(type="string", options={"default":"ACK"}, nullable=true)
      */
     private $result;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", options={"default":"00"})
+     * @ORM\Column(type="string", options={"default":"00"}, nullable=true)
      */
     private $reasonCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", options={"default":"SUCCESSFULL"})
+     * @ORM\Column(type="string", options={"default":"SUCCESSFULL"}, nullable=true)
      */
     private $reason;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", options={"default":"Request successfully processed in ''Merchant in Connector Test Mode''"})
+     * @ORM\Column(type="string", options={"default":"Request successfully processed in ''Merchant in Connector Test Mode''"}, nullable=true)
      */
     private $return;
 
@@ -450,6 +471,13 @@ class Order
      * @ORM\Column(type="string")
      */
     private $code;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $initialRequestData;
 
     /**
      * @return int
@@ -540,7 +568,7 @@ class Order
     }
 
     /**
-     * @param address $address
+     * @param Address $address
      */
     public function setAddress(address $address): void
     {
@@ -556,7 +584,7 @@ class Order
     }
 
     /**
-     * @param account $account
+     * @param Account $account
      */
     public function setAccount(account $account): void
     {
@@ -769,22 +797,6 @@ class Order
     public function setRequestData(string $requestData): void
     {
         $this->requestData = $requestData;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreated(): \DateTime
-    {
-        return $this->created;
-    }
-
-    /**
-     * @param \DateTime $created
-     */
-    public function setCreated(\DateTime $created): void
-    {
-        $this->created = $created;
     }
 
     /**
@@ -1265,5 +1277,21 @@ class Order
     public function setCode(string $code): void
     {
         $this->code = $code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInitialRequestData(): string
+    {
+        return $this->initialRequestData;
+    }
+
+    /**
+     * @param string $initialRequestData
+     */
+    public function setInitialRequestData(string $initialRequestData): void
+    {
+        $this->initialRequestData = $initialRequestData;
     }
 }
