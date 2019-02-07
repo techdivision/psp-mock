@@ -15,10 +15,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
+use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
-use TechDivision\PspMock\Service\Payone\ServerApi\RequestToOrderMapper;
+use TechDivision\PspMock\Service\Heidelpay\RequestMapper;
 
-class PostGatwayController extends AbstractController
+/**
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
+ * @link       http://www.techdivision.com/
+ * @author     Lukas Kiederle <l.kiederle@techdivision.com
+ */
+class PostGatewayController extends AbstractController
 {
     /**
      * @var LoggerInterface
@@ -36,19 +42,25 @@ class PostGatwayController extends AbstractController
     private $objectManager;
 
     /**
-     * @var RequestToOrderMapper
+     * @var ObjectManager
+     */
+    private $entityManager;
+
+    /**
+     * @var RequestMapper
      */
     private $requestToOrderMapper;
 
     /**
      * @param LoggerInterface $logger
      * @param ObjectManager $objectManager
-     * @param RequestToOrderMapper $requestToOrderMapper
+     * @param RequestMapper $requestToOrderMapper
+     * @param EntityManager $entityManager
      */
     public function __construct(
         LoggerInterface $logger,
         ObjectManager $objectManager,
-        RequestToOrderMapper $requestToOrderMapper
+        RequestMapper $requestToOrderMapper
     )
     {
         $this->logger = $logger;
@@ -71,17 +83,21 @@ class PostGatwayController extends AbstractController
      */
     public function execute(Request $request)
     {
+        $responseData = 'test';
 
-        $responseData = ['test' => 'test'];
+        $content = $request->getContent();
 
-        $requestType = $request->get('request');
-        if (in_array($requestType, ['authorization', 'preauthorization'])) {
-            $order = new Order();
-            $this->requestToOrderMapper->map($request, $order);
-            $this->objectManager->persist($order);
+        if(isset($content)){
+            $account = new Account();
+
+            $this->requestToOrderMapper->mapRequestToAccount($request, $account);
+            $this->objectManager->persist($account);
+            //$this->entityManager->find('Order', 1);
+
             $this->objectManager->flush();
-            $txId = $order->getTransactionId();
         }
+
+
 
         return $this->buildResponse($responseData);
     }
