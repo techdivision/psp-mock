@@ -9,8 +9,8 @@
 
 namespace TechDivision\PspMock\Entity\Heidelpay;
 
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\Heidelpay\OrderRepository")
@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  *
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
- * @author     Vadim Justus <v.justus@techdivision.com
+ * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 class Order
 {
@@ -72,8 +72,7 @@ class Order
      * @var address
      *
      * One Order has One Address.
-     * @OneToOne(targetEntity="Address")
-     * @JoinColumn(name="address_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Address")
      */
     private $address;
 
@@ -84,9 +83,8 @@ class Order
     /**
      * @var account
      *
-     * One Order has One Address.
-     * @OneToOne(targetEntity="Account")
-     * @JoinColumn(name="account_id", referencedColumnName="id")
+     * One Order has One Account.
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Account")
      */
     private $account;
 
@@ -409,7 +407,7 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(type="string", options={"default":"Request successfully processed in 'Merchant in Connector Test Mode'"})
+     * @ORM\Column(type="string", options={"default":"Request successfully processed in ''Merchant in Connector Test Mode''"})
      */
     private $return;
 

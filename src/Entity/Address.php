@@ -9,6 +9,8 @@
 
 namespace TechDivision\PspMock\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\AddressRepository")
  * @ORM\Table(name="payment_address")
