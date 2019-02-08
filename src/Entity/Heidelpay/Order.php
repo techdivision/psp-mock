@@ -48,6 +48,7 @@ class Order
     const PROCESSING = 'PROCESSING_';
     const PAYMENT = 'PAYMENT_';
     const USER = 'USER_';
+    const POST_ = 'POST_';
 
 
     /**
@@ -91,6 +92,29 @@ class Order
      * @ORM\Column(type="string", nullable=true)
      */
     private $store;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true, unique=true)
+     */
+    private $stateId;
+
+    /**
+     * @return string
+     */
+    public function getStateId(): string
+    {
+        return $this->stateId;
+    }
+
+    /**
+     * @param string $stateId
+     */
+    public function setStateId(string $stateId): void
+    {
+        $this->stateId = $stateId;
+    }
 
     /**
      * ADDRESS_
@@ -150,7 +174,7 @@ class Order
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $brands;
+    private $brands = "{\"MASTER\":\"MasterCard\",\"AMEX\":\"American Express\",\"JCB\":\"JCB\",\"DISCOVERY\":\"Discover\",\"DINERS\":\"Diners\",\"CUP\":\"China Union Pay\",\"VISA\":\"Visa\"}";
 
     /**
      * CRITERION_
@@ -407,9 +431,9 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(type="string", options={"default":"ACK"}, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $result;
+    private $result = "ACK";
 
     /**
      * @var string
@@ -473,11 +497,61 @@ class Order
     private $code;
 
     /**
+     * POST_
+     */
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $validation = "ACK";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $paymentFrameUrl;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
     private $initialRequestData;
+
+    /**
+     * @return string
+     */
+    public function getPaymentFrameUrl(): string
+    {
+        return $this->paymentFrameUrl;
+    }
+
+    /**
+     * @param string $paymentFrameUrl
+     */
+    public function setPaymentFrameUrl(string $paymentFrameUrl): void
+    {
+        $this->paymentFrameUrl = $paymentFrameUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidation(): string
+    {
+        return $this->validation;
+    }
+
+    /**
+     * @param string $validation
+     */
+    public function setValidation(string $validation): void
+    {
+        $this->validation = $validation;
+    }
 
     /**
      * @return int
