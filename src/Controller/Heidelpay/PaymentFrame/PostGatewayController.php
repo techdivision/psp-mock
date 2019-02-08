@@ -10,9 +10,6 @@
 namespace TechDivision\PspMock\Controller\Heidelpay\PaymentFrame;
 
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
-use phpDocumentor\Reflection\Types\Boolean;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,11 +43,6 @@ class PostGatewayController extends AbstractController
     private $objectManager;
 
     /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
      * @var OrderRepository
      */
     private $orderRepository;
@@ -60,10 +52,6 @@ class PostGatewayController extends AbstractController
      */
     private $requestToOrderMapper;
 
-    /**
-     * @var Boolean
-     */
-    private $isDevMode;
 
     /**
      * @param LoggerInterface $logger
@@ -83,10 +71,6 @@ class PostGatewayController extends AbstractController
         $this->requestToOrderMapper = $requestToOrderMapper;
         $this->orderRepository = $orderRepository;
 
-        $this->isDevMode = true;
-
-        $this->entityManager = $this->initEntitiyManager();
-
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json;charset=UTF-8');
         $this->response->headers->set('Transfer-Encoding', 'chunked');
@@ -103,7 +87,7 @@ class PostGatewayController extends AbstractController
      */
     public function execute(Request $request)
     {
-        $responseData = 'test';
+
 
         if ($request->getMethod() === "POST") {
             $account = new Account();
@@ -112,72 +96,40 @@ class PostGatewayController extends AbstractController
                 $this->objectManager->persist($account);
 
                 $order = $this->orderRepository->findOneBy(array('stateId' => json_decode($request->getContent(), true)['stateId']));
-
                 $order->setAccount($account);
+
+                $this->generateMissingData($order);
 
                 $this->objectManager->persist($order);
                 $this->objectManager->flush();
 
                 //TODO
-                return $this->buildResponse($responseData);
+                return $this->buildResponse($order);
             } catch (\Exception $exception) {
                 $this->logger->error($exception);
                 return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
             }
         }
 
-        return $this->buildResponse($responseData);
+        //GET for testing
+        $this->response->setContent('test');
+        return $this->response;
     }
 
     /**
-     * @param string|int $txid
-     * @return Response
+     * @param Order $order
      */
-    private function approve($txid)
-    {
-        $responseData = [
-            'status' => 'APPROVED',
-            'txid' => $txid,
-            'userid' => '123456',
-        ];
+    private function generateMissingData(Order $order){
 
-        return $this->buildResponse($responseData);
     }
 
     /**
-     * @param string $code
-     * @param string $message
+     * @param Order $order
      * @return Response
      */
-    private function error($code, $message)
+    private function buildResponse(Order $order)
     {
-        $responseData = [
-            'status' => 'ERROR',
-            'errorcode' => $code,
-            'customermessage' => $message,
-        ];
-
-        return $this->buildResponse($responseData);
-    }
-
-
-    private function initEntitiyManager()
-    {
-        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/src"), $this->isDevMode);
-        $conn = array(
-            'driver' => 'pdo_sqlite',
-            'path' => __DIR__ . '/db.sqlite',
-        );
-        return EntityManager::create($conn, $config);
-    }
-
-    /**
-     * @param $data
-     * @return Response
-     */
-    private function buildResponse($data)
-    {
-        $this->response->setContent($data);
+        $this->response->setContent($this->orderToResponseMapper->map($order, true));
         return $this->response;
     }
 }

@@ -3,6 +3,7 @@
 
 namespace TechDivision\PspMock\Service\Heidelpay;
 
+use phpDocumentor\Reflection\Types\Boolean;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 
 /**
@@ -20,11 +21,13 @@ class OrderToResponseMapper
 
     /**
      * Maps the order to a key-value based string with an urlencoded value
+     * If the flag is set to true the mapper returns Json
      *
      * @param Order $order
+     * @param bool $withCreditCard
      * @return string
      */
-    public function map(Order $order)
+    public function map(Order $order, bool $withCreditCard)
     {
         $data = [
             "FRONTEND.REDIRECT_URL" => self::HEIDELPAY_URL . '?state=' . $order->getStateId()
@@ -85,6 +88,38 @@ class OrderToResponseMapper
             "USER.LOGIN" => $order->getLogin(),
             "USER.PWD" => $order->getPwd(),
         ];
+
+        if ($withCreditCard) {
+            $additionalData = [
+                "ACCOUNT.EXPIRY_YEAR" => $order->getAccount()->getExpiryYear(),
+                "ACCOUNT.EXPIRY_MONTH" => $order->getAccount()->getExpiryMonth(),
+                "ACCOUNT.VERIFICATION" => $order->getAccount()->getVerification(),
+                "ACCOUNT.NUMBER" => $order->getAccount()->getNumber(),
+                "ACCOUNT.HOLDER" => $order->getAccount()->getHolder(),
+                "ACCOUNT.BRAND" => $order->getAccount()->getBrand(),
+
+                "PROCESSING.TIMESTAMP" => $order->getTimestamp(),
+
+                "PROCESSING.STATUS.CODE" => $order->getStatusCode(),
+
+                "IDENTIFICATION.SHORTID" => $order->getShortId(),
+                "IDENTIFICATION.UNIQUEID" => $order->getUniqueId(),
+                "CLEARING.AMOUNT" => $order->getCAmount(),
+                "CLEARING.CURRENCY" => $order->getCCurrency(),
+                "CLEARING.DESCRIPTOR" => $order->getDescriptor(),
+
+
+                "PROCESSING.CODE" => $order->getCode(),
+                "PROCESSING.STATUS" => $order->getStatus(),
+                "PROCESSING.RETURN.CODE" => $order->getReturnCode(),
+                "PROCESSING.REASON.CODE" => $order->getReasonCode(),
+                "PROCESSING.REASON" => $order->getReason(),
+                "PROCESSING.RETURN" => $order->getReturn(),
+                "PROCESSING.REDIRECT_URL" => $order->getRedirectUrl(),
+            ];
+
+            return json_encode(array_merge($data, $additionalData));
+        }
 
         return $this->mapArrayToString($data);
     }

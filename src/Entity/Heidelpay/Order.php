@@ -396,7 +396,7 @@ class Order
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $statusCode;
+    private $statusCode = "90";
 
     /**
      * @var string
@@ -438,9 +438,9 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(type="string", options={"default":"00"}, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $reasonCode;
+    private $reasonCode = "00";
 
     /**
      * @var string
@@ -455,6 +455,13 @@ class Order
      * @ORM\Column(type="string", options={"default":"Request successfully processed in ''Merchant in Connector Test Mode''"}, nullable=true)
      */
     private $return;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", options={"default":"SUCCESSFULL"}, nullable=true)
+     */
+    private $redirectUrl;
 
     /**
      * SECURITY_
@@ -1367,5 +1374,21 @@ class Order
     public function setInitialRequestData(string $initialRequestData): void
     {
         $this->initialRequestData = $initialRequestData;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirectUrl(): string
+    {
+        return $this->redirectUrl;
+    }
+
+    /**
+     * @param string $redirectUrl
+     */
+    public function setRedirectUrl(string $redirectUrl): void
+    {
+        $this->redirectUrl = $redirectUrl;
     }
 }

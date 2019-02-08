@@ -121,7 +121,7 @@ class NgwPostController extends AbstractController
      */
     private function buildResponse(Order $order)
     {
-        $this->response->setContent($this->orderToResponseMapper->map($order));
+        $this->response->setContent($this->orderToResponseMapper->map($order, false));
         return $this->response;
     }
 }
