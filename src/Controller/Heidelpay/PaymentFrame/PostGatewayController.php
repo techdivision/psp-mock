@@ -18,6 +18,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
+use TechDivision\PspMock\Service\Heidelpay\MissingDataGenerator;
+use TechDivision\PspMock\Service\Heidelpay\OrderToResponseMapper;
 use TechDivision\PspMock\Service\Heidelpay\RequestMapper;
 
 /**
@@ -52,24 +54,40 @@ class PostGatewayController extends AbstractController
      */
     private $requestToOrderMapper;
 
+    /**
+     * @var OrderToResponseMapper
+     */
+    private $orderToResponseMapper;
+
+    /**
+     * @var MissingDataGenerator
+     */
+    private $missingDataGenerator;
+
 
     /**
      * @param LoggerInterface $logger
      * @param ObjectManager $objectManager
      * @param RequestMapper $requestToOrderMapper
      * @param OrderRepository $orderRepository
+     * @param OrderToResponseMapper $orderToResponseMapper
+     * @param MissingDataGenerator $missingDataGenerator
      */
     public function __construct(
         LoggerInterface $logger,
         ObjectManager $objectManager,
         RequestMapper $requestToOrderMapper,
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository,
+        OrderToResponseMapper $orderToResponseMapper,
+        MissingDataGenerator $missingDataGenerator
     )
     {
         $this->logger = $logger;
         $this->objectManager = $objectManager;
         $this->requestToOrderMapper = $requestToOrderMapper;
         $this->orderRepository = $orderRepository;
+        $this->orderToResponseMapper = $orderToResponseMapper;
+        $this->missingDataGenerator = $missingDataGenerator;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json;charset=UTF-8');
@@ -98,7 +116,7 @@ class PostGatewayController extends AbstractController
                 $order = $this->orderRepository->findOneBy(array('stateId' => json_decode($request->getContent(), true)['stateId']));
                 $order->setAccount($account);
 
-                $this->generateMissingData($order);
+                $this->missingDataGenerator->generate($order);
 
                 $this->objectManager->persist($order);
                 $this->objectManager->flush();
@@ -114,13 +132,6 @@ class PostGatewayController extends AbstractController
         //GET for testing
         $this->response->setContent('test');
         return $this->response;
-    }
-
-    /**
-     * @param Order $order
-     */
-    private function generateMissingData(Order $order){
-
     }
 
     /**

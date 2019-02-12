@@ -29,7 +29,8 @@ class MissingDataGenerator
     {
         $shortId = $this->generateShortId();
 
-        $order->setRedirectUrl('https://' . getenv('SERVICE_DOMAIN') . self::REDIRECT_URL);
+        //$order->setRedirectUrl('https://' . getenv('SERVICE_DOMAIN') . self::REDIRECT_URL);
+        $order->setRedirectUrl($order->getResponseUrl());
         $order->setCCurrency($order->getPCurrency());
         $order->setCAmount($order->getPAmount());
 
