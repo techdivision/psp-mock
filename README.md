@@ -17,6 +17,24 @@ valet link --secure
 cp .env.dist .env
 ```
 
+### Make Hosts entry because php-curl would not find it otherwise
+on MacOs: 
+```
+sudo vim /etc/hosts
+```
+
+Paste in:
+```
+127.0.0.1 psp-mock.test
+::1 psp-mock.test
+fe80::1%lo0 psp-mock.test
+127.0.0.1 project-community-edition.test
+::1 project-community-edition.test
+fe80::1%lo0 project-community-edition.test
+```
+psp-mock.test = your psp-mock domain
+project-community-edition.test = your magento domain
+
 ### If composer install fails run this
 ```
 composer update symfony/flex --no-plugins

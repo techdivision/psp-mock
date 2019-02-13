@@ -48,9 +48,7 @@ class QuoteConfirmer
      */
     public function execute(Order $order, $options)
     {
-        $client = new Client(['defaults' => [
-            'verify' => false
-        ]]);
+        $client = new Client();
 
         if ($options === null) {
             $options = [];
