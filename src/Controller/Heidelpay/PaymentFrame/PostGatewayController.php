@@ -20,6 +20,8 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\Heidelpay\MissingDataGenerator;
 use TechDivision\PspMock\Service\Heidelpay\OrderToResponseMapper;
+use TechDivision\PspMock\Service\Heidelpay\QuoteConfirmer;
+use TechDivision\PspMock\Service\Heidelpay\RedirectCaller;
 use TechDivision\PspMock\Service\Heidelpay\RequestMapper;
 
 /**
@@ -64,6 +66,15 @@ class PostGatewayController extends AbstractController
      */
     private $missingDataGenerator;
 
+    /**
+     * @var QuoteConfirmer
+     */
+    private $quoteConfirmer;
+
+    /**
+     * @var RedirectCaller
+     */
+    private $redirectCaller;
 
     /**
      * @param LoggerInterface $logger
@@ -72,6 +83,8 @@ class PostGatewayController extends AbstractController
      * @param OrderRepository $orderRepository
      * @param OrderToResponseMapper $orderToResponseMapper
      * @param MissingDataGenerator $missingDataGenerator
+     * @param QuoteConfirmer $quoteConfirmer
+     * @param RedirectCaller $redirectCaller
      */
     public function __construct(
         LoggerInterface $logger,
@@ -79,7 +92,9 @@ class PostGatewayController extends AbstractController
         RequestMapper $requestToOrderMapper,
         OrderRepository $orderRepository,
         OrderToResponseMapper $orderToResponseMapper,
-        MissingDataGenerator $missingDataGenerator
+        MissingDataGenerator $missingDataGenerator,
+        QuoteConfirmer $quoteConfirmer,
+        RedirectCaller $redirectCaller
     )
     {
         $this->logger = $logger;
@@ -88,6 +103,8 @@ class PostGatewayController extends AbstractController
         $this->orderRepository = $orderRepository;
         $this->orderToResponseMapper = $orderToResponseMapper;
         $this->missingDataGenerator = $missingDataGenerator;
+        $this->quoteConfirmer = $quoteConfirmer;
+        $this->redirectCaller = $redirectCaller;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json;charset=UTF-8');
@@ -102,26 +119,29 @@ class PostGatewayController extends AbstractController
     /**
      * @param Request $request
      * @return Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function execute(Request $request)
     {
-
-
         if ($request->getMethod() === "POST") {
             $account = new Account();
             try {
                 $this->requestToOrderMapper->mapRequestToAccount($request, $account);
                 $this->objectManager->persist($account);
 
+                /** @var Order $order */
                 $order = $this->orderRepository->findOneBy(array('stateId' => json_decode($request->getContent(), true)['stateId']));
                 $order->setAccount($account);
 
                 $this->missingDataGenerator->generate($order);
 
+                //TODO send Post to Magento instance
+                $this->quoteConfirmer->execute($order, null);
+                $this->redirectCaller->execute($order, null);
+
                 $this->objectManager->persist($order);
                 $this->objectManager->flush();
 
-                //TODO
                 return $this->buildResponse($order);
             } catch (\Exception $exception) {
                 $this->logger->error($exception);

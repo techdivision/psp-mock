@@ -44,6 +44,9 @@ class MissingDataGenerator
         $order->setReason("SUCCESSFULL");
         $order->setReturn("Request successfully processed in 'Merchant in Connector Test Mode'");
         $order->setProcessingCode($order->getCode() . '.' . $order->getReturnCode() . '.' . "00");
+
+        //TODO for more store ids if relevant
+        $order->setStore('default');
     }
 
     /**

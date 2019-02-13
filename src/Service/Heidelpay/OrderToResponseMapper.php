@@ -1,9 +1,14 @@
 <?php
-
+/**
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ */
 
 namespace TechDivision\PspMock\Service\Heidelpay;
 
-use phpDocumentor\Reflection\Types\Boolean;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 
 /**
@@ -15,9 +20,20 @@ class OrderToResponseMapper
 {
     const HEIDELPAY_URL = 'https://test-heidelpay.hpcgw.net/ngw/whitelabel';
     const PAYMENT_FRAME = '/heidelpay/payment/frame';
-    const SEPERATOR = '=';
-    const CONNECTOR = '&';
 
+    /**
+     * @var ArrayToStringMapper
+     */
+    private $arrayToStringMapper;
+
+    /**
+     * OrderToResponseMapper constructor.
+     * @param ArrayToStringMapper $arrayToStringMapper
+     */
+    public function __construct(ArrayToStringMapper $arrayToStringMapper)
+    {
+        $this->arrayToStringMapper = $arrayToStringMapper;
+    }
 
     /**
      * Maps the order to a key-value based string with an urlencoded value
@@ -121,26 +137,6 @@ class OrderToResponseMapper
             return json_encode(array_merge($data, $additionalData));
         }
 
-        return $this->mapArrayToString($data);
-    }
-
-    /**
-     * @param $data
-     * @return string
-     */
-    private function mapArrayToString($data)
-    {
-
-        $result = '';
-
-        foreach ($data as $key => $value) {
-
-            if ($result === '') {
-                $result = $key . self::SEPERATOR . urlencode($value);
-            }
-            $result = $result . self::CONNECTOR . $key . self::SEPERATOR . urlencode($value);
-        }
-
-        return $result;
+        return $this->arrayToStringMapper->map($data);
     }
 }
