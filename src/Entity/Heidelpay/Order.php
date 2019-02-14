@@ -101,20 +101,11 @@ class Order
     private $stateId;
 
     /**
-     * @return string
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
-    public function getStateId(): string
-    {
-        return $this->stateId;
-    }
-
-    /**
-     * @param string $stateId
-     */
-    public function setStateId(string $stateId): void
-    {
-        $this->stateId = $stateId;
-    }
+    private $referenceId;
 
     /**
      * ADDRESS_
@@ -1390,5 +1381,37 @@ class Order
     public function setRedirectUrl(string $redirectUrl): void
     {
         $this->redirectUrl = $redirectUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferenceId(): string
+    {
+        return $this->referenceId;
+    }
+
+    /**
+     * @param string $referenceId
+     */
+    public function setReferenceId(string $referenceId): void
+    {
+        $this->referenceId = $referenceId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStateId(): string
+    {
+        return $this->stateId;
+    }
+
+    /**
+     * @param string $stateId
+     */
+    public function setStateId(string $stateId): void
+    {
+        $this->stateId = $stateId;
     }
 }

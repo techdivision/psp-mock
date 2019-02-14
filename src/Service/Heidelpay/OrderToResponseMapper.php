@@ -41,9 +41,10 @@ class OrderToResponseMapper
      *
      * @param Order $order
      * @param bool $withCreditCard
+     * @param bool $json
      * @return string
      */
-    public function map(Order $order, bool $withCreditCard)
+    public function map(Order $order, bool $withCreditCard, bool $json)
     {
         $data = [
             "FRONTEND.REDIRECT_URL" => self::HEIDELPAY_URL . '?state=' . $order->getStateId()
@@ -134,7 +135,11 @@ class OrderToResponseMapper
                 "PROCESSING.REDIRECT_URL" => $order->getRedirectUrl(),
             ];
 
-            return json_encode(array_merge($data, $additionalData));
+            if($json){
+                return json_encode(array_merge($data, $additionalData));
+            } else {
+                return $this->arrayToStringMapper->map(array_merge($data, $additionalData));
+            }
         }
 
         return $this->arrayToStringMapper->map($data);

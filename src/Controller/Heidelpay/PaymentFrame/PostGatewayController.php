@@ -160,7 +160,7 @@ class PostGatewayController extends AbstractController
      */
     private function buildResponse(Order $order)
     {
-        $this->response->setContent($this->orderToResponseMapper->map($order, true));
+        $this->response->setContent($this->orderToResponseMapper->map($order, true, true));
         return $this->response;
     }
 }
