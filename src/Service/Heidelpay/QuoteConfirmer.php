@@ -57,8 +57,12 @@ class QuoteConfirmer
         /** @var ResponseInterface $response */
         $response = $client->request(
             'POST',
-            $order->getResponseUrl() . '?' . $this->buildQuoteUrl($order),
-            array_merge($this->defaultOptions, $options)
+            $order->getResponseUrl(),
+            [
+                'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
+                'verify' => false,
+                'form_params' => $this->buildQuoteUrl($order)
+            ]
         );
 
         $order->setRedirectUrl((string)$response->getBody());
@@ -70,7 +74,7 @@ class QuoteConfirmer
 
     /**
      * @param Order $order
-     * @return string
+     * @return array
      */
     private function buildQuoteUrl(Order $order)
     {

@@ -20,22 +20,8 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
 class DataProvider
 {
     /**
-     * @var ArrayToStringMapper
-     */
-    private $arrayToStringMapper;
-
-    /**
-     * DataProvider constructor.
-     * @param ArrayToStringMapper $arrayToStringMapper
-     */
-    public function __construct(ArrayToStringMapper $arrayToStringMapper)
-    {
-        $this->arrayToStringMapper = $arrayToStringMapper;
-    }
-
-    /**
      * @param Order $order
-     * @return string
+     * @return array
      */
     public function get(Order $order)
     {
@@ -98,6 +84,6 @@ class DataProvider
             "PAYMENT_CODE" => $order->getCode()
         ];
 
-        return $this->arrayToStringMapper->map($data);
+        return $data;
     }
 }

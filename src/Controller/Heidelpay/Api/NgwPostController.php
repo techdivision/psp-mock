@@ -106,8 +106,6 @@ class NgwPostController extends AbstractController
     {
         try {
             if ($request->getMethod() === "POST") {
-
-
                 switch ($request->get(Order::PAYMENT . 'CODE')) {
                     case 'CC.PA':
                         // If preauthorization
@@ -149,6 +147,9 @@ class NgwPostController extends AbstractController
                     default:
                         throw new \Exception('No such Payment Code supported: ' . $request->get(Order::PAYMENT . 'CODE'));
                 }
+            }
+            else {
+                throw new \Exception('No such Method supported: ' . $request->getMethod());
             }
         } catch (\Exception $exception) {
             $this->logger->error($exception);
