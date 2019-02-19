@@ -123,9 +123,10 @@ class PostGatewayController extends AbstractController
      */
     public function execute(Request $request)
     {
-        if ($request->getMethod() === "POST") {
-            $account = new Account();
-            try {
+        try {
+            if ($request->getMethod() === "POST") {
+                $account = new Account();
+
                 $this->requestToOrderMapper->mapRequestToAccount($request, $account);
                 $this->objectManager->persist($account);
 
@@ -135,7 +136,6 @@ class PostGatewayController extends AbstractController
 
                 $this->missingDataGenerator->generate($order);
 
-                //TODO send Post to Magento instance
                 $this->quoteConfirmer->execute($order, null);
                 $this->redirectCaller->execute($order, null);
 
@@ -143,15 +143,13 @@ class PostGatewayController extends AbstractController
                 $this->objectManager->flush();
 
                 return $this->buildResponse($order);
-            } catch (\Exception $exception) {
-                $this->logger->error($exception);
-                return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+            } else {
+                throw new \Exception('No such Method supported: ' . $request->getMethod());
             }
+        } catch (\Exception $exception) {
+            $this->logger->error($exception);
+            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-
-        //GET for testing
-        $this->response->setContent('test');
-        return $this->response;
     }
 
     /**

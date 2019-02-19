@@ -27,6 +27,6 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        return $this->redirectToRoute('gui-order-list');
+        return $this->redirectToRoute('gui-order-list', ['type' => '']);
     }
 }

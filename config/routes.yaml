@@ -2,19 +2,13 @@ gui-index:
     path: /
     controller: TechDivision\PspMock\Controller\Gui\IndexController::index
 gui-order-list:
-    path: /order/list/
+    path: /order/list/{type}
     controller: TechDivision\PspMock\Controller\Gui\OrderController::list
+    requirements:
+        type: '^[a-zA-Z]{0,}$'
 gui-order-detail:
     path: /order/detail/{order}
     controller: TechDivision\PspMock\Controller\Gui\OrderController::detail
-
-
-gui-paymentFrame-index:
-  path: /ngw/paymentFrame
-  controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\IndexController::index
-heidelpay-payment-frame:
-  path: /heidelpay/payment/frame
-  controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\FrameController::execute
 
 help-index:
     path: /help/
@@ -37,11 +31,14 @@ payone-client-api-static:
   requirements:
       req: ".+?"
 
+
+heidelpay-payment-frame:
+  path: /heidelpay/payment/frame
+  controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\FrameController::execute
 ngw/paymentFrame/sendData:
   path: /ngw/paymentFrame/sendData
   defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\PostGatewayController::execute }
   methods: [GET, POST]
-
 heidelpay-post:
   path: /ngw/post
   defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\Api\NgwPostController:execute }

@@ -31,8 +31,11 @@
                                     </h6>
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{ path('gui-order-list') }}">
-                                                Orders
+                                            <a class="nav-link" href="{{ path('gui-order-list', { 'type': 'payone' }) }}">
+                                                Payone Orders
+                                            </a>
+                                            <a class="nav-link" href="{{ path('gui-order-list', { 'type': 'heidelpay' }) }}">
+                                                Heidelpay Orders
                                             </a>
                                         </li>
                                     </ul>

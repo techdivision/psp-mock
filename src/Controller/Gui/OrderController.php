@@ -9,11 +9,14 @@
 
 namespace TechDivision\PspMock\Controller\Gui;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Entity\Order;
-use TechDivision\PspMock\Repository\OrderRepository;
+use TechDivision\PspMock\Repository\OrderRepository as PayoneOrderRepository;
 use TechDivision\PspMock\Service\StatusManager;
+use TechDivision\PspMock\Repository\Heidelpay\OrderRepository as HeidelpayOrderRepository;
 
 /**
  * @category   TechDivision
@@ -26,34 +29,69 @@ use TechDivision\PspMock\Service\StatusManager;
 class OrderController extends AbstractController
 {
     /**
-     * @var OrderRepository
+     * @var PayoneOrderRepository
      */
-    private $orderRepository;
+    private $payoneOrderRepository;
+
+    /**
+     * @var HeidelpayOrderRepository
+     */
+    private $heidelpayOrderRepository;
+
     /**
      * @var StatusManager
      */
     private $statusManager;
 
     /**
-     * @param OrderRepository $orderRepository
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @param PayoneOrderRepository $payoneOrderRepository
+     * @param HeidelpayOrderRepository $heidelpayOrderRepository
      * @param StatusManager $statusManager
+     * @param LoggerInterface $logger
      */
     public function __construct(
-        OrderRepository $orderRepository,
-        StatusManager $statusManager
-    ) {
-        $this->orderRepository = $orderRepository;
+        PayoneOrderRepository $payoneOrderRepository,
+        HeidelpayOrderRepository $heidelpayOrderRepository,
+        StatusManager $statusManager,
+        LoggerInterface $logger
+    )
+    {
+        $this->payoneOrderRepository = $payoneOrderRepository;
+        $this->heidelpayOrderRepository = $heidelpayOrderRepository;
         $this->statusManager = $statusManager;
+        $this->logger = $logger;
     }
 
     /**
+     * @param Request $request
      * @return Response
      */
-    public function list()
+    public function list(Request $request)
     {
-        return $this->render('gui/order/list.html.twig', [
-            'orders' => $this->orderRepository->findBy([], ['created' => 'DESC'])
-        ]);
+        try {
+            switch ($request->get('type')) {
+                case '':
+                    // default is payone
+                case 'payone':
+                    return $this->render('gui/order/payone/list.html.twig', [
+                        'orders' => $this->payoneOrderRepository->findBy([], ['created' => 'DESC'])
+                    ]);
+                case 'heidelpay':
+                    return $this->render('gui/order/heidelpay/list.html.twig', [
+                        'orders' => $this->heidelpayOrderRepository->findBy([], ['created' => 'DESC'])
+                    ]);
+                default:
+                    throw new \Exception('No such type supported: ' . $request->get('type'));
+            }
+        } catch (\Exception $exception) {
+            $this->logger->error($exception);
+            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**

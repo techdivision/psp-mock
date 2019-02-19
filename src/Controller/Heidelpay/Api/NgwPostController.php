@@ -115,6 +115,11 @@ class NgwPostController extends AbstractController
                         $this->requestMapper->mapRequestToOrder($request, $order, $address);
 
                         $order->setStateId($this->stateIdGenerator->get());
+                        $order->setCreated(new \DateTime());
+
+                        // This is neccessary because the order is being created every time before
+                        // the account holder is set
+                        $this->removeDuplicatedEntries($order->getTransactionId());
 
                         $this->objectManager->persist($address);
                         $this->objectManager->persist($order);
@@ -147,8 +152,7 @@ class NgwPostController extends AbstractController
                     default:
                         throw new \Exception('No such Payment Code supported: ' . $request->get(Order::PAYMENT . 'CODE'));
                 }
-            }
-            else {
+            } else {
                 throw new \Exception('No such Method supported: ' . $request->getMethod());
             }
         } catch (\Exception $exception) {
@@ -168,10 +172,25 @@ class NgwPostController extends AbstractController
         return $this->response;
     }
 
+    /**
+     * @param Request $request
+     * @param Order $order
+     */
     private function setCapturingParams(Request $request, Order $order)
     {
         $order->setEnabled($request->get(Order::FRONTEND . 'ENABLED'));
         $order->setCode($request->get(Order::PAYMENT . 'CODE'));
         $order->setReferenceId($request->get(Order::IDENTIFICATION . 'REFERENCEID'));
+    }
+
+    /**
+     * @param string $transactionId
+     */
+    private function removeDuplicatedEntries(string $transactionId){
+        $order = $this->orderRepository->findOneBy(array('transactionId' => $transactionId));
+        if($order !== null){
+            $this->objectManager->remove($order);
+            $this->objectManager->flush();
+        }
     }
 }

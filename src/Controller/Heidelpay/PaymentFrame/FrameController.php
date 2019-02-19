@@ -36,6 +36,5 @@ class FrameController extends AbstractController
         return $this->render('heidelpay/payment/frame.html.twig', [
             'state' => $request->get('state')
         ]);
-
     }
 }
