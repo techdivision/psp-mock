@@ -5,7 +5,7 @@
 
 {% block main_content %}
     <body>
-    <div id="paymentFrameConf" frontend-payment-frame-origin="https://project-community-edition.test" payment-frame-url="https://psp-mock.test/ngw/paymentFrame/sendData?{{ state }}" lang="en"></div>
+    <div id="paymentFrameConf" frontend-payment-frame-origin="{{ paymentFrameOrigin }}" payment-frame-url="{{ baseUrl }}/ngw/paymentFrame/sendData?{{ state }}" lang="en"></div>
     <form id="paymentFrameForm">
         <input type="hidden" id="stateId" name="stateId" value="{{ state }}" />
         <div id="accountHolderContainer" class="form-row">

@@ -130,7 +130,9 @@ class NgwPostController extends AbstractController
                     case 'CC.CP':
                         // If capturing/invoice
                         /** @var Order $order */
-                        $order = $this->orderRepository->findOneBy(array('transactionId' => $request->get(Order::IDENTIFICATION . 'TRANSACTIONID')));
+                        $order = $this->orderRepository->findOneBy(
+                            array('transactionId' => $request->get(
+                                Order::IDENTIFICATION . 'TRANSACTIONID')));
 
                         $this->setCapturingParams($request, $order);
 
@@ -142,7 +144,9 @@ class NgwPostController extends AbstractController
                     case 'CC.RF':
                         // If refund
                         /** @var Order $order */
-                        $order = $this->orderRepository->findOneBy(array('transactionId' => $request->get(Order::IDENTIFICATION . 'TRANSACTIONID')));
+                        $order = $this->orderRepository->findOneBy(
+                            array('transactionId' => $request->get(
+                                Order::IDENTIFICATION . 'TRANSACTIONID')));
                         $order->setCode($request->get(Order::PAYMENT . 'CODE'));
 
                         $this->objectManager->persist($order);

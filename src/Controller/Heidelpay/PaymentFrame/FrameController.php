@@ -12,6 +12,8 @@ namespace TechDivision\PspMock\Controller\Heidelpay\PaymentFrame;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
@@ -20,9 +22,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class FrameController extends AbstractController
 {
+    /**
+     * @var OrderRepository
+     */
+    private $orderRepository;
 
-    public function __construct()
+    /**
+     * FrameController constructor.
+     * @param OrderRepository $orderRepository
+     */
+    public function __construct(OrderRepository $orderRepository)
     {
+        $this->orderRepository = $orderRepository;
     }
 
     /**
@@ -33,8 +44,15 @@ class FrameController extends AbstractController
      */
     public function execute(Request $request)
     {
+
+        /** @var Order $order */
+        $order = $this->orderRepository->findOneBy(
+            array('stateId' => $request->get('state')));
+
         return $this->render('heidelpay/payment/frame.html.twig', [
-            'state' => $request->get('state')
+            'state' => $request->get('state'),
+            'paymentFrameOrigin' => $order->getPaymentFrameOrigin(),
+            'baseUrl' => 'https://' . $_SERVER['SERVER_NAME']
         ]);
     }
 }

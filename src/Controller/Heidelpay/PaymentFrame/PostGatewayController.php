@@ -131,7 +131,8 @@ class PostGatewayController extends AbstractController
                 $this->objectManager->persist($account);
 
                 /** @var Order $order */
-                $order = $this->orderRepository->findOneBy(array('stateId' => json_decode($request->getContent(), true)['stateId']));
+                $order = $this->orderRepository->findOneBy(
+                    array('stateId' => json_decode($request->getContent(), true)['stateId']));
                 $order->setAccount($account);
 
                 $this->missingDataGenerator->generate($order);
