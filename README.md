@@ -1,6 +1,6 @@
 # PSP-Mock
 
-Mock service for payment providers. This project is in a alpha state and supports only PAYONE payments, yet.
+Mock service for payment providers. This project is in a alpha state and supports only PAYONE and Heidelpay payments, yet.
 
 ## Getting Started
 
@@ -33,6 +33,7 @@ fe80::1%lo0 psp-mock.test
 fe80::1%lo0 project-community-edition.test
 ```
 psp-mock.test = your psp-mock domain
+
 project-community-edition.test = your magento domain
 
 ### If composer install fails run this
@@ -67,7 +68,7 @@ composer require --dev techdivision/payone-mockable
 
 This project is licensed under the OSL 3.0 License.
 
-## Roadmap
+## Roadmap Payone
 
 | Feature / Task                | Status    |
 |-------------------------------|-----------|
@@ -81,7 +82,6 @@ This project is licensed under the OSL 3.0 License.
 | **PAYONE - Address Check**    | X         |
 | **PAYONE - Credit rating**    | X         |
 | **Rule based automation**     | X         |
-| **other PSPs**                | X         |
 
 ### Creditcard
 
@@ -92,3 +92,14 @@ This project is licensed under the OSL 3.0 License.
 | - Partially paid              | ✓         |
 | - Debit                       | ✓         |
 
+## Roadmap Heidelpay
+
+| Feature / Task                | Status    |
+|-------------------------------|-----------|
+| **Heidelpay - Payments**      |           |
+| - Creditcard(Visa)            | ✓         |
+| - Debit Payment               | X         |
+| - PayPal                      | X         |
+| - Cash on Delivery            | X         |
+| - Advance Payment             | X         |
+| - Invoice                     | X         |

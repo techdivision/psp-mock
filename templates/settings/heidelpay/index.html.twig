@@ -1,0 +1,42 @@
+{% extends 'default.html.twig' %}
+
+{% block main_title %}Settings for Heidelpay{% endblock %}
+
+{% block main_content %}
+    <form action="/settings/heidelpay/update" method="post">
+        <div>
+            <h3>Fail on preauthorization: </h3>
+            <label class="switch">
+                {% if failOnPreauth == '0' %}
+                <input type="checkbox" name="failOnPreauth">
+                {% else %}
+                <input checked type="checkbox" name="failOnPreauth">
+                {% endif %}
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div>
+            <h3>Fail on capture: </h3>
+            <label class="switch">
+                {% if failOnCapture == '0' %}
+                    <input type="checkbox" name="failOnCapture">
+                {% else %}
+                    <input checked type="checkbox" name="failOnCapture">
+                {% endif %}
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div>
+            <h3>Fail on refund: </h3>
+            <label class="switch">
+                {% if failOnRefund == '0' %}
+                    <input type="checkbox" name="failOnRefund">
+                {% else %}
+                    <input checked type="checkbox" name="failOnRefund">
+                {% endif %}
+                <span class="slider"></span>
+            </label>
+        </div>
+        <input class="settings-input btn btn-info " type="submit" value="save">
+    </form>
+{% endblock %}

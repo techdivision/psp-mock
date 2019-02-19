@@ -43,3 +43,11 @@ heidelpay-post:
   path: /ngw/post
   defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\Api\NgwPostController:execute }
   methods: [GET, POST]
+
+settings-heidelpay-index:
+  path: /settings/heidelpay
+  controller: TechDivision\PspMock\Controller\Heidelpay\Settings\IndexController::index
+settings-heidelpay-update:
+  path: /settings/heidelpay/update
+  controller: TechDivision\PspMock\Controller\Heidelpay\Settings\ConfigController::execute
+  methods: [POST]
