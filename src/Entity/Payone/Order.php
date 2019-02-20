@@ -7,10 +7,11 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Entity;
+namespace TechDivision\PspMock\Entity\Payone;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Service\StatusManager;
 
 /**
@@ -23,6 +24,7 @@ use TechDivision\PspMock\Service\StatusManager;
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
+ * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 class Order
 {
@@ -71,32 +73,12 @@ class Order
     private $lastName;
 
     /**
-     * @var string
+     * @var address
      *
-     * @ORM\Column(type="string", nullable=true)
+     * One Order has One Address.
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Address")
      */
-    private $street;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $zip;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $country;
+    private $address;
 
     /**
      * @var string
@@ -188,6 +170,22 @@ class Order
      * @var StatusManager
      */
     private $statusManager;
+
+    /**
+     * @return Address
+     */
+    public function getAddress(): Address
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param Address $address
+     */
+    public function setAddress(Address $address): void
+    {
+        $this->address = $address;
+    }
 
     /**
      * @return string
@@ -299,70 +297,6 @@ class Order
     public function setRequestType(string $requestType): void
     {
         $this->requestType = $requestType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param string $country
-     */
-    public function setCountry(string $country): void
-    {
-        $this->country = $country;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCity(): string
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param string $city
-     */
-    public function setCity(string $city): void
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @return string
-     */
-    public function getZip(): string
-    {
-        return $this->zip;
-    }
-
-    /**
-     * @param string $zip
-     */
-    public function setZip(string $zip): void
-    {
-        $this->zip = $zip;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStreet(): string
-    {
-        return $this->street;
-    }
-
-    /**
-     * @param string $street
-     */
-    public function setStreet(string $street): void
-    {
-        $this->street = $street;
     }
 
     /**

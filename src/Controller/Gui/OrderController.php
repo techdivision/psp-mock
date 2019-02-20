@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Repository\OrderRepository as PayoneOrderRepository;
 use TechDivision\PspMock\Service\StatusManager;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository as HeidelpayOrderRepository;

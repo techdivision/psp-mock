@@ -11,7 +11,7 @@ namespace TechDivision\PspMock\Service\Payone\ServerApi;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionFactory;
 
 /**
@@ -46,7 +46,7 @@ class CallbackExecutor
     /**
      * @param Order $order
      * @param string $action
-     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function execute(Order $order, string $action): void
     {

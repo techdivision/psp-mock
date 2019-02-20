@@ -10,7 +10,8 @@
 namespace TechDivision\PspMock\Service\Payone\ServerApi;
 
 use Symfony\Component\HttpFoundation\Request;
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\TransactionIdProvider;
 
 /**
@@ -38,10 +39,18 @@ class RequestToOrderMapper
 
     /**
      * @param Request $request
-     * @param $order
+     * @param Order $order
+     * @param Address $address
      */
-    public function map(Request $request, Order $order): void
+    public function map(Request $request, Order $order, Address $address): void
     {
+        $address->setStreet((string)$request->get('street'));
+        $address->setZip((string)$request->get('zip'));
+        $address->setCity((string)$request->get('city'));
+        $address->setCountry((string)$request->get('country'));
+
+        $order->setAddress($address);
+
         $order->setAmount((string)$request->get('amount'));
         $order->setBalance($order->getAmount());
         $order->setCurrency((string)$request->get('currency'));
@@ -52,11 +61,6 @@ class RequestToOrderMapper
 
         $order->setFirstName((string)$request->get('firstname'));
         $order->setLastName((string)$request->get('lastname'));
-        $order->setStreet((string)$request->get('street'));
-        $order->setZip((string)$request->get('zip'));
-        $order->setCity((string)$request->get('city'));
-        $order->setCountry((string)$request->get('country'));
-
         $order->setSuccessUrl((string)$request->get('successurl'));
         $order->setBackUrl((string)$request->get('backurl'));
         $order->setErrorUrl((string)$request->get('errorurl'));

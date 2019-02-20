@@ -12,10 +12,9 @@ namespace TechDivision\PspMock\Controller\Payone\ServerApi;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Repository\OrderRepository;
+use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Payone\ServerApi\CallbackExecutor;
 
 /**
@@ -39,9 +38,9 @@ class TransactionStatusController extends AbstractController
     private $logger;
 
     /**
-     * @var ObjectManager
+     * @var EntitySaver
      */
-    private $objectManager;
+    private $entitySaver;
 
     /**
      * @var CallbackExecutor
@@ -51,18 +50,18 @@ class TransactionStatusController extends AbstractController
     /**
      * @param LoggerInterface $logger
      * @param OrderRepository $orderRepository
-     * @param ObjectManager $objectManager
+     * @param EntitySaver $entitySaver
      * @param CallbackExecutor $callbackExecutor
      */
     public function __construct(
         LoggerInterface $logger,
         OrderRepository $orderRepository,
-        ObjectManager $objectManager,
+        EntitySaver $entitySaver,
         CallbackExecutor $callbackExecutor
     ) {
         $this->orderRepository = $orderRepository;
         $this->logger = $logger;
-        $this->objectManager = $objectManager;
+        $this->entitySaver = $entitySaver;
         $this->callbackExecutor = $callbackExecutor;
     }
 
@@ -70,6 +69,7 @@ class TransactionStatusController extends AbstractController
      * @param int $order
      * @param string $action
      * @return RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function execute($order, $action)
     {
@@ -79,14 +79,13 @@ class TransactionStatusController extends AbstractController
 
             $this->callbackExecutor->execute($order, $action);
 
-            $this->objectManager->persist($order);
-            $this->objectManager->flush();
+            $this->entitySaver->save($order);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage());
             $this->logger->debug($exception->getTraceAsString());
         }
 
-        return $this->redirectToRoute('gui-order-list');
+        return $this->redirectToRoute('gui-order-list', ['type' => 'payone']);
     }
 
     /**

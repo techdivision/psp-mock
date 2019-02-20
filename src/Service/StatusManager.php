@@ -9,7 +9,7 @@
 
 namespace TechDivision\PspMock\Service;
 
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\Appoint;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\PayFull;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\PayPartial;
