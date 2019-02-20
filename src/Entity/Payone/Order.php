@@ -15,7 +15,7 @@ use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Service\StatusManager;
 
 /**
- * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\OrderRepository")
+ * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\Payone\OrderRepository")
  * @ORM\Table(name="payment_order")
  *
  * @category   TechDivision

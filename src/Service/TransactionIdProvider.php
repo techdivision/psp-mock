@@ -8,7 +8,7 @@
  */
 
 namespace TechDivision\PspMock\Service;
-use TechDivision\PspMock\Repository\OrderRepository;
+use TechDivision\PspMock\Repository\Payone\OrderRepository;
 
 /**
  * @category   TechDivision

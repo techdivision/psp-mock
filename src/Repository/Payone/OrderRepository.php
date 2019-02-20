@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Repository;
+namespace TechDivision\PspMock\Repository\Payone;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;

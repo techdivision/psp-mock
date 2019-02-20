@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use TechDivision\PspMock\Entity\Payone\Order;
-use TechDivision\PspMock\Repository\OrderRepository;
+use TechDivision\PspMock\Repository\Payone\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Payone\ServerApi\CallbackExecutor;
 
