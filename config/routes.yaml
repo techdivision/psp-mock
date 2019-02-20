@@ -38,11 +38,11 @@ heidelpay-payment-frame:
 ngw/paymentFrame/sendData:
   path: /ngw/paymentFrame/sendData
   defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\PostGatewayController::execute }
-  methods: [GET, POST]
+  methods: [POST]
 heidelpay-post:
   path: /ngw/post
   defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\Api\NgwPostController:execute }
-  methods: [GET, POST]
+  methods: [POST]
 
 settings-heidelpay-index:
   path: /settings/heidelpay

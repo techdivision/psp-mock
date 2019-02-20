@@ -27,4 +27,17 @@ class ConfigurationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Configuration::class);
     }
+
+    /**
+     * @param string $value
+     * @return array
+     */
+    public function findAllConfigurationsByWildcard(string $value)
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
+        $queryBuilder->select('c')
+            ->where('c.path LIKE :value')
+            ->setParameter('value', $value);
+        return $queryBuilder->getQuery()->getArrayResult();
+    }
 }

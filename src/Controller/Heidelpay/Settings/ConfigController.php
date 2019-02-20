@@ -9,12 +9,11 @@
 
 namespace TechDivision\PspMock\Controller\Heidelpay\Settings;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use TechDivision\PspMock\Entity\Configuration;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Service\EntitySaver;
 
 /**
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
@@ -24,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ConfigController extends AbstractController
 {
     //TODO Setupscript needed with this query:
-    // INSERT INTO core_config (path, value) VALUES ('fail_on_preauth', '0'), ('fail_on_capture', '0'), ('fail_on_refund', '0')
+    // INSERT INTO core_config (path, value) VALUES ('fail_on_preauth', '0'), ('fail_on_capture', '0'), ('fail_on_refund', '0'), ('fail_on_iframe', '0')
 
     /**
      * @var ConfigurationRepository
@@ -32,19 +31,19 @@ class ConfigController extends AbstractController
     private $configurationRepository;
 
     /**
-     * @var ObjectManager
+     * @var EntitySaver
      */
-    private $objectManager;
+    private $entitySaver;
 
     /**
      * ConfigController constructor.
      * @param ConfigurationRepository $configurationRepository
-     * @param ObjectManager $objectManager
+     * @param EntitySaver $entitySaver
      */
-    public function __construct(ConfigurationRepository $configurationRepository, ObjectManager $objectManager)
+    public function __construct(ConfigurationRepository $configurationRepository, EntitySaver $entitySaver)
     {
         $this->configurationRepository = $configurationRepository;
-        $this->objectManager = $objectManager;
+        $this->entitySaver = $entitySaver;
     }
 
     /**
@@ -53,54 +52,20 @@ class ConfigController extends AbstractController
      */
     public function execute(Request $request)
     {
-        /**
-         * @var Configuration
-         */
-        $failOnPreauth = $this->configurationRepository->findOneBy(array('path' => 'fail_on_preauth'));
+        $configArray = [
+            'failOnPreauth' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_preauth')),
+            'failOnIframe' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_iframe')),
+            'failOnCapture' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_capture')),
+            'failOnRefund' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_refund')),
+        ];
 
-        /**
-         * @var Configuration
-         */
-        $failOnCapture = $this->configurationRepository->findOneBy(array('path' => 'fail_on_capture'));
-
-        /**
-         * @var Configuration
-         */
-        $failOnRefund = $this->configurationRepository->findOneBy(array('path' => 'fail_on_refund'));
-
-        if ($request->getContent() !== "") {
-            if ($request->get('failOnPreauth') === 'on') {
-                $failOnPreauth->setValue('1');
-                $this->objectManager->persist($failOnPreauth);
-            } else {
-                $failOnPreauth->setValue('0');
-                $this->objectManager->persist($failOnPreauth);
-            }
-
-            if ($request->get('failOnCapture') === 'on') {
-                $failOnCapture->setValue('1');
-                $this->objectManager->persist($failOnCapture);
-            } else {
-                $failOnCapture->setValue('0');
-                $this->objectManager->persist($failOnCapture);
-            }
-
-            if ($request->get('failOnRefund') === 'on') {
-                $failOnRefund->setValue('1');
-                $this->objectManager->persist($failOnRefund);
-            } else {
-                $failOnRefund->setValue('0');
-                $this->objectManager->persist($failOnRefund);
-            }
-
-            $this->objectManager->flush();
+        foreach ($configArray as $key => $value) {
+            ($request->get($key) === 'on')
+                ? $configArray[$key]->setValue('1')
+                : $configArray[$key]->setValue('0');
         }
+        $this->entitySaver->save($configArray);
 
-        return $this->render('settings/heidelpay/index.html.twig', [
-                'failOnPreauth' => $failOnPreauth->getValue(),
-                'failOnCapture' => $failOnCapture->getValue(),
-                'failOnRefund' => $failOnRefund->getValue(),
-            ]
-        );
+        return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $configArray]);
     }
 }

@@ -40,26 +40,13 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        /**
-         * @var Configuration
-         */
-        $failOnPreauth = $this->configurationRepository->findOneBy(array('path' => 'fail_on_preauth'));
+        $configArray = [
+            'failOnPreauth' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_preauth')),
+            'failOnIframe' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_iframe')),
+            'failOnCapture' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_capture')),
+            'failOnRefund' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_refund')),
+        ];
 
-        /**
-         * @var Configuration
-         */
-        $failOnCapture = $this->configurationRepository->findOneBy(array('path' => 'fail_on_capture'));
-
-        /**
-         * @var Configuration
-         */
-        $failOnRefund = $this->configurationRepository->findOneBy(array('path' => 'fail_on_refund'));
-
-        return $this->render('settings/heidelpay/index.html.twig', [
-                'failOnPreauth' => $failOnPreauth->getValue(),
-                'failOnCapture' => $failOnCapture->getValue(),
-                'failOnRefund' => $failOnRefund->getValue(),
-            ]
-        );
+        return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $configArray]);
     }
 }

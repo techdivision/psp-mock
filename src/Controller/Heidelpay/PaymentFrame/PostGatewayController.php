@@ -14,10 +14,11 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\Common\Persistence\ObjectManager;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
+use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\MissingDataGenerator;
 use TechDivision\PspMock\Service\Heidelpay\OrderToResponseMapper;
 use TechDivision\PspMock\Service\Heidelpay\QuoteConfirmer;
@@ -42,14 +43,19 @@ class PostGatewayController extends AbstractController
     private $response;
 
     /**
-     * @var ObjectManager
+     * @var EntitySaver
      */
-    private $objectManager;
+    private $entitySaver;
 
     /**
      * @var OrderRepository
      */
     private $orderRepository;
+
+    /**
+     * @var ConfigurationRepository
+     */
+    private $configurationRepository;
 
     /**
      * @var RequestMapper
@@ -77,34 +83,42 @@ class PostGatewayController extends AbstractController
     private $redirectCaller;
 
     /**
+     * @var string
+     */
+    private $failOnIframe;
+
+    /**
      * @param LoggerInterface $logger
-     * @param ObjectManager $objectManager
+     * @param EntitySaver $entitySaver
      * @param RequestMapper $requestToOrderMapper
      * @param OrderRepository $orderRepository
      * @param OrderToResponseMapper $orderToResponseMapper
      * @param MissingDataGenerator $missingDataGenerator
      * @param QuoteConfirmer $quoteConfirmer
      * @param RedirectCaller $redirectCaller
+     * @param ConfigurationRepository $configurationRepository
      */
     public function __construct(
         LoggerInterface $logger,
-        ObjectManager $objectManager,
+        EntitySaver $entitySaver,
         RequestMapper $requestToOrderMapper,
         OrderRepository $orderRepository,
         OrderToResponseMapper $orderToResponseMapper,
         MissingDataGenerator $missingDataGenerator,
         QuoteConfirmer $quoteConfirmer,
-        RedirectCaller $redirectCaller
+        RedirectCaller $redirectCaller,
+        ConfigurationRepository $configurationRepository
     )
     {
         $this->logger = $logger;
-        $this->objectManager = $objectManager;
+        $this->entitySaver = $entitySaver;
         $this->requestToOrderMapper = $requestToOrderMapper;
         $this->orderRepository = $orderRepository;
         $this->orderToResponseMapper = $orderToResponseMapper;
         $this->missingDataGenerator = $missingDataGenerator;
         $this->quoteConfirmer = $quoteConfirmer;
         $this->redirectCaller = $redirectCaller;
+        $this->configurationRepository = $configurationRepository;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json;charset=UTF-8');
@@ -124,11 +138,11 @@ class PostGatewayController extends AbstractController
     public function execute(Request $request)
     {
         try {
+            $this->loadSettings();
             if ($request->getMethod() === "POST") {
                 $account = new Account();
 
                 $this->requestToOrderMapper->mapRequestToAccount($request, $account);
-                $this->objectManager->persist($account);
 
                 /** @var Order $order */
                 $order = $this->orderRepository->findOneBy(
@@ -137,11 +151,10 @@ class PostGatewayController extends AbstractController
 
                 $this->missingDataGenerator->generate($order);
 
-                $this->quoteConfirmer->execute($order, null);
-                $this->redirectCaller->execute($order, null);
+                // If flag is set return a 'NOK' Message
+                ($this->failOnIframe === '0') ? $this->setAck($order) : $this->setNok($order);
 
-                $this->objectManager->persist($order);
-                $this->objectManager->flush();
+                $this->entitySaver->save([$order, $account]);
 
                 return $this->buildResponse($order);
             } else {
@@ -161,5 +174,38 @@ class PostGatewayController extends AbstractController
     {
         $this->response->setContent($this->orderToResponseMapper->map($order, true, true));
         return $this->response;
+    }
+
+    /**
+     * @param Order $order
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function setAck(Order $order)
+    {
+        $order->setResult('ACK');
+        $order->setValidation('ACK');
+        $order->setReturn("Request successfully processed in ''Merchant in Connector Test Mode''");
+
+        // Calls 2 API endpoints of the heidelpay module
+        $this->quoteConfirmer->execute($order, null);
+        $this->redirectCaller->execute($order, null);
+    }
+
+    /**
+     * @param Order $order
+     */
+    private function setNok(Order $order)
+    {
+        $order->setResult('NOK');
+        $order->setValidation('NOK');
+        $order->setReturn("Request processed with errors in ''Merchant in Connector Test Mode''");
+    }
+
+    /**
+     * Loads the system settings for Heidelpay requests
+     */
+    private function loadSettings()
+    {
+        $this->failOnIframe = $this->configurationRepository->findOneBy(array('path' => 'fail_on_iframe'))->getValue();
     }
 }
