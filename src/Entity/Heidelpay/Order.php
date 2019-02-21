@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Customer;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 
 /**
@@ -142,18 +143,12 @@ class Order implements PspEntityInterface
      */
 
     /**
-     * @var string
+     * @var Customer
      *
-     * @ORM\Column(type="string")
+     * One Order has One Account.
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Customer")
      */
-    private $firstname;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    private $lastname;
+    private $customer;
 
     /**
      * @var string
@@ -533,6 +528,36 @@ class Order implements PspEntityInterface
     private $created;
 
     /**
+     * @return string
+     */
+    public function getLastName(){
+        return ($this->customer != null) ? $this->customer->getLastName(): 'n/a';
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(){
+        return ($this->customer) ? $this->customer->getFirstName() : 'n/a';
+    }
+
+    /**
+     * @return Customer
+     */
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param Customer $customer
+     */
+    public function setCustomer(Customer $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getCreated(): \DateTime
@@ -690,38 +715,6 @@ class Order implements PspEntityInterface
     public function setAccount(account $account): void
     {
         $this->account = $account;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstname(): string
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * @param string $firstname
-     */
-    public function setFirstname(string $firstname): void
-    {
-        $this->firstname = $firstname;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastname(): string
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * @param string $lastname
-     */
-    public function setLastname(string $lastname): void
-    {
-        $this->lastname = $lastname;
     }
 
     /**

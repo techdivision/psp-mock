@@ -87,8 +87,8 @@ class OrderToResponseMapper
             "IDENTIFICATION.TRANSACTIONID" => $order->getTransactionId(),
 
             "NAME.COMPANY" => $order->getCompany(),
-            "NAME.GIVEN" => $order->getFirstname(),
-            "NAME.FAMILY" => $order->getLastname(),
+            "NAME.GIVEN" => $order->getFirstName(),
+            "NAME.FAMILY" => $order->getLastName(),
 
             "PAYMENT.CODE" => $order->getCode(),
 

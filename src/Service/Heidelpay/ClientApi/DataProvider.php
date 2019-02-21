@@ -30,7 +30,7 @@ class DataProvider implements PspEntityDataProviderInterface
         /** @var Order $order */
         $data = [
             "__store" => $order->getStore(),
-            "NAME_FAMILY" => $order->getLastname(),
+            "NAME_FAMILY" => $order->getLastName(),
             "CRITERION_SDK_NAME" => $order->getSdkName(),
             "CRITERION_SDK_VERSION" => $order->getSdkVersion(),
             "IDENTIFICATION_TRANSACTIONID" => $order->getTransactionId(),
@@ -50,7 +50,7 @@ class DataProvider implements PspEntityDataProviderInterface
             "REQUEST_VERSION" => $order->getVersion(),
             "ACCOUNT_BRAND" => $order->getAccount()->getBrand(),
             "PROCESSING_STATUS_CODE" => $order->getStatusCode(),
-            "NAME_GIVEN" => $order->getFirstname(),
+            "NAME_GIVEN" => $order->getFirstName(),
             "FRONTEND_PAYMENT_FRAME_ORIGIN" => $order->getPaymentFrameOrigin(),
             "IDENTIFICATION_SHORTID" => $order->getShortId(),
             "ADDRESS_CITY" => $order->getAddress()->getCity(),

@@ -77,8 +77,6 @@ class OrderRequestMapper implements PspRequestToEntityMapperInterface
         $order->setResponseUrl($request->get(Order::FRONTEND . 'RESPONSE_URL'));
 
         $order->setCompany($request->get(Order::NAME . 'COMPANY'));
-        $order->setFirstname($request->get(Order::NAME . 'GIVEN'));
-        $order->setLastname($request->get(Order::NAME . 'FAMILY'));
 
         $order->setCode($request->get(Order::PAYMENT . 'CODE'));
 

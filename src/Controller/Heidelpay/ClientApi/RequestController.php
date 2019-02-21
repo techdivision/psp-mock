@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Customer;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
@@ -147,14 +148,16 @@ class RequestController extends AbstractController implements PspRequestControll
                         /** @var Order $order */
                         $order = new Order();
                         $address = new Address();
-                        $this->requestMapper->map($request, $order, $address);
+                        $customer = new Customer();
+
+                        $this->requestMapper->map($request, $order, $address, $customer);
 
                         $this->removeDuplicatedEntries($order->getTransactionId());
 
                         // If flag is set return a 'NOK' Message
                         ($this->failOnPreauth === '0') ? $this->setAck($order) : $this->setNok($order);
 
-                        $this->entitySaver->save([$address, $order]);
+                        $this->entitySaver->save([$address, $order, $customer]);
 
                         return $this->buildResponse($order);
 

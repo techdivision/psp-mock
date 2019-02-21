@@ -9,27 +9,27 @@
 
 namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
-
 use Symfony\Component\HttpFoundation\Request;
+use TechDivision\PspMock\Entity\Customer;
+use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Service\Interfaces\PspRequestToEntityMapperInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface RequestMapperInterface
+class CustomerRequestMapper implements PspRequestToEntityMapperInterface
 {
     /**
      * @param Request $request
-     * @param PspEntityInterface $order
-     * @param PspEntityInterface $address
      * @param PspEntityInterface $customer
      */
-    public function map(
-        Request $request,
-        PspEntityInterface $order,
-        PspEntityInterface $address,
-        PspEntityInterface $customer
-    ): void;
+    public function map(Request $request, PspEntityInterface $customer): void
+    {
+        /** @var Customer $customer */
+        $customer->setFirstName($request->get(Order::NAME . 'GIVEN'));
+        $customer->setLastname($request->get(Order::NAME . 'FAMILY'));
+    }
 }
