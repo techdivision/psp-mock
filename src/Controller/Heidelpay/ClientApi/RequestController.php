@@ -22,8 +22,8 @@ use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestMapper;
 use TechDivision\PspMock\Service\RandomStringProvider;
+use TechDivision\PspMock\Service\RequestMapper;
 
 
 /**
@@ -112,8 +112,7 @@ class RequestController extends AbstractController implements PspRequestControll
         OrderRepository $orderRepository,
         ConfigurationRepository $configurationRepository,
         EntitySaver $entitySaver
-    )
-    {
+    ) {
         $this->logger = $logger;
         $this->objectManager = $objectManager;
         $this->requestMapper = $requestMapper;

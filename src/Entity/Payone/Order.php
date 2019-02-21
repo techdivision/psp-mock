@@ -12,6 +12,7 @@ namespace TechDivision\PspMock\Entity\Payone;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Customer;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 use TechDivision\PspMock\Service\StatusManager;
 
@@ -60,24 +61,18 @@ class Order implements PspEntityInterface
     private $reference;
 
     /**
-     * @var string
+     * @var Customer
      *
-     * @ORM\Column(type="string", nullable=true)
+     * One Order has One Account.
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Customer", cascade={"persist"})
      */
-    private $firstName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $lastName;
+    private $customer;
 
     /**
      * @var address
      *
      * One Order has One Address.
-     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Address", cascade={"persist"})
      */
     private $address;
 
@@ -171,6 +166,38 @@ class Order implements PspEntityInterface
      * @var StatusManager
      */
     private $statusManager;
+
+    /**
+     * @return Customer
+     */
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param Customer $customer
+     */
+    public function setCustomer(Customer $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return ($this->customer != null) ? $this->customer->getLastName() : 'n/a';
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return ($this->customer) ? $this->customer->getFirstName() : 'n/a';
+    }
 
     /**
      * @return Address
@@ -301,27 +328,11 @@ class Order implements PspEntityInterface
     }
 
     /**
-     * @return string
-     */
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    /**
      * @param string $lastName
      */
     public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName(): string
-    {
-        return $this->firstName;
     }
 
     /**

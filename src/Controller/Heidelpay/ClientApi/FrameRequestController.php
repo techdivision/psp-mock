@@ -25,7 +25,6 @@ use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\ConfirmQuoteCaller;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderRequestMapper;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
@@ -110,8 +109,7 @@ class FrameRequestController extends AbstractController implements PspRequestSta
         RedirectCaller $redirectCaller,
         ConfigurationRepository $configurationRepository,
         AccountRequestMapper $accountRequestMapper
-    )
-    {
+    ) {
         $this->logger = $logger;
         $this->entitySaver = $entitySaver;
         $this->orderRepository = $orderRepository;

@@ -23,7 +23,7 @@ use TechDivision\PspMock\Service\TransactionIdProvider;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class AddressRequestMapper implements PspRequestToEntityMapperInterface
+class RequestAddressMapper implements PspRequestToEntityMapperInterface
 {
     /**
      * @var TransactionIdProvider

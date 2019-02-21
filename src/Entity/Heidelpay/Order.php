@@ -122,7 +122,7 @@ class Order implements PspEntityInterface
      * @var address
      *
      * One Order has One Address.
-     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Address", cascade={"persist"})
      */
     private $address;
 
@@ -134,7 +134,7 @@ class Order implements PspEntityInterface
      * @var account
      *
      * One Order has One Account.
-     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Account")
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Account", cascade={"persist"})
      */
     private $account;
 
@@ -146,7 +146,7 @@ class Order implements PspEntityInterface
      * @var Customer
      *
      * One Order has One Account.
-     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Customer")
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Customer", cascade={"persist"})
      */
     private $customer;
 
@@ -530,14 +530,16 @@ class Order implements PspEntityInterface
     /**
      * @return string
      */
-    public function getLastName(){
-        return ($this->customer != null) ? $this->customer->getLastName(): 'n/a';
+    public function getLastName()
+    {
+        return ($this->customer != null) ? $this->customer->getLastName() : 'n/a';
     }
 
     /**
      * @return string
      */
-    public function getFirstName(){
+    public function getFirstName()
+    {
         return ($this->customer) ? $this->customer->getFirstName() : 'n/a';
     }
 

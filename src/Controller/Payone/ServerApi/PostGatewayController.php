@@ -15,9 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Customer;
 use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\EntitySaver;
-use TechDivision\PspMock\Service\Payone\ServerApi\RequestToOrderMapper;
+use TechDivision\PspMock\Service\RequestMapper;
 
 /**
  * @category   TechDivision
@@ -45,23 +46,23 @@ class PostGatewayController extends AbstractController implements PspRequestCont
     private $entitySaver;
 
     /**
-     * @var RequestToOrderMapper
+     * @var RequestMapper
      */
-    private $requestToOrderMapper;
+    private $requestMapper;
 
     /**
      * @param LoggerInterface $logger
      * @param EntitySaver $entitySaver
-     * @param RequestToOrderMapper $requestToOrderMapper
+     * @param RequestMapper $requestMapper
      */
     public function __construct(
         LoggerInterface $logger,
         EntitySaver $entitySaver,
-        RequestToOrderMapper $requestToOrderMapper
+        RequestMapper $requestMapper
     ) {
         $this->logger = $logger;
         $this->entitySaver = $entitySaver;
-        $this->requestToOrderMapper = $requestToOrderMapper;
+        $this->requestMapper = $requestMapper;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'text/plain');
@@ -83,8 +84,9 @@ class PostGatewayController extends AbstractController implements PspRequestCont
             if (in_array($requestType, ['authorization', 'preauthorization'])) {
                 $order = new Order();
                 $address = new Address();
-                $this->requestToOrderMapper->map($request, $order, $address);
-                $this->entitySaver->save([$order, $address]);
+                $customer = new Customer();
+                $this->requestMapper->map($request, $order, $address, $customer);
+                $this->entitySaver->save([$order, $address, $address]);
                 $txId = $order->getTransactionId();
             }
             return $this->approve($txId);
