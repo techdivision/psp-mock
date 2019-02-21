@@ -8,7 +8,7 @@
  */
 
 
-namespace TechDivision\PspMock\Service\Heidelpay;
+namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
 /**
  * This class maps an array to the specific heidelpay format

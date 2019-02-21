@@ -17,18 +17,18 @@
         </tr>
         </thead>
         <tbody>
-            {% for order in orders %}
-                <tr>
-                    <th scope="row">{{ order.getId() }}</th>
-                    <td>{{ order.getTransactionId() }}</td>
-                    <td>{{ order.getCAmount() }}</td>
-                    <td>{{ order.getFirstname() }}</td>
-                    <td>{{ order.getLastname() }}</td>
-                    <td>{{ order.getCode() }}</td>
-                    <td>{{ order.getStatus() }}</td>
-                    <td>{{ order.getCreated().format('Y-m-d H:i:s') }}</td>
-                </tr>
-            {% endfor %}
+        {% for order in orders %}
+            <tr>
+                <th scope="row">{{ order.getId() }}</th>
+                <td>{{ order.getTransactionId() }}</td>
+                <td>{{ order.getCAmount() }}</td>
+                <td>{{ order.getFirstname() }}</td>
+                <td>{{ order.getLastname() }}</td>
+                <td>{{ order.getCode() }}</td>
+                <td>{{ order.getStatus() }}</td>
+                <td>{{ order.getCreated().format('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}

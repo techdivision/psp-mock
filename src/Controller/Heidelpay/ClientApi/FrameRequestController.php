@@ -19,11 +19,11 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
-use TechDivision\PspMock\Service\Heidelpay\MissingDataGenerator;
-use TechDivision\PspMock\Service\Heidelpay\OrderToResponseMapper;
-use TechDivision\PspMock\Service\Heidelpay\QuoteConfirmer;
-use TechDivision\PspMock\Service\Heidelpay\RedirectCaller;
-use TechDivision\PspMock\Service\Heidelpay\RequestMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataGenerator;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\QuoteConfirmer;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestMapper;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)

@@ -19,8 +19,8 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
-use TechDivision\PspMock\Service\Heidelpay\OrderToResponseMapper;
-use TechDivision\PspMock\Service\Heidelpay\RequestMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestMapper;
 use TechDivision\PspMock\Service\RandomStringGenerator;
 
 

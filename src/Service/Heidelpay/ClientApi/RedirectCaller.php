@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service\Heidelpay;
+namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
@@ -18,13 +18,8 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class QuoteConfirmer
+class RedirectCaller
 {
-    /**
-     * @var DataProvider
-     */
-    private $dataProvider;
-
     /**
      * @var array
      */
@@ -33,22 +28,15 @@ class QuoteConfirmer
     ];
 
     /**
-     * QuoteConfirmer constructor.
-     * @param DataProvider $dataProvider
-     */
-    public function __construct(DataProvider $dataProvider)
-    {
-        $this->dataProvider = $dataProvider;
-    }
-
-    /**
      * @param Order $order
      * @param $options
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function execute(Order $order, $options)
     {
-        $client = new Client();
+        $client = new Client(['defaults' => [
+            'verify' => false
+        ]]);
 
         if ($options === null) {
             $options = [];
@@ -57,15 +45,9 @@ class QuoteConfirmer
         /** @var ResponseInterface $response */
         $response = $client->request(
             'POST',
-            $order->getResponseUrl(),
-            [
-                'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
-                'verify' => false,
-                'form_params' => $this->buildQuoteUrl($order)
-            ]
+            $order->getRedirectUrl(),
+            array_merge($this->defaultOptions, $options)
         );
-
-        $order->setRedirectUrl((string)$response->getBody());
 
         if ($response->getStatusCode() !== 200) {
             throw new \Exception($response->getReasonPhrase());
@@ -74,7 +56,7 @@ class QuoteConfirmer
 
     /**
      * @param Order $order
-     * @return array
+     * @return string
      */
     private function buildQuoteUrl(Order $order)
     {

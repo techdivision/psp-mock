@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service\Heidelpay;
+namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
 
 use TechDivision\PspMock\Entity\Heidelpay\Order;

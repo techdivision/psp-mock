@@ -931,7 +931,7 @@ class Order
      */
     public function getCAmount(): string
     {
-        return $this->cAmount;
+        return ($this->cAmount === null) ? 'n/a' : $this->cAmount;
     }
 
     /**
