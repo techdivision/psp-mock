@@ -12,6 +12,7 @@ namespace TechDivision\PspMock\Entity\Payone;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 use TechDivision\PspMock\Service\StatusManager;
 
 /**
@@ -26,7 +27,7 @@ use TechDivision\PspMock\Service\StatusManager;
  * @author     Vadim Justus <v.justus@techdivision.com
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class Order
+class Order implements PspEntityInterface
 {
     const STATUS_NEW = 'NEW';
     const STATUS_APPOINTED = 'APPOINTED';

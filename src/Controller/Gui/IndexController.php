@@ -11,7 +11,7 @@ namespace TechDivision\PspMock\Controller\Gui;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use TechDivision\PspMock\Interfaces\Controller\PspGuiIndexControllerInterface;
+use TechDivision\PspMock\Controller\Interfaces\PspGuiIndexControllerInterface;
 
 /**
  * @category   TechDivision

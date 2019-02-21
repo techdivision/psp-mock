@@ -7,16 +7,21 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Interfaces\Controller;
+namespace TechDivision\PspMock\Service\Interfaces;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface PspGuiBaseControllerInterface
+interface PspCallerInterface
 {
+    /**
+     * @param PspEntityInterface $entity
+     * @param array $options
+     * @return mixed
+     */
+    public function execute(PspEntityInterface $entity, array $options);
 }

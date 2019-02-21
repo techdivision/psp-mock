@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Interfaces\Controller;
+namespace TechDivision\PspMock\Controller\Interfaces;
 
 
 /**

@@ -10,6 +10,8 @@
 namespace TechDivision\PspMock\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+
 /**
  * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\AccountRepository")
  * @ORM\Table(name="payment_account")
@@ -18,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class Account
+class Account implements PspEntityInterface
 {
     /**
      * @var int

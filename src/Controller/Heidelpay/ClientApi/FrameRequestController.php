@@ -14,15 +14,15 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspRequestStaticControllerInterface;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
-use TechDivision\PspMock\Interfaces\Controller\PspRequestStaticControllerInterface;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataGenerator;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\QuoteConfirmer;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\ConfirmQuoteCaller;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestMapper;
 
@@ -74,7 +74,7 @@ class FrameRequestController extends AbstractController implements PspRequestSta
     private $missingDataGenerator;
 
     /**
-     * @var QuoteConfirmer
+     * @var ConfirmQuoteCaller
      */
     private $quoteConfirmer;
 
@@ -95,7 +95,7 @@ class FrameRequestController extends AbstractController implements PspRequestSta
      * @param OrderRepository $orderRepository
      * @param OrderToResponseMapper $orderToResponseMapper
      * @param MissingDataGenerator $missingDataGenerator
-     * @param QuoteConfirmer $quoteConfirmer
+     * @param ConfirmQuoteCaller $quoteConfirmer
      * @param RedirectCaller $redirectCaller
      * @param ConfigurationRepository $configurationRepository
      */
@@ -106,7 +106,7 @@ class FrameRequestController extends AbstractController implements PspRequestSta
         OrderRepository $orderRepository,
         OrderToResponseMapper $orderToResponseMapper,
         MissingDataGenerator $missingDataGenerator,
-        QuoteConfirmer $quoteConfirmer,
+        ConfirmQuoteCaller $quoteConfirmer,
         RedirectCaller $redirectCaller,
         ConfigurationRepository $configurationRepository
     )
@@ -188,8 +188,9 @@ class FrameRequestController extends AbstractController implements PspRequestSta
         $order->setReturn("Request successfully processed in ''Merchant in Connector Test Mode''");
 
         // Calls 2 API endpoints of the heidelpay module
-        $this->quoteConfirmer->execute($order, null);
-        $this->redirectCaller->execute($order, null);
+        $options = [];
+        $this->quoteConfirmer->execute($order, $options);
+        $this->redirectCaller->execute($order, $options);
     }
 
     /**

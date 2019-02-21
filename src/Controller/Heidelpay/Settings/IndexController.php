@@ -11,7 +11,7 @@ namespace TechDivision\PspMock\Controller\Heidelpay\Settings;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use TechDivision\PspMock\Interfaces\Controller\PspGuiIndexControllerInterface;
+use TechDivision\PspMock\Controller\Interfaces\PspGuiIndexControllerInterface;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 
 /**

@@ -12,8 +12,8 @@ namespace TechDivision\PspMock\Controller\Heidelpay\ClientApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspRequestStaticControllerInterface;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
-use TechDivision\PspMock\Interfaces\Controller\PspRequestStaticControllerInterface;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 
 /**

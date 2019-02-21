@@ -10,6 +10,7 @@
 namespace TechDivision\PspMock\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 
 /**
  * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\AddressRepository")
@@ -19,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class Address
+class Address implements PspEntityInterface
 {
     /**
      * @var int

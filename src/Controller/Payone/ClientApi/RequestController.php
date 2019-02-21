@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use TechDivision\PspMock\Interfaces\Controller\PspRequestControllerInterface;
+use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\OutputToResponseAdapter;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactory;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactoryException;

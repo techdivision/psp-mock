@@ -7,20 +7,17 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Interfaces\Controller;
-
+namespace TechDivision\PspMock\Entity\Interfaces;
 
 /**
+ * PspEntityInterface
+ *
+ * This interface is used for identifying all entities.
+ *
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface PspServerActionControllerInterface
+interface PspEntityInterface
 {
-    /**
-     * @param string $order
-     * @param string $action
-     * @return mixed
-     */
-    public function execute(string $order, string $action);
 }

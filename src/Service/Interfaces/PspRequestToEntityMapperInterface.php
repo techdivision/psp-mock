@@ -7,14 +7,22 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Interfaces\Controller;
+namespace TechDivision\PspMock\Service\Interfaces;
 
+use Symfony\Component\HttpFoundation\Request;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface PspRequestStaticControllerInterface extends PspRequestBaseControllerInterface
+interface PspRequestToEntityMapperInterface
 {
+    /**
+     * @param Request $request
+     * @param PspEntityInterface $object $object
+     * @return mixed
+     */
+    public function map(Request $request, PspEntityInterface $object);
 }

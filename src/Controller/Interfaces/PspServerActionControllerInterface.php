@@ -7,21 +7,20 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Interfaces\Controller;
+namespace TechDivision\PspMock\Controller\Interfaces;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface PspGuiListControllerInterface extends PspGuiBaseControllerInterface
+interface PspServerActionControllerInterface
 {
     /**
-     * @param Request $request
-     * @return Response
+     * @param string $order
+     * @param string $action
+     * @return mixed
      */
-    public function list(Request $request);
+    public function execute(string $order, string $action);
 }

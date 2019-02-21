@@ -7,24 +7,19 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service;
+namespace TechDivision\PspMock\Controller\Interfaces;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class RandomStringGenerator
+interface PspGuiIndexControllerInterface extends PspGuiBaseControllerInterface
 {
     /**
-     * Returns a random String with the specified length
-     *
-     * @param int $length
-     * @return bool|string
+     * @return RedirectResponse
      */
-    public function get(int $length)
-    {
-        return substr(md5(uniqid(rand(), true)), 0, $length);
-    }
+    public function index();
 }

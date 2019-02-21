@@ -7,21 +7,17 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Interfaces\Controller;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+namespace TechDivision\PspMock\Service\Interfaces;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface PspRequestBaseControllerInterface
+interface PspMapperInterface
 {
     /**
-     * @param Request $request
-     * @return Response
+     * @return mixed
      */
-    public function execute(Request $request);
+    public function map();
 }

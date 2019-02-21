@@ -12,13 +12,15 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Service\Interfaces\PspCallerInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class QuoteConfirmer
+class ConfirmQuoteCaller implements PspCallerInterface
 {
     /**
      * @var DataProvider
@@ -42,19 +44,17 @@ class QuoteConfirmer
     }
 
     /**
-     * @param Order $order
-     * @param $options
+     * @param PspEntityInterface $order
+     * @param array $options
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
-    public function execute(Order $order, $options)
+    public function execute(PspEntityInterface $order, array $options = [])
     {
         $client = new Client();
 
-        if ($options === null) {
-            $options = [];
-        }
-
         /** @var ResponseInterface $response */
+        /** @var Order $order */
         $response = $client->request(
             'POST',
             $order->getResponseUrl(),

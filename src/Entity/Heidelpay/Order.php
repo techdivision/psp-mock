@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 
 /**
  * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\Heidelpay\OrderRepository")
@@ -22,7 +23,7 @@ use TechDivision\PspMock\Entity\Address;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class Order
+class Order implements PspEntityInterface
 {
     /**
      * Status

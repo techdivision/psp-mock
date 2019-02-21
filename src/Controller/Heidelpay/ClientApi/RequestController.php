@@ -14,15 +14,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
+use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
-use TechDivision\PspMock\Interfaces\Controller\PspRequestControllerInterface;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestMapper;
-use TechDivision\PspMock\Service\RandomStringGenerator;
+use TechDivision\PspMock\Service\RandomStringProvider;
 
 
 /**
@@ -58,7 +58,7 @@ class RequestController extends AbstractController implements PspRequestControll
     private $requestMapper;
 
     /**
-     * @var RandomStringGenerator
+     * @var RandomStringProvider
      */
     private $stateIdGenerator;
 
@@ -101,7 +101,7 @@ class RequestController extends AbstractController implements PspRequestControll
      * @param LoggerInterface $logger
      * @param ObjectManager $objectManager
      * @param RequestMapper $requestMapper
-     * @param RandomStringGenerator $stateIdGenerator
+     * @param RandomStringProvider $stateIdGenerator
      * @param OrderToResponseMapper $orderToResponseMapper
      * @param OrderRepository $orderRepository
      * @param ConfigurationRepository $configurationRepository
@@ -111,7 +111,7 @@ class RequestController extends AbstractController implements PspRequestControll
         LoggerInterface $logger,
         ObjectManager $objectManager,
         RequestMapper $requestMapper,
-        RandomStringGenerator $stateIdGenerator,
+        RandomStringProvider $stateIdGenerator,
         OrderToResponseMapper $orderToResponseMapper,
         OrderRepository $orderRepository,
         ConfigurationRepository $configurationRepository,
