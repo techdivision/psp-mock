@@ -9,6 +9,8 @@
 
 namespace TechDivision\PspMock\Service;
 
+use TechDivision\PspMock\Service\Interfaces\PspProviderInterface;
+
 /**
  * @category   TechDivision
  * @package    PspMock
@@ -17,7 +19,7 @@ namespace TechDivision\PspMock\Service;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class TransactionIdProvider
+class TransactionIdProvider implements PspProviderInterface
 {
     /**
      * @return string

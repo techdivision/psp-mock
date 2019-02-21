@@ -9,10 +9,7 @@
 
 namespace TechDivision\PspMock\Service\Payone;
 
-use GuzzleHttp\Client;
-use Psr\Http\Message\ResponseInterface;
-use TechDivision\PspMock\Entity\Payone\Order;
-use TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionFactory;
+use TechDivision\PspMock\Service\Interfaces\PspProviderInterface;
 
 /**
  * @category   TechDivision
@@ -22,7 +19,7 @@ use TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionFactory;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class CallbackUriProvider
+class CallbackUriProvider implements PspProviderInterface
 {
     /**
      * @var string

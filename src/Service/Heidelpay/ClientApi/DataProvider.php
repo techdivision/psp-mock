@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
 
 use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http=>//www.techdivision.com)
@@ -20,11 +21,12 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
 class DataProvider
 {
     /**
-     * @param Order $order
+     * @param PspEntityInterface $order
      * @return array
      */
-    public function get(Order $order)
+    public function get(PspEntityInterface $order)
     {
+        /** @var Order $order */
         $data = [
             "__store" => $order->getStore(),
             "NAME_FAMILY" => $order->getLastname(),

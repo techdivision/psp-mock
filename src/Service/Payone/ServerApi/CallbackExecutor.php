@@ -47,6 +47,7 @@ class CallbackExecutor
      * @param Order $order
      * @param string $action
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     public function execute(Order $order, string $action): void
     {

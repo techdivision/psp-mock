@@ -72,7 +72,6 @@ class CreditCardCheck implements ProcessorInterface
     }
 
     /**
-     * @param Whitelist $card
      * @param InputInterface $input
      * @return array
      */
@@ -103,7 +102,7 @@ class CreditCardCheck implements ProcessorInterface
     }
 
     /**
-     * @param string $pan
+     * @param InputInterface $input
      * @return string
      */
     private function getCardExpireDate(InputInterface $input)
