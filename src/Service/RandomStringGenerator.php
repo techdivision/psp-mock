@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service\Heidelpay;
+namespace TechDivision\PspMock\Service;
 
 
 /**
@@ -15,16 +15,16 @@ namespace TechDivision\PspMock\Service\Heidelpay;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class StateIdGenerator
+class RandomStringGenerator
 {
-    const RANDOM_STRING_LENGTH = 24;
-
     /**
      * Returns a random String with the specified length
      *
+     * @param int $length
      * @return bool|string
      */
-    public function get(){
-        return substr(md5(uniqid(rand(), true)), 0, self::RANDOM_STRING_LENGTH);
+    public function get(int $length)
+    {
+        return substr(md5(uniqid(rand(), true)), 0, $length);
     }
 }

@@ -21,7 +21,7 @@ use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\OrderToResponseMapper;
 use TechDivision\PspMock\Service\Heidelpay\RequestMapper;
-use TechDivision\PspMock\Service\Heidelpay\StateIdGenerator;
+use TechDivision\PspMock\Service\RandomStringGenerator;
 
 
 /**
@@ -31,6 +31,11 @@ use TechDivision\PspMock\Service\Heidelpay\StateIdGenerator;
  */
 class RequestController extends AbstractController
 {
+    /**
+     * StateId length
+     */
+    const STATE_ID_LENGTH = 24;
+
     /**
      * @var LoggerInterface
      */
@@ -52,7 +57,7 @@ class RequestController extends AbstractController
     private $requestMapper;
 
     /**
-     * @var StateIdGenerator
+     * @var RandomStringGenerator
      */
     private $stateIdGenerator;
 
@@ -95,7 +100,7 @@ class RequestController extends AbstractController
      * @param LoggerInterface $logger
      * @param ObjectManager $objectManager
      * @param RequestMapper $requestMapper
-     * @param StateIdGenerator $stateIdGenerator
+     * @param RandomStringGenerator $stateIdGenerator
      * @param OrderToResponseMapper $orderToResponseMapper
      * @param OrderRepository $orderRepository
      * @param ConfigurationRepository $configurationRepository
@@ -105,7 +110,7 @@ class RequestController extends AbstractController
         LoggerInterface $logger,
         ObjectManager $objectManager,
         RequestMapper $requestMapper,
-        StateIdGenerator $stateIdGenerator,
+        RandomStringGenerator $stateIdGenerator,
         OrderToResponseMapper $orderToResponseMapper,
         OrderRepository $orderRepository,
         ConfigurationRepository $configurationRepository,
@@ -148,7 +153,7 @@ class RequestController extends AbstractController
                         $address = new Address();
                         $this->requestMapper->mapRequestToOrder($request, $order, $address);
 
-                        $order->setStateId($this->stateIdGenerator->get());
+                        $order->setStateId($this->stateIdGenerator->get(self::STATE_ID_LENGTH));
                         $order->setCreated(new \DateTime());
 
                         // This is neccessary because the order is being created every time before

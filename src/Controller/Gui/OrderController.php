@@ -25,6 +25,7 @@ use TechDivision\PspMock\Repository\Heidelpay\OrderRepository as HeidelpayOrderR
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
+ * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 class OrderController extends AbstractController
 {
