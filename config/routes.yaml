@@ -34,14 +34,14 @@ payone-client-api-static:
 
 heidelpay-payment-frame:
   path: /heidelpay/payment/frame
-  controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\FrameController::execute
+  controller: TechDivision\PspMock\Controller\Heidelpay\ClientApi\StaticFileController::execute
 ngw/paymentFrame/sendData:
   path: /ngw/paymentFrame/sendData
-  defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\PaymentFrame\PostGatewayController::execute }
+  defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\ClientApi\FrameRequestController::execute }
   methods: [POST]
 heidelpay-post:
   path: /ngw/post
-  defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\Api\NgwPostController:execute }
+  defaults: { _controller: TechDivision\PspMock\Controller\Heidelpay\ClientApi\RequestController:execute }
   methods: [POST]
 
 settings-heidelpay-index:

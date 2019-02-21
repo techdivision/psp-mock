@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Controller\Heidelpay\PaymentFrame;
+namespace TechDivision\PspMock\Controller\Heidelpay\ClientApi;
 
 
 use Psr\Log\LoggerInterface;
@@ -30,7 +30,7 @@ use TechDivision\PspMock\Service\Heidelpay\RequestMapper;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class PostGatewayController extends AbstractController
+class FrameRequestController extends AbstractController
 {
     /**
      * @var LoggerInterface

@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Controller\Heidelpay\Api;
+namespace TechDivision\PspMock\Controller\Heidelpay\ClientApi;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +29,7 @@ use TechDivision\PspMock\Service\Heidelpay\StateIdGenerator;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class NgwPostController extends AbstractController
+class RequestController extends AbstractController
 {
     /**
      * @var LoggerInterface

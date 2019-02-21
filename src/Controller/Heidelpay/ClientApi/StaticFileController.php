@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Controller\Heidelpay\PaymentFrame;
+namespace TechDivision\PspMock\Controller\Heidelpay\ClientApi;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class FrameController extends AbstractController
+class StaticFileController extends AbstractController
 {
     /**
      * @var OrderRepository
