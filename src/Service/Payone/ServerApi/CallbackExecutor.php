@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Service\Payone\ServerApi;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionFactory;
 
@@ -22,7 +23,7 @@ use TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionFactory;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class CallbackExecutor
+class CallbackExecutor implements CallbackExecutorInterface
 {
     /**
      * @var string
@@ -44,15 +45,16 @@ class CallbackExecutor
     }
 
     /**
-     * @param Order $order
+     * @param PspEntityInterface $order
      * @param string $action
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */
-    public function execute(Order $order, string $action): void
+    public function execute(PspEntityInterface $order, string $action): void
     {
         $client = new Client();
 
+        /** @var Order $order */
         $action = $this->actionFactory->create($action);
         $result = $action->apply($order);
 

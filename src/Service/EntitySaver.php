@@ -9,29 +9,13 @@
 
 namespace TechDivision\PspMock\Service;
 
-use Doctrine\Common\Persistence\ObjectManager;
-
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class EntitySaver
+class EntitySaver extends AbstractEntitySaver
 {
-    /**
-     * @var ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * EntitySaver constructor.
-     * @param ObjectManager $objectManager
-     */
-    public function __construct(ObjectManager $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
     /**
      * @param $input
      */
@@ -43,8 +27,9 @@ class EntitySaver
     /**
      * @param $inputArray
      */
-    private function persistArray($inputArray){
-        foreach ($inputArray as $inputObject){
+    private function persistArray($inputArray)
+    {
+        foreach ($inputArray as $inputObject) {
             $this->objectManager->persist($inputObject);
         }
         $this->objectManager->flush();
@@ -53,7 +38,8 @@ class EntitySaver
     /**
      * @param $inputObject
      */
-    private function persistSingle($inputObject){
+    private function persistSingle($inputObject)
+    {
         $this->objectManager->persist($inputObject);
         $this->objectManager->flush();
     }

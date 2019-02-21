@@ -18,7 +18,7 @@ use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface RequestMapperInterface
+interface PspRequestMapperInterface
 {
     /**
      * @param Request $request

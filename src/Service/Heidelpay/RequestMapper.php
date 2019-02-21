@@ -15,14 +15,14 @@ use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestAddressMapper as HeidelpayRequestAddressMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestCustomerMapper as HeidelpayRequestCustomerMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestOrderMapper as HeidelpayOrderRequestMapper;
-use TechDivision\PspMock\Service\Interfaces\RequestMapperInterface;
+use TechDivision\PspMock\Service\Interfaces\PspRequestMapperInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class RequestMapper implements RequestMapperInterface
+class RequestMapper implements PspRequestMapperInterface
 {
     /**
      * @var HeidelpayOrderRequestMapper

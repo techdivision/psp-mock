@@ -12,7 +12,7 @@ namespace TechDivision\PspMock\Service\Payone;
 use Symfony\Component\HttpFoundation\Request;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 use TechDivision\PspMock\Entity\Payone\Order;
-use TechDivision\PspMock\Service\Interfaces\RequestMapperInterface;
+use TechDivision\PspMock\Service\Interfaces\PspRequestMapperInterface;
 use TechDivision\PspMock\Service\Payone\ServerApi\RequestAddressMapper as PayoneRequestAddressMapper;
 use TechDivision\PspMock\Service\Payone\ServerApi\RequestCustomerMapper as PayoneRequestCustomerMapper;
 use TechDivision\PspMock\Service\Payone\ServerApi\RequestOrderMapper as PayoneRequestOrderMapper;
@@ -22,7 +22,7 @@ use TechDivision\PspMock\Service\Payone\ServerApi\RequestOrderMapper as PayoneRe
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class RequestMapper implements RequestMapperInterface
+class RequestMapper implements PspRequestMapperInterface
 {
     /**
      * @var PayoneRequestOrderMapper
