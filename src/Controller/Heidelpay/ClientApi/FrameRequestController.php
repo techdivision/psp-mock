@@ -21,7 +21,7 @@ use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\AccountRequestMapper;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataGenerator;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\ConfirmQuoteCaller;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
@@ -70,9 +70,9 @@ class FrameRequestController extends AbstractController implements PspRequestSta
     private $orderToResponseMapper;
 
     /**
-     * @var MissingDataGenerator
+     * @var MissingDataProvider
      */
-    private $missingDataGenerator;
+    private $missingDataProvider;
 
     /**
      * @var ConfirmQuoteCaller
@@ -94,7 +94,7 @@ class FrameRequestController extends AbstractController implements PspRequestSta
      * @param EntitySaver $entitySaver
      * @param OrderRepository $orderRepository
      * @param OrderToResponseMapper $orderToResponseMapper
-     * @param MissingDataGenerator $missingDataGenerator
+     * @param MissingDataProvider $missingDataProvider
      * @param ConfirmQuoteCaller $quoteConfirmer
      * @param RedirectCaller $redirectCaller
      * @param ConfigurationRepository $configurationRepository
@@ -105,7 +105,7 @@ class FrameRequestController extends AbstractController implements PspRequestSta
         EntitySaver $entitySaver,
         OrderRepository $orderRepository,
         OrderToResponseMapper $orderToResponseMapper,
-        MissingDataGenerator $missingDataGenerator,
+        MissingDataProvider $missingDataProvider,
         ConfirmQuoteCaller $quoteConfirmer,
         RedirectCaller $redirectCaller,
         ConfigurationRepository $configurationRepository,
@@ -116,7 +116,7 @@ class FrameRequestController extends AbstractController implements PspRequestSta
         $this->entitySaver = $entitySaver;
         $this->orderRepository = $orderRepository;
         $this->orderToResponseMapper = $orderToResponseMapper;
-        $this->missingDataGenerator = $missingDataGenerator;
+        $this->missingDataProvider = $missingDataProvider;
         $this->quoteConfirmer = $quoteConfirmer;
         $this->redirectCaller = $redirectCaller;
         $this->configurationRepository = $configurationRepository;
@@ -152,7 +152,7 @@ class FrameRequestController extends AbstractController implements PspRequestSta
 
                 $order->setAccount($account);
 
-                $this->missingDataGenerator->generate($order);
+                $this->missingDataProvider->get($order);
 
                 // If flag is set return a 'NOK' Message
                 ($this->failOnIframe === '0') ? $this->setAck($order) : $this->setNok($order);

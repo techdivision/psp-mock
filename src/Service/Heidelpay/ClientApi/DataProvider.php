@@ -12,13 +12,14 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Service\Interfaces\PspEntityDataProviderInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http=>//www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class DataProvider
+class DataProvider implements PspEntityDataProviderInterface
 {
     /**
      * @param PspEntityInterface $order

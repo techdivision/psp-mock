@@ -11,22 +11,25 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
 
 use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Service\Interfaces\PspEntityDataProviderInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class MissingDataGenerator
+class MissingDataProvider implements PspEntityDataProviderInterface
 {
     const REDIRECT_URL = '/hgw/index/response';
     const RANDOM_STRING_LENGTH = 32;
 
     /**
-     * @param Order $order
+     * @param PspEntityInterface $order
      */
-    public function generate(Order $order)
+    public function get(PspEntityInterface $order)
     {
+        /** @var Order $order */
         $shortId = $this->generateShortId();
 
         $order->setRedirectUrl($order->getResponseUrl());
