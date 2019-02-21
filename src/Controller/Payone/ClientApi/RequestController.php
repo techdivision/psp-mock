@@ -13,6 +13,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Interfaces\Controller\PspRequestControllerInterface;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\OutputToResponseAdapter;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactory;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactoryException;
@@ -26,7 +27,7 @@ use TechDivision\PspMock\Service\Payone\ClientApi\Request\RequestToInputAdapter;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class RequestController extends AbstractController
+class RequestController extends AbstractController implements PspRequestControllerInterface
 {
     /**
      * @var LoggerInterface

@@ -1437,4 +1437,13 @@ class Order
     {
         $this->stateId = $stateId;
     }
+
+    /**
+     * @return string
+     */
+    public function getTotal(): string
+    {
+        $amount = number_format((int)$this->getPAmount() / 100, 2);
+        return $amount . ' ' . $this->getPCurrency();
+    }
 }

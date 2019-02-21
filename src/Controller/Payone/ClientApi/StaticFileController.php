@@ -13,6 +13,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Interfaces\Controller\PspRequestControllerInterface;
 use TechDivision\PspMock\Service\Payone\ClientApi\StaticFile\ProcessorInterface;
 use TechDivision\PspMock\Service\Payone\ClientApi\StaticFile\RequestToInputAdapter;
 use TechDivision\PspMock\Service\Payone\ClientApi\StaticFile\OutputToResponseAdapter;
@@ -25,7 +26,7 @@ use TechDivision\PspMock\Service\Payone\ClientApi\StaticFile\OutputToResponseAda
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class StaticFileController extends AbstractController
+class StaticFileController extends AbstractController implements PspRequestControllerInterface
 {
     /**
      * @var ProcessorInterface

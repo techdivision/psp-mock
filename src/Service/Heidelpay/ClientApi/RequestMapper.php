@@ -72,7 +72,7 @@ class RequestMapper
         $order->setCode($request->get(Order::PAYMENT . 'CODE'));
 
         $order->setPCurrency((string)$request->get(Order::PRESENTATION . 'CURRENCY'));
-        $order->setPAmount((string)$request->get(Order::PRESENTATION . 'AMOUNT'));
+        $order->setPAmount((string)($request->get(Order::PRESENTATION . 'AMOUNT') * 100));
 
         $order->setVersion($request->get(Order::REQUEST . 'VERSION'));
 
@@ -83,11 +83,6 @@ class RequestMapper
 
         $order->setLogin($request->get(Order::USER . 'LOGIN'));
         $order->setPwd($request->get(Order::USER . 'PWD'));
-
-//        $order->setCCurrency((string)$request->get(Order::CURRENCY . 'CURRENCY'));
-//        $order->setCAmount((string)$request->get(Order::CURRENCY . 'AMOUNT'));
-
-
 
         $order->setInitialRequestData((string)json_encode($request->request->all()));
 

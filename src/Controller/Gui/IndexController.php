@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Controller\Gui;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use TechDivision\PspMock\Interfaces\Controller\PspGuiIndexControllerInterface;
 
 /**
  * @category   TechDivision
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class IndexController extends AbstractController
+class IndexController extends AbstractController implements PspGuiIndexControllerInterface
 {
     /**
      * @return RedirectResponse

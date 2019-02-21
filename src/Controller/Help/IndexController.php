@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Controller\Help;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Interfaces\Controller\PspGuiIndexControllerInterface;
 use TechDivision\PspMock\Service\DomainProvider;
 
 /**
@@ -21,7 +22,7 @@ use TechDivision\PspMock\Service\DomainProvider;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class IndexController extends AbstractController
+class IndexController extends AbstractController implements PspGuiIndexControllerInterface
 {
     /**
      * @var DomainProvider

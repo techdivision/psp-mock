@@ -13,6 +13,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use TechDivision\PspMock\Entity\Payone\Order;
+use TechDivision\PspMock\Interfaces\Controller\PspServerActionControllerInterface;
 use TechDivision\PspMock\Repository\Payone\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Payone\ServerApi\CallbackExecutor;
@@ -25,7 +26,7 @@ use TechDivision\PspMock\Service\Payone\ServerApi\CallbackExecutor;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class TransactionStatusController extends AbstractController
+class TransactionStatusController extends AbstractController implements PspServerActionControllerInterface
 {
     /**
      * @var OrderRepository
@@ -58,7 +59,8 @@ class TransactionStatusController extends AbstractController
         OrderRepository $orderRepository,
         EntitySaver $entitySaver,
         CallbackExecutor $callbackExecutor
-    ) {
+    )
+    {
         $this->orderRepository = $orderRepository;
         $this->logger = $logger;
         $this->entitySaver = $entitySaver;
@@ -66,12 +68,12 @@ class TransactionStatusController extends AbstractController
     }
 
     /**
-     * @param int $order
+     * @param string $order
      * @param string $action
      * @return RedirectResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function execute($order, $action)
+    public function execute(string $order, string $action)
     {
         try {
             /** @var Order $order */
@@ -83,9 +85,9 @@ class TransactionStatusController extends AbstractController
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage());
             $this->logger->debug($exception->getTraceAsString());
+        } finally {
+            return $this->redirectToRoute('gui-order-list', ['type' => 'payone']);
         }
-
-        return $this->redirectToRoute('gui-order-list', ['type' => 'payone']);
     }
 
     /**

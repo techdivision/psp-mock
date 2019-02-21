@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Interfaces\Controller\PspRequestStaticControllerInterface;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
@@ -30,7 +31,7 @@ use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestMapper;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class FrameRequestController extends AbstractController
+class FrameRequestController extends AbstractController implements PspRequestStaticControllerInterface
 {
     /**
      * @var LoggerInterface

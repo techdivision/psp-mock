@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Interfaces\Controller\PspRequestStaticControllerInterface;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 
 /**
@@ -20,7 +21,7 @@ use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class StaticFileController extends AbstractController
+class StaticFileController extends AbstractController implements PspRequestStaticControllerInterface
 {
     /**
      * @var OrderRepository

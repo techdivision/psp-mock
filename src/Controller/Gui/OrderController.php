@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Entity\Payone\Order;
+use TechDivision\PspMock\Interfaces\Controller\PspGuiListControllerInterface;
 use TechDivision\PspMock\Repository\Payone\OrderRepository as PayoneOrderRepository;
 use TechDivision\PspMock\Service\StatusManager;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository as HeidelpayOrderRepository;
@@ -27,7 +28,7 @@ use TechDivision\PspMock\Repository\Heidelpay\OrderRepository as HeidelpayOrderR
  * @author     Vadim Justus <v.justus@techdivision.com
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class OrderController extends AbstractController
+class OrderController extends AbstractController implements PspGuiListControllerInterface
 {
     /**
      * @var PayoneOrderRepository

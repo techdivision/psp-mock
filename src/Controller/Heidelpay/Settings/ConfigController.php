@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Controller\Heidelpay\Settings;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use TechDivision\PspMock\Interfaces\Controller\PspRequestControllerInterface;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Service\EntitySaver;
@@ -20,7 +21,7 @@ use TechDivision\PspMock\Service\EntitySaver;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class ConfigController extends AbstractController
+class ConfigController extends AbstractController implements PspRequestControllerInterface
 {
     //TODO Setupscript needed with this query:
     // INSERT INTO core_config (path, value) VALUES ('fail_on_preauth', '0'), ('fail_on_capture', '0'), ('fail_on_refund', '0'), ('fail_on_iframe', '0')

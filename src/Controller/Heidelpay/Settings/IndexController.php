@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Controller\Heidelpay\Settings;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Interfaces\Controller\PspGuiIndexControllerInterface;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 
 /**
@@ -18,7 +19,7 @@ use TechDivision\PspMock\Repository\ConfigurationRepository;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class IndexController extends AbstractController
+class IndexController extends AbstractController implements PspGuiIndexControllerInterface
 {
     /**
      * @var ConfigurationRepository

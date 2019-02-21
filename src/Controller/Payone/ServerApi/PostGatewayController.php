@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Payone\Order;
+use TechDivision\PspMock\Interfaces\Controller\PspRequestControllerInterface;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Payone\ServerApi\RequestToOrderMapper;
 
@@ -26,7 +27,7 @@ use TechDivision\PspMock\Service\Payone\ServerApi\RequestToOrderMapper;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class PostGatewayController extends AbstractController
+class PostGatewayController extends AbstractController implements PspRequestControllerInterface
 {
     /**
      * @var LoggerInterface

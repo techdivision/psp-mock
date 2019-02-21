@@ -8,7 +8,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">transactionId</th>
-            <th scope="col">Amount</th>
+            <th scope="col">Total</th>
             <th scope="col">Firstname</th>
             <th scope="col">Lastname</th>
             <th scope="col">Clearing Type</th>
@@ -21,7 +21,7 @@
             <tr>
                 <th scope="row">{{ order.getId() }}</th>
                 <td>{{ order.getTransactionId() }}</td>
-                <td>{{ order.getCAmount() }}</td>
+                <td>{{ order.getTotal() }}</td>
                 <td>{{ order.getFirstname() }}</td>
                 <td>{{ order.getLastname() }}</td>
                 <td>{{ order.getCode() }}</td>

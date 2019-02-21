@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
 use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
+use TechDivision\PspMock\Interfaces\Controller\PspRequestControllerInterface;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
@@ -29,7 +30,7 @@ use TechDivision\PspMock\Service\RandomStringGenerator;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class RequestController extends AbstractController
+class RequestController extends AbstractController implements PspRequestControllerInterface
 {
     /**
      * StateId length
