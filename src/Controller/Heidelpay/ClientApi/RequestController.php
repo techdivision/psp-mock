@@ -33,11 +33,6 @@ use TechDivision\PspMock\Service\RandomStringProvider;
 class RequestController extends AbstractController implements PspRequestControllerInterface
 {
     /**
-     * StateId length
-     */
-    const STATE_ID_LENGTH = 24;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -152,13 +147,8 @@ class RequestController extends AbstractController implements PspRequestControll
                         /** @var Order $order */
                         $order = new Order();
                         $address = new Address();
-                        $this->requestMapper->mapRequestToOrder($request, $order, $address);
+                        $this->requestMapper->map($request, $order, $address);
 
-                        $order->setStateId($this->stateIdGenerator->get(self::STATE_ID_LENGTH));
-                        $order->setCreated(new \DateTime());
-
-                        // This is neccessary because the order is being created every time before
-                        // the account holder is set
                         $this->removeDuplicatedEntries($order->getTransactionId());
 
                         // If flag is set return a 'NOK' Message
@@ -198,6 +188,7 @@ class RequestController extends AbstractController implements PspRequestControll
                         $this->entitySaver->save($order);
 
                         return $this->buildResponse($order, true);
+
                     default:
                         throw new \Exception('No such Payment Code supported: ' . $request->get(Order::PAYMENT . 'CODE'));
                 }
@@ -243,6 +234,8 @@ class RequestController extends AbstractController implements PspRequestControll
     }
 
     /**
+     * This is necessary because the order is being created every time before
+     * the account holder is set
      * @param string $transactionId
      */
     private function removeDuplicatedEntries(string $transactionId)

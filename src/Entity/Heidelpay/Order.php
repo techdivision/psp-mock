@@ -31,6 +31,11 @@ class Order implements PspEntityInterface
     const STATUS_NEW = 'NEW';
 
     /**
+     * StateId length
+     */
+    const STATE_ID_LENGTH = 24;
+
+    /**
      * Prefixes
      */
     const IDENTIFICATION = 'IDENTIFICATION_';

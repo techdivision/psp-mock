@@ -20,11 +20,12 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\EntitySaver;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\AccountRequestMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataGenerator;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\ConfirmQuoteCaller;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderRequestMapper;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
@@ -59,9 +60,9 @@ class FrameRequestController extends AbstractController implements PspRequestSta
     private $configurationRepository;
 
     /**
-     * @var RequestMapper
+     * @var AccountRequestMapper
      */
-    private $requestToOrderMapper;
+    private $accountRequestMapper;
 
     /**
      * @var OrderToResponseMapper
@@ -91,35 +92,35 @@ class FrameRequestController extends AbstractController implements PspRequestSta
     /**
      * @param LoggerInterface $logger
      * @param EntitySaver $entitySaver
-     * @param RequestMapper $requestToOrderMapper
      * @param OrderRepository $orderRepository
      * @param OrderToResponseMapper $orderToResponseMapper
      * @param MissingDataGenerator $missingDataGenerator
      * @param ConfirmQuoteCaller $quoteConfirmer
      * @param RedirectCaller $redirectCaller
      * @param ConfigurationRepository $configurationRepository
+     * @param AccountRequestMapper $accountRequestMapper
      */
     public function __construct(
         LoggerInterface $logger,
         EntitySaver $entitySaver,
-        RequestMapper $requestToOrderMapper,
         OrderRepository $orderRepository,
         OrderToResponseMapper $orderToResponseMapper,
         MissingDataGenerator $missingDataGenerator,
         ConfirmQuoteCaller $quoteConfirmer,
         RedirectCaller $redirectCaller,
-        ConfigurationRepository $configurationRepository
+        ConfigurationRepository $configurationRepository,
+        AccountRequestMapper $accountRequestMapper
     )
     {
         $this->logger = $logger;
         $this->entitySaver = $entitySaver;
-        $this->requestToOrderMapper = $requestToOrderMapper;
         $this->orderRepository = $orderRepository;
         $this->orderToResponseMapper = $orderToResponseMapper;
         $this->missingDataGenerator = $missingDataGenerator;
         $this->quoteConfirmer = $quoteConfirmer;
         $this->redirectCaller = $redirectCaller;
         $this->configurationRepository = $configurationRepository;
+        $this->accountRequestMapper = $accountRequestMapper;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json;charset=UTF-8');
@@ -143,11 +144,12 @@ class FrameRequestController extends AbstractController implements PspRequestSta
             if ($request->getMethod() === "POST") {
                 $account = new Account();
 
-                $this->requestToOrderMapper->mapRequestToAccount($request, $account);
+                $this->accountRequestMapper->map($request, $account);
 
                 /** @var Order $order */
                 $order = $this->orderRepository->findOneBy(
                     array('stateId' => json_decode($request->getContent(), true)['stateId']));
+
                 $order->setAccount($account);
 
                 $this->missingDataGenerator->generate($order);
