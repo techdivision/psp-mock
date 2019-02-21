@@ -259,6 +259,8 @@ class RequestController extends AbstractController implements PspRequestControll
      */
     private function setAck(Order $order)
     {
+        $order->setStatus('SUCCESS');
+        $order->setStatusCode('00');
         $order->setResult('ACK');
         $order->setValidation('ACK');
         $order->setReturn("Request successfully processed in ''Merchant in Connector Test Mode''");
@@ -269,6 +271,8 @@ class RequestController extends AbstractController implements PspRequestControll
      */
     private function setNok(Order $order)
     {
+        $order->setStatus('WAITING_BANK');
+        $order->setStatusCode('59');
         $order->setResult('NOK');
         $order->setValidation('NOK');
         $order->setReturn("Request processed with errors in ''Merchant in Connector Test Mode''");
