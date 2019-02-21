@@ -68,7 +68,7 @@ composer require --dev techdivision/payone-mockable
 
 #### Heidelpay
 In order to use this mock service with a Magento 2 installation you need to manipulate the endpoints within the
-`magento2/heidelpay` extension. Therefore you can use the module: https://github.com/LukasKiederle/magento2-heidelpay-mockable
+`heidelpay/magento2` Version: `^18.10`extension. Therefore you can use the module: https://github.com/LukasKiederle/magento2-heidelpay-mockable
 
 ```bash
 composer config repositories.techdivision.magento2-heidelpay-mockable vcs https://github.com/LukasKiederle/magento2-heidelpay-mockable.git
