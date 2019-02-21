@@ -57,11 +57,22 @@ PAYONE_CALLBACK_URI=https://test.my-shop.local/payone/transactionstatus
 
 ### Using with Magento 2
 
+#### Payone:
+
 In order to use this mock service with a Magento 2 installation you need to manipulate the endpoints within the
 `payone-gmbh/magento2` extension. Therefore you can use the module: https://github.com/techdivision/magento2-payone-mockable
 
 ```bash
 composer require --dev techdivision/payone-mockable
+```
+
+#### Heidelpay
+In order to use this mock service with a Magento 2 installation you need to manipulate the endpoints within the
+`magento2/heidelpay` extension. Therefore you can use the module: https://github.com/LukasKiederle/magento2-heidelpay-mockable
+
+```bash
+composer config repositories.techdivision.magento2-heidelpay-mockable vcs https://github.com/LukasKiederle/magento2-heidelpay-mockable.git
+composer require --dev techdivision/heidelpay-mockable
 ```
 
 ## License
