@@ -10,9 +10,9 @@
 namespace TechDivision\PspMock\Controller\Gui;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspGuiListControllerInterface;
 use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Repository\Payone\OrderRepository as PayoneOrderRepository;
@@ -28,7 +28,7 @@ use TechDivision\PspMock\Repository\Heidelpay\OrderRepository as HeidelpayOrderR
  * @author     Vadim Justus <v.justus@techdivision.com
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class OrderController extends AbstractController implements PspGuiListControllerInterface
+class OrderController extends PspAbstractController implements PspGuiListControllerInterface
 {
     /**
      * @var PayoneOrderRepository
@@ -46,11 +46,6 @@ class OrderController extends AbstractController implements PspGuiListController
     private $statusManager;
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @param PayoneOrderRepository $payoneOrderRepository
      * @param HeidelpayOrderRepository $heidelpayOrderRepository
      * @param StatusManager $statusManager
@@ -63,6 +58,7 @@ class OrderController extends AbstractController implements PspGuiListController
         LoggerInterface $logger
     )
     {
+        parent::__construct($logger);
         $this->payoneOrderRepository = $payoneOrderRepository;
         $this->heidelpayOrderRepository = $heidelpayOrderRepository;
         $this->statusManager = $statusManager;
@@ -94,17 +90,5 @@ class OrderController extends AbstractController implements PspGuiListController
             $this->logger->error($exception);
             return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-    }
-
-    /**
-     * @param Order $order
-     * @return Response
-     */
-    public function detail(Order $order)
-    {
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/plain');
-        $response->setContent(var_export(json_decode($order->getRequestData(), true), true));
-        return $response;
     }
 }

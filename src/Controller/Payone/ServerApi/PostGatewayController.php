@@ -10,9 +10,9 @@
 namespace TechDivision\PspMock\Controller\Payone\ServerApi;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Customer;
@@ -28,13 +28,8 @@ use TechDivision\PspMock\Service\RequestMapper;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class PostGatewayController extends AbstractController implements PspRequestControllerInterface
+class PostGatewayController extends PspAbstractController implements PspRequestControllerInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
     /**
      * @var Response
      */
@@ -60,7 +55,7 @@ class PostGatewayController extends AbstractController implements PspRequestCont
         EntitySaver $entitySaver,
         RequestMapper $requestMapper
     ) {
-        $this->logger = $logger;
+        parent::__construct($logger);
         $this->entitySaver = $entitySaver;
         $this->requestMapper = $requestMapper;
 

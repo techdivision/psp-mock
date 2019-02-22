@@ -6,9 +6,6 @@ gui-order-list:
     controller: TechDivision\PspMock\Controller\Gui\OrderController::list
     requirements:
         type: '^[a-zA-Z]{0,}$'
-gui-order-detail:
-    path: /order/detail/{order}
-    controller: TechDivision\PspMock\Controller\Gui\OrderController::detail
 
 help-index:
     path: /help/

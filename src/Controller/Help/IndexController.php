@@ -9,8 +9,9 @@
 
 namespace TechDivision\PspMock\Controller\Help;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspGuiIndexControllerInterface;
 use TechDivision\PspMock\Service\DomainProvider;
 
@@ -22,7 +23,7 @@ use TechDivision\PspMock\Service\DomainProvider;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class IndexController extends AbstractController implements PspGuiIndexControllerInterface
+class IndexController extends PspAbstractController implements PspGuiIndexControllerInterface
 {
     /**
      * @var DomainProvider
@@ -31,10 +32,13 @@ class IndexController extends AbstractController implements PspGuiIndexControlle
 
     /**
      * @param DomainProvider $domainProvider
+     * @param LoggerInterface $logger
      */
     public function __construct(
-        DomainProvider $domainProvider
+        DomainProvider $domainProvider,
+        LoggerInterface $logger
     ) {
+        parent::__construct($logger);
         $this->domainProvider = $domainProvider;
     }
 
@@ -43,8 +47,12 @@ class IndexController extends AbstractController implements PspGuiIndexControlle
      */
     public function index()
     {
-        return $this->render('help/index.html.twig', ['settings' => [
-            'domain' => $this->domainProvider->get(),
-        ]]);
+        try {
+            return $this->render('help/index.html.twig', ['settings' => [
+                'domain' => $this->domainProvider->get(),
+            ]]);
+        } catch (\Exception $exception) {
+            $this->logger->error($exception);
+        }
     }
 }

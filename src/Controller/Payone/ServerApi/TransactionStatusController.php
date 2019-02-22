@@ -10,8 +10,8 @@
 namespace TechDivision\PspMock\Controller\Payone\ServerApi;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspServerActionControllerInterface;
 use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Repository\Payone\OrderRepository;
@@ -26,17 +26,12 @@ use TechDivision\PspMock\Service\Payone\ServerApi\CallbackExecutor;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class TransactionStatusController extends AbstractController implements PspServerActionControllerInterface
+class TransactionStatusController extends PspAbstractController implements PspServerActionControllerInterface
 {
     /**
      * @var OrderRepository
      */
     private $orderRepository;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * @var EntitySaver
@@ -62,7 +57,7 @@ class TransactionStatusController extends AbstractController implements PspServe
     )
     {
         $this->orderRepository = $orderRepository;
-        $this->logger = $logger;
+        parent::__construct($logger);
         $this->entitySaver = $entitySaver;
         $this->callbackExecutor = $callbackExecutor;
     }

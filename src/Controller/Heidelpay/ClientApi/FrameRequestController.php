@@ -11,9 +11,9 @@ namespace TechDivision\PspMock\Controller\Heidelpay\ClientApi;
 
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
@@ -31,13 +31,8 @@ use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class FrameRequestController extends AbstractController implements PspRequestControllerInterface
+class FrameRequestController extends PspAbstractController implements PspRequestControllerInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
     /**
      * @var Response
      */
@@ -110,7 +105,7 @@ class FrameRequestController extends AbstractController implements PspRequestCon
         ConfigurationRepository $configurationRepository,
         AccountRequestMapper $accountRequestMapper
     ) {
-        $this->logger = $logger;
+        parent::__construct($logger);
         $this->entitySaver = $entitySaver;
         $this->orderRepository = $orderRepository;
         $this->orderToResponseMapper = $orderToResponseMapper;

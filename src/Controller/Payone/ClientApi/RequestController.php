@@ -10,9 +10,9 @@
 namespace TechDivision\PspMock\Controller\Payone\ClientApi;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\OutputToResponseAdapter;
 use TechDivision\PspMock\Service\Payone\ClientApi\Request\ProcessorFactory;
@@ -27,13 +27,8 @@ use TechDivision\PspMock\Service\Payone\ClientApi\Request\RequestToInputAdapter;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class RequestController extends AbstractController implements PspRequestControllerInterface
+class RequestController extends PspAbstractController implements PspRequestControllerInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
     /**
      * @var ProcessorFactory
      */
@@ -61,7 +56,7 @@ class RequestController extends AbstractController implements PspRequestControll
         RequestToInputAdapter $requestToInputAdapter,
         OutputToResponseAdapter $outputToResponseAdapter
     ) {
-        $this->logger = $logger;
+        parent::__construct($logger);
         $this->processorFactory = $processorFactory;
         $this->requestToInputAdapter = $requestToInputAdapter;
         $this->outputToResponseAdapter = $outputToResponseAdapter;

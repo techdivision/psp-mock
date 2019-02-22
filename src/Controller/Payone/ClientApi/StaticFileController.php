@@ -10,9 +10,9 @@
 namespace TechDivision\PspMock\Controller\Payone\ClientApi;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Service\Payone\ClientApi\StaticFile\ProcessorInterface;
 use TechDivision\PspMock\Service\Payone\ClientApi\StaticFile\RequestToInputAdapter;
@@ -26,17 +26,12 @@ use TechDivision\PspMock\Service\Payone\ClientApi\StaticFile\OutputToResponseAda
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class StaticFileController extends AbstractController implements PspRequestControllerInterface
+class StaticFileController extends PspAbstractController implements PspRequestControllerInterface
 {
     /**
      * @var ProcessorInterface
      */
     private $processor;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * @var RequestToInputAdapter
@@ -63,7 +58,7 @@ class StaticFileController extends AbstractController implements PspRequestContr
         $this->requestToInputAdapter = $requestToInputAdapter;
         $this->outputToResponseAdapter = $outputToResponseAdapter;
         $this->processor = $processor;
-        $this->logger = $logger;
+        parent::__construct($logger);
     }
 
     /**
@@ -72,8 +67,12 @@ class StaticFileController extends AbstractController implements PspRequestContr
      */
     public function execute(Request $request)
     {
-        $apiRequest = $this->requestToInputAdapter->convert($request);
-        $apiResponse = $this->processor->execute($apiRequest);
-        return $this->outputToResponseAdapter->convert($apiResponse);
+        try {
+            $apiRequest = $this->requestToInputAdapter->convert($request);
+            $apiResponse = $this->processor->execute($apiRequest);
+            return $this->outputToResponseAdapter->convert($apiResponse);
+        } catch (\Exception $exception) {
+            $this->logger->error($exception);
+        }
     }
 }

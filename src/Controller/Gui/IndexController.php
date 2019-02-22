@@ -9,8 +9,8 @@
 
 namespace TechDivision\PspMock\Controller\Gui;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspGuiIndexControllerInterface;
 
 /**
@@ -21,13 +21,17 @@ use TechDivision\PspMock\Controller\Interfaces\PspGuiIndexControllerInterface;
  * @link       http://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class IndexController extends AbstractController implements PspGuiIndexControllerInterface
+class IndexController extends PspAbstractController implements PspGuiIndexControllerInterface
 {
     /**
      * @return RedirectResponse
      */
     public function index()
     {
-        return $this->redirectToRoute('gui-order-list', ['type' => '']);
+        try {
+            return $this->redirectToRoute('gui-order-list', ['type' => '']);
+        } catch (\Exception $exception) {
+            $this->logger->error($exception);
+        }
     }
 }

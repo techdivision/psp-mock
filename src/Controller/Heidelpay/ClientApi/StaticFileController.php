@@ -9,9 +9,10 @@
 
 namespace TechDivision\PspMock\Controller\Heidelpay\ClientApi;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestStaticControllerInterface;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
@@ -21,7 +22,7 @@ use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class StaticFileController extends AbstractController implements PspRequestStaticControllerInterface
+class StaticFileController extends PspAbstractController implements PspRequestStaticControllerInterface
 {
     /**
      * @var OrderRepository
@@ -31,9 +32,11 @@ class StaticFileController extends AbstractController implements PspRequestStati
     /**
      * FrameController constructor.
      * @param OrderRepository $orderRepository
+     * @param LoggerInterface $logger
      */
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(OrderRepository $orderRepository, LoggerInterface $logger)
     {
+        parent::__construct($logger);
         $this->orderRepository = $orderRepository;
     }
 
@@ -45,14 +48,18 @@ class StaticFileController extends AbstractController implements PspRequestStati
      */
     public function execute(Request $request)
     {
-        /** @var Order $order */
-        $order = $this->orderRepository->findOneBy(
-            array('stateId' => $request->get('state')));
+        try {
+            /** @var Order $order */
+            $order = $this->orderRepository->findOneBy(
+                array('stateId' => $request->get('state')));
 
-        return $this->render('heidelpay/payment/frame.html.twig', [
-            'state' => $request->get('state'),
-            'paymentFrameOrigin' => $order->getPaymentFrameOrigin(),
-            'baseUrl' => 'https://' . $_SERVER['SERVER_NAME']
-        ]);
+            return $this->render('heidelpay/payment/frame.html.twig', [
+                'state' => $request->get('state'),
+                'paymentFrameOrigin' => $order->getPaymentFrameOrigin(),
+                'baseUrl' => 'https://' . $_SERVER['SERVER_NAME']
+            ]);
+        } catch (\Exception $exception) {
+            $this->logger->error($exception);
+        }
     }
 }
