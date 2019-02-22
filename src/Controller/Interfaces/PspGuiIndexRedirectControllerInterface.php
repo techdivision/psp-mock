@@ -9,17 +9,17 @@
 
 namespace TechDivision\PspMock\Controller\Interfaces;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface PspGuiIndexControllerInterface extends PspGuiBaseControllerInterface
+interface PspGuiIndexRedirectControllerInterface extends PspGuiBaseControllerInterface
 {
     /**
-     * @return Response
+     * @return RedirectResponse
      */
-    public function index(): Response;
+    public function index(): RedirectResponse;
 }

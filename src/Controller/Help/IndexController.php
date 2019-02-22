@@ -45,7 +45,7 @@ class IndexController extends PspAbstractController implements PspGuiIndexContro
     /**
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         try {
             return $this->render('help/index.html.twig', ['settings' => [

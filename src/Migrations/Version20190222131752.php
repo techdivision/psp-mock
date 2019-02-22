@@ -14,13 +14,13 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * HeidelpaySetupScript
+ * GeneralSettingsSetupScript
  *
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-final class Version20190222091645 extends AbstractMigration
+final class Version20190222131752 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -38,11 +38,8 @@ final class Version20190222091645 extends AbstractMigration
 
         $this->addSql(
             'INSERT INTO core_config (path, value, display_name) VALUES
-                  ("heidelpay/fail_on_preauth", 0, "Fail on Preauth"),
-                  ("heidelpay/fail_on_iframe", 0, "Fail on iFrame"),
-                  ("heidelpay/fail_on_capture", 0, "Fail on Capture"),
-                  ("heidelpay/fail_on_refund", 0, "Fail on Refund")
-                  ');
+                  ("general/registered_psps", "Payone,Heidelpay", "Registered Psps")'
+        );
     }
 
     /**
@@ -55,6 +52,6 @@ final class Version20190222091645 extends AbstractMigration
 
         $this->addSql(
             'DELETE FROM core_config
-                  WHERE path LIKE "heidelpay/fail_on_%"');
+                  WHERE path = "general/registered_psps"');
     }
 }

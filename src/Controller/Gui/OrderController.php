@@ -56,8 +56,7 @@ class OrderController extends PspAbstractController implements PspGuiListControl
         HeidelpayOrderRepository $heidelpayOrderRepository,
         StatusManager $statusManager,
         LoggerInterface $logger
-    )
-    {
+    ) {
         parent::__construct($logger);
         $this->payoneOrderRepository = $payoneOrderRepository;
         $this->heidelpayOrderRepository = $heidelpayOrderRepository;
@@ -72,7 +71,7 @@ class OrderController extends PspAbstractController implements PspGuiListControl
     public function list(Request $request)
     {
         try {
-            switch ($request->get('type')) {
+            switch (strtolower($request->get('type'))) {
                 case '':
                     // default is payone
                 case 'payone':

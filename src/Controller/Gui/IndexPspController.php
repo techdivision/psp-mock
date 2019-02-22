@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Controller\Heidelpay\Settings;
+namespace TechDivision\PspMock\Controller\Gui;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,48 +16,38 @@ use TechDivision\PspMock\Controller\Interfaces\PspGuiIndexControllerInterface;
 use TechDivision\PspMock\Service\ConfigProvider;
 
 /**
+ * Renders all registered Psps into the navbar
+ *
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class IndexController extends PspAbstractController implements PspGuiIndexControllerInterface
+class IndexPspController extends PspAbstractController implements PspGuiIndexControllerInterface
 {
     /**
      * @var ConfigProvider
      */
     private $configProvider;
 
-    /**
-     * @var array
-     */
-    private $options = [];
-
-    /**
-     * ConfigController constructor.
-     * @param ConfigProvider $configProvider
-     * @param LoggerInterface $logger
-     */
-    public function __construct(ConfigProvider $configProvider, LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, ConfigProvider $configProvider)
     {
         parent::__construct($logger);
         $this->configProvider = $configProvider;
-
-        $this->options['asObjects'] = true;
     }
 
     /**
      * @return Response
      */
-    public function index() : Response
+    public function index(): Response
     {
         try {
-            $configArray = $this->configProvider->get($this->options);
+            $psps = explode(',', $this->configProvider->get()['general/registered_psps']);
 
-            return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $configArray]);
-
+            return $this->render('navbar.html.twig', [
+                'psps' => $psps
+            ]);
         } catch (\Exception $exception) {
             $this->logger->error($exception);
-            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }
