@@ -73,6 +73,7 @@ class StaticFileController extends PspAbstractController implements PspRequestCo
             return $this->outputToResponseAdapter->convert($apiResponse);
         } catch (\Exception $exception) {
             $this->logger->error($exception);
+            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }

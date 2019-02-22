@@ -13,8 +13,9 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
-use TechDivision\PspMock\Repository\ConfigurationRepository;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Entity\Configuration;
+use TechDivision\PspMock\Service\ConfigProvider;
 use TechDivision\PspMock\Service\EntitySaver;
 
 /**
@@ -25,9 +26,9 @@ use TechDivision\PspMock\Service\EntitySaver;
 class ConfigController extends PspAbstractController implements PspRequestControllerInterface
 {
     /**
-     * @var ConfigurationRepository
+     * @var ConfigProvider
      */
-    private $configurationRepository;
+    private $configProvider;
 
     /**
      * @var EntitySaver
@@ -35,19 +36,26 @@ class ConfigController extends PspAbstractController implements PspRequestContro
     private $entitySaver;
 
     /**
+     * @var array
+     */
+    private $options = [];
+
+    /**
      * ConfigController constructor.
-     * @param ConfigurationRepository $configurationRepository
+     * @param ConfigProvider $configProvider
      * @param EntitySaver $entitySaver
      * @param LoggerInterface $logger
      */
     public function __construct(
-        ConfigurationRepository $configurationRepository,
+        ConfigProvider $configProvider,
         EntitySaver $entitySaver,
         LoggerInterface $logger
     ) {
         parent::__construct($logger);
-        $this->configurationRepository = $configurationRepository;
+        $this->configProvider = $configProvider;
         $this->entitySaver = $entitySaver;
+
+        $this->options['asObjects'] = true;
     }
 
     /**
@@ -57,22 +65,19 @@ class ConfigController extends PspAbstractController implements PspRequestContro
     public function execute(Request $request)
     {
         try {
-            $configArray = [
-                'failOnPreauth' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_preauth')),
-                'failOnIframe' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_iframe')),
-                'failOnCapture' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_capture')),
-                'failOnRefund' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_refund')),
-            ];
+            $configArray = $this->configProvider->get($this->options);
 
             foreach ($configArray as $key => $value) {
-                ($request->get($key) === 'on')
+                /** @var Configuration $value */
+                ($request->get($value->getPath()) === 'on')
                     ? $configArray[$key]->setValue('1')
                     : $configArray[$key]->setValue('0');
             }
             $this->entitySaver->save($configArray);
-            return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $configArray]);
+            return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $this->configProvider->get($this->options)]);
         } catch (\Exception $exception) {
             $this->logger->error($exception);
+            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }

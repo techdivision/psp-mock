@@ -18,7 +18,8 @@ namespace TechDivision\PspMock\Service\Interfaces;
 interface PspDataProviderInterface
 {
     /**
+     * @param array $options
      * @return array
      */
-    public function get(): array ;
+    public function get(array $options): array ;
 }

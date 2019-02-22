@@ -10,7 +10,6 @@
 namespace TechDivision\PspMock\Service\Heidelpay\ClientApi\Handler;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\ConfigProvider;
 use TechDivision\PspMock\Service\EntitySaver;

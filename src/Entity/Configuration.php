@@ -37,6 +37,13 @@ class Configuration implements PspEntityInterface
      *
      * @ORM\Column(type="string", unique=true, nullable=true)
      */
+    private $displayName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", unique=true, nullable=true)
+     */
     private $path;
 
     /**
@@ -92,5 +99,21 @@ class Configuration implements PspEntityInterface
     public function setValue(string $value): void
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayName(): string
+    {
+        return $this->displayName;
+    }
+
+    /**
+     * @param string $displayName
+     */
+    public function setDisplayName(string $displayName): void
+    {
+        $this->displayName = $displayName;
     }
 }

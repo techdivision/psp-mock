@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspGuiIndexControllerInterface;
-use TechDivision\PspMock\Repository\ConfigurationRepository;
+use TechDivision\PspMock\Service\ConfigProvider;
 
 /**
  * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
@@ -23,19 +23,26 @@ use TechDivision\PspMock\Repository\ConfigurationRepository;
 class IndexController extends PspAbstractController implements PspGuiIndexControllerInterface
 {
     /**
-     * @var ConfigurationRepository
+     * @var ConfigProvider
      */
-    private $configurationRepository;
+    private $configProvider;
+
+    /**
+     * @var array
+     */
+    private $options = [];
 
     /**
      * ConfigController constructor.
-     * @param ConfigurationRepository $configurationRepository
+     * @param ConfigProvider $configProvider
      * @param LoggerInterface $logger
      */
-    public function __construct(ConfigurationRepository $configurationRepository, LoggerInterface $logger)
+    public function __construct(ConfigProvider $configProvider, LoggerInterface $logger)
     {
         parent::__construct($logger);
-        $this->configurationRepository = $configurationRepository;
+        $this->configProvider = $configProvider;
+
+        $this->options['asObjects'] = true;
     }
 
     /**
@@ -44,17 +51,13 @@ class IndexController extends PspAbstractController implements PspGuiIndexContro
     public function index()
     {
         try {
-            $configArray = [
-                'failOnPreauth' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_preauth')),
-                'failOnIframe' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_iframe')),
-                'failOnCapture' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_capture')),
-                'failOnRefund' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_refund')),
-            ];
+            $configArray = $this->configProvider->get($this->options);
 
             return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $configArray]);
 
         } catch (\Exception $exception) {
             $this->logger->error($exception);
+            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }

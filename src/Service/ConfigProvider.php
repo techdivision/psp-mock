@@ -35,12 +35,13 @@ class ConfigProvider implements PspDataProviderInterface
     }
 
     /**
+     * @param array $options
      * @return array
      */
-    public function get(): array
+    public function get(array $options = null): array
     {
         $settings = $this->configurationRepository->findAll();
-        return $this->convert($settings);
+        return ($options['asObjects'] == true) ? $settings : $this->convert($settings);
     }
 
     /**

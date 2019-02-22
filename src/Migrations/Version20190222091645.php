@@ -35,11 +35,11 @@ final class Version20190222091645 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'sqlite', 'Migration can only be executed safely on \'sqlite\'.');
 
         $this->addSql(
-            'INSERT INTO core_config (path, value) VALUES
-                  ("heidelpay/fail_on_preauth", 0),
-                  ("heidelpay/fail_on_capture", 0),
-                  ("heidelpay/fail_on_refund", 0),
-                  ("heidelpay/fail_on_iframe", 0)'
+            'INSERT INTO core_config (path, value, display_name) VALUES
+                  ("heidelpay/fail_on_preauth", 0, "Fail on Preauth"),
+                  ("heidelpay/fail_on_capture", 0, "Fail on Capture"),
+                  ("heidelpay/fail_on_refund", 0, "Fail on Refund"),
+                  ("heidelpay/fail_on_iframe", 0, "Fail on iFrame")'
         );
     }
 

@@ -53,6 +53,7 @@ class IndexController extends PspAbstractController implements PspGuiIndexContro
             ]]);
         } catch (\Exception $exception) {
             $this->logger->error($exception);
+            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }
