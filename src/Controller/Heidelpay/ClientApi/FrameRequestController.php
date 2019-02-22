@@ -22,7 +22,9 @@ use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\ConfigProvider;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\AccountRequestMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\AckProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataProvider;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\NokProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\ConfirmQuoteCaller;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
@@ -80,6 +82,16 @@ class FrameRequestController extends PspAbstractController implements PspRequest
     private $redirectCaller;
 
     /**
+     * @var AckProvider
+     */
+    private $ackProvider;
+
+    /**
+     * @var NokProvider
+     */
+    private $nokProvider;
+
+    /**
      * @var string
      */
     private $failOnIframe;
@@ -94,6 +106,8 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      * @param RedirectCaller $redirectCaller
      * @param ConfigProvider $configProvider
      * @param AccountRequestMapper $accountRequestMapper
+     * @param AckProvider $ackProvider
+     * @param NokProvider $nokProvider
      */
     public function __construct(
         LoggerInterface $logger,
@@ -104,7 +118,9 @@ class FrameRequestController extends PspAbstractController implements PspRequest
         ConfirmQuoteCaller $quoteConfirmer,
         RedirectCaller $redirectCaller,
         ConfigProvider $configProvider,
-        AccountRequestMapper $accountRequestMapper
+        AccountRequestMapper $accountRequestMapper,
+        AckProvider $ackProvider,
+        NokProvider $nokProvider
     ) {
         parent::__construct($logger);
         $this->entitySaver = $entitySaver;
@@ -115,6 +131,8 @@ class FrameRequestController extends PspAbstractController implements PspRequest
         $this->redirectCaller = $redirectCaller;
         $this->configProvider = $configProvider;
         $this->accountRequestMapper = $accountRequestMapper;
+        $this->ackProvider = $ackProvider;
+        $this->nokProvider = $nokProvider;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json;charset=UTF-8');
@@ -149,7 +167,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
                 $this->missingDataProvider->get($order);
 
                 // If flag is set return a 'NOK' Message
-                ($this->failOnIframe === '0') ? $this->setAck($order) : $this->setNok($order);
+                ($this->failOnIframe === '0') ? $this->setAck($order) : $this->nokProvider->get($order);
 
                 $this->entitySaver->save([$order, $account]);
 
@@ -179,24 +197,11 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      */
     private function setAck(Order $order)
     {
-        $order->setResult('ACK');
-        $order->setValidation('ACK');
-        $order->setReturn("Request successfully processed in ''Merchant in Connector Test Mode''");
-
+        $this->ackProvider->get($order);
         // Calls 2 API endpoints of the heidelpay module
         $options = [];
         $this->quoteConfirmer->execute($order, $options);
         $this->redirectCaller->execute($order, $options);
-    }
-
-    /**
-     * @param Order $order
-     */
-    private function setNok(Order $order)
-    {
-        $order->setResult('NOK');
-        $order->setValidation('NOK');
-        $order->setReturn("Request processed with errors in ''Merchant in Connector Test Mode''");
     }
 
     /**
