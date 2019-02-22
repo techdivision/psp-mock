@@ -19,6 +19,7 @@ use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
+use TechDivision\PspMock\Service\ConfigProvider;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\AccountRequestMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataProvider;
@@ -49,9 +50,9 @@ class FrameRequestController extends PspAbstractController implements PspRequest
     private $orderRepository;
 
     /**
-     * @var ConfigurationRepository
+     * @var ConfigProvider
      */
-    private $configurationRepository;
+    private $configProvider;
 
     /**
      * @var AccountRequestMapper
@@ -91,7 +92,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      * @param MissingDataProvider $missingDataProvider
      * @param ConfirmQuoteCaller $quoteConfirmer
      * @param RedirectCaller $redirectCaller
-     * @param ConfigurationRepository $configurationRepository
+     * @param ConfigProvider $configProvider
      * @param AccountRequestMapper $accountRequestMapper
      */
     public function __construct(
@@ -102,7 +103,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
         MissingDataProvider $missingDataProvider,
         ConfirmQuoteCaller $quoteConfirmer,
         RedirectCaller $redirectCaller,
-        ConfigurationRepository $configurationRepository,
+        ConfigProvider $configProvider,
         AccountRequestMapper $accountRequestMapper
     ) {
         parent::__construct($logger);
@@ -112,7 +113,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
         $this->missingDataProvider = $missingDataProvider;
         $this->quoteConfirmer = $quoteConfirmer;
         $this->redirectCaller = $redirectCaller;
-        $this->configurationRepository = $configurationRepository;
+        $this->configProvider = $configProvider;
         $this->accountRequestMapper = $accountRequestMapper;
 
         $this->response = new Response();
@@ -203,6 +204,6 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      */
     private function loadSettings()
     {
-        $this->failOnIframe = $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_iframe'))->getValue();
+        $this->failOnIframe = $this->configProvider->get()['heidelpay/fail_on_iframe'];
     }
 }

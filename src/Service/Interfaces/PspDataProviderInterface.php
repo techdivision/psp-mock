@@ -9,15 +9,16 @@
 
 namespace TechDivision\PspMock\Service\Interfaces;
 
+
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface PspProviderInterface
+interface PspDataProviderInterface
 {
     /**
-     * @return string
+     * @return array
      */
-    public function get(): string;
+    public function get(): array ;
 }
