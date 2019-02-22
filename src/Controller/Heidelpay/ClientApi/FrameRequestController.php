@@ -14,7 +14,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use TechDivision\PspMock\Controller\Interfaces\PspRequestStaticControllerInterface;
+use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
@@ -31,7 +31,7 @@ use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
  * @link       http://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class FrameRequestController extends AbstractController implements PspRequestStaticControllerInterface
+class FrameRequestController extends AbstractController implements PspRequestControllerInterface
 {
     /**
      * @var LoggerInterface

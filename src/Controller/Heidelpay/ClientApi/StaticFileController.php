@@ -45,7 +45,6 @@ class StaticFileController extends AbstractController implements PspRequestStati
      */
     public function execute(Request $request)
     {
-
         /** @var Order $order */
         $order = $this->orderRepository->findOneBy(
             array('stateId' => $request->get('state')));
