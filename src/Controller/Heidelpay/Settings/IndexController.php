@@ -45,10 +45,10 @@ class IndexController extends PspAbstractController implements PspGuiIndexContro
     {
         try {
             $configArray = [
-                'failOnPreauth' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_preauth')),
-                'failOnIframe' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_iframe')),
-                'failOnCapture' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_capture')),
-                'failOnRefund' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_refund')),
+                'failOnPreauth' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_preauth')),
+                'failOnIframe' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_iframe')),
+                'failOnCapture' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_capture')),
+                'failOnRefund' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_refund')),
             ];
 
             return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $configArray]);

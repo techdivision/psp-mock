@@ -203,6 +203,6 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      */
     private function loadSettings()
     {
-        $this->failOnIframe = $this->configurationRepository->findOneBy(array('path' => 'fail_on_iframe'))->getValue();
+        $this->failOnIframe = $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_iframe'))->getValue();
     }
 }

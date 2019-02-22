@@ -118,8 +118,8 @@ abstract class AbstractHandler implements PspHandlerInterface
      */
     private function loadSettings()
     {
-        $this->failOnPreauth = $this->configurationRepository->findOneBy(array('path' => 'fail_on_preauth'))->getValue();
-        $this->failOnCapture = $this->configurationRepository->findOneBy(array('path' => 'fail_on_capture'))->getValue();
-        $this->failOnRefund = $this->configurationRepository->findOneBy(array('path' => 'fail_on_refund'))->getValue();
+        $this->failOnPreauth = $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_preauth'))->getValue();
+        $this->failOnCapture = $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_capture'))->getValue();
+        $this->failOnRefund = $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_refund'))->getValue();
     }
 }

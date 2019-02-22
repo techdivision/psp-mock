@@ -24,9 +24,6 @@ use TechDivision\PspMock\Service\EntitySaver;
  */
 class ConfigController extends PspAbstractController implements PspRequestControllerInterface
 {
-    //TODO Setupscript needed with this query:
-    // INSERT INTO core_config (path, value) VALUES ('fail_on_preauth', '0'), ('fail_on_capture', '0'), ('fail_on_refund', '0'), ('fail_on_iframe', '0')
-
     /**
      * @var ConfigurationRepository
      */
@@ -61,10 +58,10 @@ class ConfigController extends PspAbstractController implements PspRequestContro
     {
         try {
             $configArray = [
-                'failOnPreauth' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_preauth')),
-                'failOnIframe' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_iframe')),
-                'failOnCapture' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_capture')),
-                'failOnRefund' => $this->configurationRepository->findOneBy(array('path' => 'fail_on_refund')),
+                'failOnPreauth' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_preauth')),
+                'failOnIframe' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_iframe')),
+                'failOnCapture' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_capture')),
+                'failOnRefund' => $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_refund')),
             ];
 
             foreach ($configArray as $key => $value) {

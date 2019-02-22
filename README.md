@@ -41,10 +41,9 @@ project-community-edition.test = your magento domain
 composer update symfony/flex --no-plugins
 ```
 
-### Instantiate database
+### Instantiate psp-mock
 ```
-bin/console doctrine:database:create
-bin/console doctrine:schema:create
+bin/setup-instance.sh
 ```
 
 ### Configuration
