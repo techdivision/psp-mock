@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspGuiListControllerInterface;
-use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Repository\Payone\OrderRepository as PayoneOrderRepository;
 use TechDivision\PspMock\Service\StatusManager;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository as HeidelpayOrderRepository;
