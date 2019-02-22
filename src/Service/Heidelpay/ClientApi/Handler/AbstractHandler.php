@@ -12,6 +12,7 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi\Handler;
 use Doctrine\Common\Persistence\ObjectManager;
 use TechDivision\PspMock\Repository\ConfigurationRepository;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
+use TechDivision\PspMock\Service\ConfigProvider;
 use TechDivision\PspMock\Service\EntitySaver;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\AckProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\NokProvider;
@@ -62,9 +63,9 @@ abstract class AbstractHandler implements PspHandlerInterface
     protected $orderRepository;
 
     /**
-     * @var ConfigurationRepository
+     * @var ConfigProvider
      */
-    protected $configurationRepository;
+    protected $configProvider;
 
     /**
      * @var string
@@ -86,7 +87,7 @@ abstract class AbstractHandler implements PspHandlerInterface
      * @param RequestMapper $requestMapper
      * @param RandomStringProvider $stateIdGenerator
      * @param OrderRepository $orderRepository
-     * @param ConfigurationRepository $configurationRepository
+     * @param ConfigProvider $configProvider
      * @param EntitySaver $entitySaver
      * @param AckProvider $ackProvider
      * @param NokProvider $nokProvider
@@ -96,7 +97,7 @@ abstract class AbstractHandler implements PspHandlerInterface
         RequestMapper $requestMapper,
         RandomStringProvider $stateIdGenerator,
         OrderRepository $orderRepository,
-        ConfigurationRepository $configurationRepository,
+        ConfigProvider $configProvider,
         EntitySaver $entitySaver,
         AckProvider $ackProvider,
         NokProvider $nokProvider
@@ -105,7 +106,7 @@ abstract class AbstractHandler implements PspHandlerInterface
         $this->requestMapper = $requestMapper;
         $this->stateIdGenerator = $stateIdGenerator;
         $this->orderRepository = $orderRepository;
-        $this->configurationRepository = $configurationRepository;
+        $this->configProvider = $configProvider;
         $this->entitySaver = $entitySaver;
         $this->ackProvider = $ackProvider;
         $this->nokProvider = $nokProvider;
@@ -118,8 +119,8 @@ abstract class AbstractHandler implements PspHandlerInterface
      */
     private function loadSettings()
     {
-        $this->failOnPreauth = $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_preauth'))->getValue();
-        $this->failOnCapture = $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_capture'))->getValue();
-        $this->failOnRefund = $this->configurationRepository->findOneBy(array('path' => 'heidelpay/fail_on_refund'))->getValue();
+        $this->failOnPreauth = $this->configProvider->get()['heidelpay/fail_on_preauth'];
+        $this->failOnCapture = $this->configProvider->get()['heidelpay/fail_on_capture'];
+        $this->failOnRefund = $this->configProvider->get()['heidelpay/fail_on_refund'];
     }
 }
