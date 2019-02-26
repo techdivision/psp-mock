@@ -43,7 +43,7 @@ class IndexController extends PspAbstractController implements PspGuiIndexContro
         $this->configProvider = $configProvider;
 
         $this->options['asObjects'] = true;
-        $this->options['namespace'] = 'heidelpay/%';
+        $this->options['namespace'] = 'heidelpay/';
     }
 
     /**

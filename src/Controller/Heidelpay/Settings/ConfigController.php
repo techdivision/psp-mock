@@ -56,7 +56,7 @@ class ConfigController extends PspAbstractController implements PspRequestContro
         $this->entitySaver = $entitySaver;
 
         $this->options['asObjects'] = true;
-        $this->options['namespace'] = 'heidelpay/%';
+        $this->options['namespace'] = 'heidelpay/';
     }
 
     /**
