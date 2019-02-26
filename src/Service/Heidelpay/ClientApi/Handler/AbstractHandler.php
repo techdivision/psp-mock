@@ -82,6 +82,11 @@ abstract class AbstractHandler implements PspHandlerInterface
     protected $failOnRefund;
 
     /**
+     * @var array
+     */
+    private $options = [];
+
+    /**
      * @param ObjectManager $objectManager
      * @param RequestMapper $requestMapper
      * @param RandomStringProvider $stateIdGenerator
@@ -110,6 +115,8 @@ abstract class AbstractHandler implements PspHandlerInterface
         $this->ackProvider = $ackProvider;
         $this->nokProvider = $nokProvider;
 
+        $this->options['asObjects'] = false;
+
         $this->loadSettings();
     }
 
@@ -118,8 +125,8 @@ abstract class AbstractHandler implements PspHandlerInterface
      */
     private function loadSettings()
     {
-        $this->failOnPreauth = $this->configProvider->get()['heidelpay/fail_on_preauth'];
-        $this->failOnCapture = $this->configProvider->get()['heidelpay/fail_on_capture'];
-        $this->failOnRefund = $this->configProvider->get()['heidelpay/fail_on_refund'];
+        $this->failOnPreauth = $this->configProvider->get($this->options)['heidelpay/fail_on_preauth'];
+        $this->failOnCapture = $this->configProvider->get($this->options)['heidelpay/fail_on_capture'];
+        $this->failOnRefund = $this->configProvider->get($this->options)['heidelpay/fail_on_refund'];
     }
 }

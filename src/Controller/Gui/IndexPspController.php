@@ -29,10 +29,16 @@ class IndexPspController extends PspAbstractController implements PspGuiIndexCon
      */
     private $configProvider;
 
+    /**
+     * @var array
+     */
+    private $options = [];
+
     public function __construct(LoggerInterface $logger, ConfigProvider $configProvider)
     {
         parent::__construct($logger);
         $this->configProvider = $configProvider;
+        $this->options['asObjects'] = false;
     }
 
     /**
@@ -41,7 +47,7 @@ class IndexPspController extends PspAbstractController implements PspGuiIndexCon
     public function index(): Response
     {
         try {
-            $psps = explode(',', $this->configProvider->get()['general/registered_psps']);
+            $psps = explode(',', $this->configProvider->get($this->options)['general/registered_psps']);
 
             return $this->render('navbar.html.twig', [
                 'psps' => $psps

@@ -43,15 +43,16 @@ class IndexController extends PspAbstractController implements PspGuiIndexContro
         $this->configProvider = $configProvider;
 
         $this->options['asObjects'] = true;
+        $this->options['namespace'] = 'heidelpay/%';
     }
 
     /**
      * @return Response
      */
-    public function index() : Response
+    public function index(): Response
     {
         try {
-            $configArray = $this->configProvider->get($this->options);
+            $configArray = $this->loadSettings();
 
             return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $configArray]);
 
@@ -59,5 +60,13 @@ class IndexController extends PspAbstractController implements PspGuiIndexContro
             $this->logger->error($exception);
             return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    /**
+     * @return array
+     */
+    private function loadSettings()
+    {
+        return $this->configProvider->get($this->options);
     }
 }

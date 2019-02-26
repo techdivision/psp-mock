@@ -35,9 +35,9 @@ class ConfigurationRepository extends ServiceEntityRepository
     public function findAllConfigurationsByWildcard(string $value)
     {
         $queryBuilder = $this->createQueryBuilder('c');
-        $queryBuilder->select('c')
+        $queryBuilder
             ->where('c.path LIKE :value')
             ->setParameter('value', $value);
-        return $queryBuilder->getQuery()->getArrayResult();
+        return $queryBuilder->getQuery()->getResult();
     }
 }

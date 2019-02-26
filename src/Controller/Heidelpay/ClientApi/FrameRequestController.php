@@ -97,6 +97,11 @@ class FrameRequestController extends PspAbstractController implements PspRequest
     private $failOnIframe;
 
     /**
+     * @var array
+     */
+    private $options = [];
+
+    /**
      * @param LoggerInterface $logger
      * @param EntitySaver $entitySaver
      * @param OrderRepository $orderRepository
@@ -133,6 +138,8 @@ class FrameRequestController extends PspAbstractController implements PspRequest
         $this->accountRequestMapper = $accountRequestMapper;
         $this->ackProvider = $ackProvider;
         $this->nokProvider = $nokProvider;
+
+        $this->options['asObjects'] = false;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json;charset=UTF-8');
@@ -209,6 +216,6 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      */
     private function loadSettings()
     {
-        $this->failOnIframe = $this->configProvider->get()['heidelpay/fail_on_iframe'];
+        $this->failOnIframe = $this->configProvider->get($this->options)['heidelpay/fail_on_iframe'];
     }
 }

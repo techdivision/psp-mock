@@ -35,13 +35,20 @@ class ConfigProvider implements PspDataProviderInterface
     }
 
     /**
+     * Info: if namespace isset return specific result by namespace
+     *
      * @param array $options
      * @return array
      */
-    public function get(array $options = null): array
+    public function get(array $options): array
     {
-        $settings = $this->configurationRepository->findAll();
-        return ($options['asObjects'] == true) ? $settings : $this->convert($settings);
+        if (array_key_exists('namespace', $options)) {
+            $settings = $this->configurationRepository->findAllConfigurationsByWildcard($options['namespace']);
+            return ($options['asObjects'] == true) ? $settings : $this->convert($settings);
+        } else {
+            $settings = $this->configurationRepository->findAll();
+            return ($options['asObjects'] == true) ? $settings : $this->convert($settings);
+        }
     }
 
     /**
