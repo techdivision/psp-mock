@@ -17,7 +17,7 @@ valet link --secure
 cp .env.dist .env
 ```
 
-### Make Hosts entry because php-curl would not find it otherwise
+### On Mojave make Hosts entry because php-curl would not find it otherwise
 on MacOs: 
 ```
 sudo vim /etc/hosts
@@ -95,21 +95,29 @@ This project is licensed under the OSL 3.0 License.
 
 ### Creditcard
 
-| Feature / Task                | Status    |
-|-------------------------------|-----------|
-| - Appoint                     | ✓         |
-| - Fully paid                  | ✓         |
-| - Partially paid              | ✓         |
-| - Debit                       | ✓         |
+| Feature / Task     | Status    |
+|--------------------|-----------|
+| - Appoint          | ✓         |
+| - Fully paid       | ✓         |
+| - Partially paid   | ✓         |
+| - Debit            | ✓         |
 
 ## Roadmap Heidelpay
 
 | Feature / Task                | Status    |
 |-------------------------------|-----------|
 | **Heidelpay - Payments**      |           |
-| - Creditcard(Visa)            | ✓         |
+| - Creditcard(Visa, Mastercard)| ✓         |
 | - Debit Payment               | X         |
 | - PayPal                      | X         |
 | - Cash on Delivery            | X         |
 | - Advance Payment             | X         |
 | - Invoice                     | X         |
+
+### Creditcard
+
+| Feature / Task     | Status    |
+|--------------------|-----------|
+| - New              | ✓         |
+| - Captured         | ✓         |
+| - Refunded         | ✓         |
