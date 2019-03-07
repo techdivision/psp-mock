@@ -118,6 +118,6 @@ This project is licensed under the OSL 3.0 License.
 
 | Feature / Task     | Status    |
 |--------------------|-----------|
-| - New              | ✓         |
+| - Preauthorization | ✓         |
 | - Captured         | ✓         |
 | - Refunded         | ✓         |
