@@ -14,7 +14,7 @@ use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestAddressMapper as HeidelpayRequestAddressMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestCustomerMapper as HeidelpayRequestCustomerMapper;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestOrderMapper as HeidelpayOrderRequestMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestOrderMapper as HeidelpayRequestOrderMapper;
 use TechDivision\PspMock\Service\Interfaces\PspRequestMapperInterface;
 
 /**
@@ -25,7 +25,7 @@ use TechDivision\PspMock\Service\Interfaces\PspRequestMapperInterface;
 class RequestMapper implements PspRequestMapperInterface
 {
     /**
-     * @var HeidelpayOrderRequestMapper
+     * @var HeidelpayRequestOrderMapper
      */
     private $heidelpayRequestOrderMapper;
 
@@ -41,12 +41,12 @@ class RequestMapper implements PspRequestMapperInterface
 
     /**
      * RequestMapper constructor.
-     * @param HeidelpayOrderRequestMapper $heidelpayRequestOrderMapper
+     * @param HeidelpayRequestOrderMapper $heidelpayRequestOrderMapper
      * @param HeidelpayRequestAddressMapper $heidelpayRequestAddressMapper
      * @param HeidelpayRequestCustomerMapper $heidelpayRequestCustomerMapper
      */
     public function __construct(
-        HeidelpayOrderRequestMapper $heidelpayRequestOrderMapper,
+        HeidelpayRequestOrderMapper $heidelpayRequestOrderMapper,
         HeidelpayRequestAddressMapper $heidelpayRequestAddressMapper,
         HeidelpayRequestCustomerMapper $heidelpayRequestCustomerMapper
     ) {

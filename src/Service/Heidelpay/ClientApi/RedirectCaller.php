@@ -41,7 +41,6 @@ class RedirectCaller implements PspCallerInterface
             'verify' => false
         ]]);
 
-
         /** @var ResponseInterface $response */
         /** @var Order $order */
         $response = $client->request(
