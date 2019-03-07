@@ -28,7 +28,7 @@ class DataProvider implements PspEntityDataProviderInterface
     public function get(PspEntityInterface $order)
     {
         /** @var Order $order */
-        $data = [
+        return [
             "__store" => $order->getStore(),
             "NAME_FAMILY" => $order->getLastName(),
             "CRITERION_SDK_NAME" => $order->getSdkName(),
@@ -86,7 +86,5 @@ class DataProvider implements PspEntityDataProviderInterface
             "FRONTEND_LANGUAGE" => $order->getLanguage(),
             "PAYMENT_CODE" => $order->getCode()
         ];
-
-        return $data;
     }
 }

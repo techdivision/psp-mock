@@ -75,6 +75,7 @@ class ConfigController extends PspAbstractController implements PspRequestContro
                     : $configArray[$key]->setValue('0');
             }
             $this->entitySaver->save($configArray);
+
             return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $this->configProvider->get($this->options)]);
         } catch (\Exception $exception) {
             $this->logger->error($exception);

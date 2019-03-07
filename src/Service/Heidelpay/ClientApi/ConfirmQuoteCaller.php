@@ -28,13 +28,6 @@ class ConfirmQuoteCaller implements PspCallerInterface
     private $dataProvider;
 
     /**
-     * @var array
-     */
-    private $defaultOptions = [
-        'verify' => false
-    ];
-
-    /**
      * QuoteConfirmer constructor.
      * @param DataProvider $dataProvider
      */

@@ -55,7 +55,6 @@ class IndexController extends PspAbstractController implements PspGuiIndexContro
             $configArray = $this->loadSettings();
 
             return $this->render('settings/heidelpay/index.html.twig', ['configArray' => $configArray]);
-
         } catch (\Exception $exception) {
             $this->logger->error($exception);
             return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
