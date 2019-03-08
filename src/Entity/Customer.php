@@ -16,8 +16,8 @@ use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
  * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\CustomerRepository")
  * @ORM\Table(name="payment_customer")
  *
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 class Customer implements PspEntityInterface

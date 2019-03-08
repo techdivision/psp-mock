@@ -16,8 +16,8 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * GeneralSettingsSetupScript
  *
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 final class Version20190222131752 extends AbstractMigration

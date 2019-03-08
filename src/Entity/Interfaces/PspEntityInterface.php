@@ -14,8 +14,8 @@ namespace TechDivision\PspMock\Entity\Interfaces;
  *
  * This interface is used for identifying all entities.
  *
- * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 interface PspEntityInterface

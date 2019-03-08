@@ -20,8 +20,8 @@ use TechDivision\PspMock\Service\Interfaces\PspRequestMapperInterface;
 use TechDivision\PspMock\Service\Payone\RequestMapper as PayoneRequestMapper;
 
 /**
- * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 class RequestMapper implements PspRequestMapperInterface

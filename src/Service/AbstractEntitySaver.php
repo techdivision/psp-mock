@@ -13,7 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH
- * @link       http://www.techdivision.com/
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 abstract class AbstractEntitySaver

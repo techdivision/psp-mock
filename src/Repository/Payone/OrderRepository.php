@@ -17,8 +17,8 @@ use TechDivision\PspMock\Entity\Payone\Order;
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Repository
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
 class OrderRepository extends ServiceEntityRepository

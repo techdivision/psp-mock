@@ -12,8 +12,8 @@ namespace TechDivision\PspMock\Controller\Interfaces;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 interface PspGuiIndexControllerInterface extends PspGuiBaseControllerInterface

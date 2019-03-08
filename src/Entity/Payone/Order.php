@@ -23,8 +23,8 @@ use TechDivision\PspMock\Service\StatusManager;
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Entity
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */

@@ -20,8 +20,8 @@ use TechDivision\PspMock\Service\RandomStringProvider;
 use TechDivision\PspMock\Service\RequestMapper;
 
 /**
- * @copyright  Copyright (c) 2019 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 abstract class AbstractHandler implements PspHandlerInterface

@@ -16,8 +16,8 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
  * KEY                        | urlencoded part
  * FRONTEND.PAYMENT_FRAME_URL=https%3A%2F%2Ftest-heidelpay.hpcgw.net%2Fngw%2FpaymentFrame
  *
- * @copyright  Copyright (c) 2019 TechDivision GmbH (http=>//www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 class ArrayToStringMapper

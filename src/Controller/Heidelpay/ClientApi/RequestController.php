@@ -23,7 +23,7 @@ use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH
- * @link       http://www.techdivision.com/
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 class RequestController extends PspAbstractController implements PspRequestControllerInterface

@@ -18,8 +18,8 @@ use TechDivision\PspMock\Service\ConfigProvider;
 /**
  * Renders all registered Psps into the navbar
  *
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
 class IndexPspController extends PspAbstractController implements PspGuiIndexControllerInterface
