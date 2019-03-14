@@ -19,7 +19,7 @@ use TechDivision\PspMock\Service\Interfaces\PspRequestToEntityMapperInterface;
  * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class AccountRequestMapper implements PspRequestToEntityMapperInterface
+class RequestAccountMapper implements PspRequestToEntityMapperInterface
 {
     /**
      * @param Request $request

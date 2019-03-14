@@ -20,7 +20,7 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\ConfigProvider;
 use TechDivision\PspMock\Service\EntitySaver;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\AccountRequestMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestAccountMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\AckProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\NokProvider;
@@ -56,7 +56,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
     private $configProvider;
 
     /**
-     * @var AccountRequestMapper
+     * @var RequestAccountMapper
      */
     private $accountRequestMapper;
 
@@ -109,7 +109,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      * @param ConfirmQuoteCaller $quoteConfirmer
      * @param RedirectCaller $redirectCaller
      * @param ConfigProvider $configProvider
-     * @param AccountRequestMapper $accountRequestMapper
+     * @param RequestAccountMapper $accountRequestMapper
      * @param AckProvider $ackProvider
      * @param NokProvider $nokProvider
      */
@@ -122,7 +122,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
         ConfirmQuoteCaller $quoteConfirmer,
         RedirectCaller $redirectCaller,
         ConfigProvider $configProvider,
-        AccountRequestMapper $accountRequestMapper,
+        RequestAccountMapper $accountRequestMapper,
         AckProvider $ackProvider,
         NokProvider $nokProvider
     ) {
