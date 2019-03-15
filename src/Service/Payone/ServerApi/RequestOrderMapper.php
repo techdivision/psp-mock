@@ -11,7 +11,9 @@ namespace TechDivision\PspMock\Service\Payone\ServerApi;
 
 use Symfony\Component\HttpFoundation\Request;
 use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 use TechDivision\PspMock\Entity\Payone\Order;
+use TechDivision\PspMock\Service\Interfaces\PspRequestToEntityMapperInterface;
 use TechDivision\PspMock\Service\TransactionIdProvider;
 
 /**
@@ -22,7 +24,7 @@ use TechDivision\PspMock\Service\TransactionIdProvider;
  * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class RequestOrderMapper
+class RequestOrderMapper implements PspRequestToEntityMapperInterface
 {
     /**
      * @var TransactionIdProvider
@@ -39,11 +41,10 @@ class RequestOrderMapper
 
     /**
      * @param Request $request
-     * @param Order $order
+     * @param PspEntityInterface $order
      */
-    public function map(Request $request, Order $order): void
+    public function map(Request $request, PspEntityInterface $order): void
     {
-
         $order->setAmount((string)$request->get('amount'));
         $order->setBalance($order->getAmount());
         $order->setCurrency((string)$request->get('currency'));

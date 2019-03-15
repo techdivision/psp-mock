@@ -12,7 +12,7 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 use TechDivision\PspMock\Service\Interfaces\PspCallerInterface;
 
 /**
@@ -37,12 +37,11 @@ class ConfirmQuoteCaller implements PspCallerInterface
     }
 
     /**
-     * @param PspEntityInterface $order
+     * @param PspOrderInterface $order
      * @param array $options
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Exception
      */
-    public function execute(PspEntityInterface $order, array $options = [])
+    public function execute(PspOrderInterface $order, array $options = []): void
     {
         $client = new Client();
 
@@ -69,7 +68,7 @@ class ConfirmQuoteCaller implements PspCallerInterface
      * @param Order $order
      * @return array
      */
-    private function buildQuoteUrl(Order $order)
+    private function buildQuoteUrl(Order $order): array
     {
         return $this->dataProvider->get($order);
     }

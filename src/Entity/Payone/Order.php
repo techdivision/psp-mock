@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Customer;
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 use TechDivision\PspMock\Service\StatusManager;
 
 /**
@@ -28,7 +28,7 @@ use TechDivision\PspMock\Service\StatusManager;
  * @author     Vadim Justus <v.justus@techdivision.com
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class Order implements PspEntityInterface
+class Order implements PspOrderInterface
 {
     const STATUS_NEW = 'NEW';
     const STATUS_APPOINTED = 'APPOINTED';

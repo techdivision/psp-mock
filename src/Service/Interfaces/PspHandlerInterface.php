@@ -10,7 +10,7 @@
 namespace TechDivision\PspMock\Service\Interfaces;
 
 use Symfony\Component\HttpFoundation\Request;
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
@@ -21,7 +21,7 @@ interface PspHandlerInterface
 {
     /**
      * @param Request $request
-     * @return PspEntityInterface
+     * @return PspOrderInterface
      */
-    public function handle(Request $request): PspEntityInterface;
+    public function handle(Request $request): PspOrderInterface;
 }

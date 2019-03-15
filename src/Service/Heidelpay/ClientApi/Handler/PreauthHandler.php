@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Customer;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
@@ -24,10 +24,10 @@ class PreauthHandler extends AbstractHandler
 {
     /**
      * @param Request $request
-     * @return PspEntityInterface
+     * @return PspOrderInterface
      * @throws \Exception
      */
-    public function handle(Request $request): PspEntityInterface
+    public function handle(Request $request): PspOrderInterface
     {
         /** @var Order $order */
         $order = new Order();
@@ -53,7 +53,7 @@ class PreauthHandler extends AbstractHandler
      * the account holder is set
      * @param string $transactionId
      */
-    private function removeDuplicatedEntries(string $transactionId)
+    private function removeDuplicatedEntries(string $transactionId): void
     {
         $order = $this->orderRepository->findOneBy(array('transactionId' => $transactionId));
         if ($order !== null) {

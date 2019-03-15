@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use TechDivision\PspMock\Entity\Account;
 use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Customer;
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 
 /**
  * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\Heidelpay\OrderRepository")
@@ -24,7 +24,7 @@ use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
  * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class Order implements PspEntityInterface
+class Order implements PspOrderInterface
 {
     /**
      * Status
@@ -451,7 +451,7 @@ class Order implements PspEntityInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", options={"default":"SUCCESSFULL"}, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $redirectUrl;
 

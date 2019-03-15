@@ -7,22 +7,17 @@
  * http://opensource.org/licenses/osl-3.0.php
  */
 
-namespace TechDivision\PspMock\Service\Interfaces;
-
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
-use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
+namespace TechDivision\PspMock\Entity\Interfaces;
 
 /**
+ * PspEntityInterface
+ *
+ * This interface is used for identifying Order entities.
+ *
  * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
  * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-interface PspCallerInterface
+interface PspOrderInterface extends PspEntityInterface
 {
-    /**
-     * @param PspOrderInterface $pspOrder
-     * @param array $options
-     * @return mixed
-     */
-    public function execute(PspOrderInterface $pspOrder, array $options): void;
 }

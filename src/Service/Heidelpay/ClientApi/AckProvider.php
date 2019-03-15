@@ -11,7 +11,7 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
 
 use TechDivision\PspMock\Entity\Heidelpay\Order;
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 use TechDivision\PspMock\Service\Interfaces\PspEntityDataProviderInterface;
 
 /**
@@ -22,10 +22,10 @@ use TechDivision\PspMock\Service\Interfaces\PspEntityDataProviderInterface;
 class AckProvider implements PspEntityDataProviderInterface
 {
     /**
-     * @param PspEntityInterface $order
+     * @param PspOrderInterface $order
      * @return void
      */
-    public function get(PspEntityInterface $order)
+    public function get(PspOrderInterface $order): void
     {
         /** @var Order $order */
         $order->setStatus('SUCCESS');

@@ -9,7 +9,7 @@
 
 namespace TechDivision\PspMock\Service\Interfaces;
 
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
@@ -19,8 +19,8 @@ use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
 interface PspEntityDataProviderInterface
 {
     /**
-     * @param PspEntityInterface $entity
+     * @param PspOrderInterface $pspOrder
      * @return array
      */
-    public function get(PspEntityInterface $entity);
+    public function get(PspOrderInterface $pspOrder);
 }

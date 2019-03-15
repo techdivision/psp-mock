@@ -11,6 +11,7 @@ namespace TechDivision\PspMock\Service\Heidelpay;
 
 use Symfony\Component\HttpFoundation\Request;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestAddressMapper as HeidelpayRequestAddressMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestCustomerMapper as HeidelpayRequestCustomerMapper;
@@ -57,14 +58,13 @@ class RequestMapper implements PspRequestMapperInterface
 
     /**
      * @param Request $request
-     * @param PspEntityInterface $order
+     * @param PspOrderInterface $order
      * @param PspEntityInterface $address
      * @param PspEntityInterface $customer
-     * @throws \Exception
      */
     public function map(
         Request $request,
-        PspEntityInterface $order,
+        PspOrderInterface $order,
         PspEntityInterface $address,
         PspEntityInterface $customer
     ): void {

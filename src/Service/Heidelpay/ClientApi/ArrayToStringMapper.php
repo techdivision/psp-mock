@@ -33,7 +33,7 @@ class ArrayToStringMapper
      * @param $data
      * @return string
      */
-    public function map(array $data)
+    public function map(array $data): string
     {
         $result = '';
 

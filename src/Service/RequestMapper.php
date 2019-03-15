@@ -14,6 +14,7 @@ use TechDivision\PspMock\Entity\Address;
 use TechDivision\PspMock\Entity\Customer;
 use TechDivision\PspMock\Entity\Heidelpay\Order as HeidelpayOrder;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 use TechDivision\PspMock\Entity\Payone\Order as PayoneOrder;
 use TechDivision\PspMock\Service\Heidelpay\RequestMapper as HeidelpayRequestMapper;
 use TechDivision\PspMock\Service\Interfaces\PspRequestMapperInterface;
@@ -51,14 +52,14 @@ class RequestMapper implements PspRequestMapperInterface
 
     /**
      * @param Request $request
-     * @param PspEntityInterface $order
+     * @param PspOrderInterface $order
      * @param PspEntityInterface $address
      * @param PspEntityInterface $customer
      * @throws \Exception
      */
     public function map(
         Request $request,
-        PspEntityInterface $order,
+        PspOrderInterface $order,
         PspEntityInterface $address,
         PspEntityInterface $customer
     ): void {

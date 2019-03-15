@@ -12,6 +12,7 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi\Handler;
 use Symfony\Component\HttpFoundation\Request;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
@@ -23,9 +24,9 @@ class CaptureHandler extends AbstractHandler
 
     /**
      * @param Request $request
-     * @return PspEntityInterface
+     * @return PspOrderInterface
      */
-    public function handle(Request $request): PspEntityInterface
+    public function handle(Request $request): PspOrderInterface
     {
         /** @var Order $order */
         $order = $this->orderRepository->findOneBy(
@@ -47,7 +48,7 @@ class CaptureHandler extends AbstractHandler
      * @param Request $request
      * @param Order $order
      */
-    private function setCapturingParams(Request $request, Order $order)
+    private function setCapturingParams(Request $request, Order $order): void
     {
         $order->setEnabled($request->get(Order::FRONTEND . 'ENABLED'));
         $order->setCode($request->get(Order::PAYMENT . 'CODE'));

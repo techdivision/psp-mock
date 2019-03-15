@@ -9,7 +9,7 @@
 
 namespace TechDivision\PspMock\Service\Payone\ServerApi\Callback;
 
-use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Interfaces\PspEntityDataProviderInterface;
 
@@ -24,10 +24,10 @@ use TechDivision\PspMock\Service\Interfaces\PspEntityDataProviderInterface;
 class DataProvider implements PspEntityDataProviderInterface
 {
     /**
-     * @param PspEntityInterface $order
+     * @param PspOrderInterface $order
      * @return array
      */
-    public function get(PspEntityInterface $order)
+    public function get(PspOrderInterface $order): array
     {
         /** @var Order $order */
         $data = [
@@ -93,7 +93,7 @@ class DataProvider implements PspEntityDataProviderInterface
      * @param string $default
      * @return string
      */
-    private function getParam(Order $order, $paramKey, $default = '')
+    private function getParam(Order $order, $paramKey, $default = ''): string
     {
         $data = json_decode($order->getRequestData(), true);
         return $data[$paramKey] ?? $default;

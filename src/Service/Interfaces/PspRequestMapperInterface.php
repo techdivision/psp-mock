@@ -12,6 +12,7 @@ namespace TechDivision\PspMock\Service\Interfaces;
 
 use Symfony\Component\HttpFoundation\Request;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
@@ -22,13 +23,13 @@ interface PspRequestMapperInterface
 {
     /**
      * @param Request $request
-     * @param PspEntityInterface $order
+     * @param PspOrderInterface $order
      * @param PspEntityInterface $address
      * @param PspEntityInterface $customer
      */
     public function map(
         Request $request,
-        PspEntityInterface $order,
+        PspOrderInterface $order,
         PspEntityInterface $address,
         PspEntityInterface $customer
     ): void;

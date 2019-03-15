@@ -12,6 +12,7 @@ namespace TechDivision\PspMock\Service\Heidelpay\ClientApi;
 
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 use TechDivision\PspMock\Service\Interfaces\PspEntityDataProviderInterface;
 
 /**
@@ -25,9 +26,9 @@ class MissingDataProvider implements PspEntityDataProviderInterface
     const RANDOM_STRING_LENGTH = 32;
 
     /**
-     * @param PspEntityInterface $order
+     * @param PspOrderInterface $order
      */
-    public function get(PspEntityInterface $order)
+    public function get(PspOrderInterface $order): void
     {
         /** @var Order $order */
         $shortId = $this->generateShortId();
@@ -54,7 +55,7 @@ class MissingDataProvider implements PspEntityDataProviderInterface
     /**
      * @return string
      */
-    private function generateShortId()
+    private function generateShortId(): string
     {
         return rand(1000, 9999) . rand(1000, 9999) . rand(1000, 9999) . rand(1000, 9999);
     }
@@ -63,14 +64,16 @@ class MissingDataProvider implements PspEntityDataProviderInterface
      * @param string $shortId
      * @return string
      */
-    private function generateDescriptor(string $shortId){
-        return $shortId . ' ' . rand(1000,9999) . '-Standard-Test-Merchant';
+    private function generateDescriptor(string $shortId): string
+    {
+        return $shortId . ' ' . rand(1000, 9999) . '-Standard-Test-Merchant';
     }
 
     /**
      * @return mixed|null|string|string[]
      */
-    private function generateUniqueId(){
+    private function generateUniqueId()
+    {
         return mb_strtoupper(substr(md5(uniqid(rand(), true)), 0, self::RANDOM_STRING_LENGTH));
     }
 }
