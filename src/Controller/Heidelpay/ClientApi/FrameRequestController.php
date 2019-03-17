@@ -20,11 +20,12 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Repository\Heidelpay\OrderRepository;
 use TechDivision\PspMock\Service\ConfigProvider;
 use TechDivision\PspMock\Service\EntitySaver;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\ArrayFormatter;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RequestAccountMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\AckProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\MissingDataProvider;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\NokProvider;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseDataMapper;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\ConfirmQuoteCaller;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\RedirectCaller;
 
@@ -61,7 +62,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
     private $accountRequestMapper;
 
     /**
-     * @var OrderToResponseMapper
+     * @var OrderToResponseDataMapper
      */
     private $orderToResponseMapper;
 
@@ -91,6 +92,11 @@ class FrameRequestController extends PspAbstractController implements PspRequest
     private $nokProvider;
 
     /**
+     * @var ArrayFormatter
+     */
+    private $arrayFormatter;
+
+    /**
      * @var string
      */
     private $failOnIframe;
@@ -104,7 +110,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      * @param LoggerInterface $logger
      * @param EntitySaver $entitySaver
      * @param OrderRepository $orderRepository
-     * @param OrderToResponseMapper $orderToResponseMapper
+     * @param OrderToResponseDataMapper $orderToResponseMapper
      * @param MissingDataProvider $missingDataProvider
      * @param ConfirmQuoteCaller $quoteConfirmer
      * @param RedirectCaller $redirectCaller
@@ -112,19 +118,21 @@ class FrameRequestController extends PspAbstractController implements PspRequest
      * @param RequestAccountMapper $accountRequestMapper
      * @param AckProvider $ackProvider
      * @param NokProvider $nokProvider
+     * @param ArrayFormatter $arrayFormatter
      */
     public function __construct(
         LoggerInterface $logger,
         EntitySaver $entitySaver,
         OrderRepository $orderRepository,
-        OrderToResponseMapper $orderToResponseMapper,
+        OrderToResponseDataMapper $orderToResponseMapper,
         MissingDataProvider $missingDataProvider,
         ConfirmQuoteCaller $quoteConfirmer,
         RedirectCaller $redirectCaller,
         ConfigProvider $configProvider,
         RequestAccountMapper $accountRequestMapper,
         AckProvider $ackProvider,
-        NokProvider $nokProvider
+        NokProvider $nokProvider,
+        ArrayFormatter $arrayFormatter
     ) {
         parent::__construct($logger);
         $this->entitySaver = $entitySaver;
@@ -137,6 +145,7 @@ class FrameRequestController extends PspAbstractController implements PspRequest
         $this->accountRequestMapper = $accountRequestMapper;
         $this->ackProvider = $ackProvider;
         $this->nokProvider = $nokProvider;
+        $this->arrayFormatter = $arrayFormatter;
 
         $this->options['asObjects'] = false;
 
@@ -190,10 +199,12 @@ class FrameRequestController extends PspAbstractController implements PspRequest
     /**
      * @param Order $order
      * @return Response
+     * @throws \Exception
      */
     private function buildResponse(Order $order)
     {
-        $this->response->setContent($this->orderToResponseMapper->map($order, true, true));
+        $orderDataArray = $this->orderToResponseMapper->map($order, true);
+        $this->response->setContent($this->arrayFormatter->format('json', $orderDataArray));
         return $this->response;
     }
 

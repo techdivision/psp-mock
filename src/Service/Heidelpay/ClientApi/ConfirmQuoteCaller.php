@@ -40,6 +40,7 @@ class ConfirmQuoteCaller implements PspCallerInterface
      * @param PspOrderInterface $order
      * @param array $options
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     public function execute(PspOrderInterface $order, array $options = []): void
     {

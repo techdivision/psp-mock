@@ -16,10 +16,11 @@ use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
 use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
 use TechDivision\PspMock\Entity\Heidelpay\Order;
 use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\ArrayFormatter;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\Handler\CaptureHandler;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\Handler\PreauthHandler;
 use TechDivision\PspMock\Service\Heidelpay\ClientApi\Handler\RefundHandler;
-use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseMapper;
+use TechDivision\PspMock\Service\Heidelpay\ClientApi\OrderToResponseDataMapper;
 
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH
@@ -34,7 +35,7 @@ class RequestController extends PspAbstractController implements PspRequestContr
     private $response;
 
     /**
-     * @var OrderToResponseMapper
+     * @var OrderToResponseDataMapper
      */
     private $orderToResponseMapper;
 
@@ -53,25 +54,31 @@ class RequestController extends PspAbstractController implements PspRequestContr
      */
     private $refundHandler;
 
+    /** @var ArrayFormatter */
+    private $arrayFormatter;
+
     /**
      * @param LoggerInterface $logger
-     * @param OrderToResponseMapper $orderToResponseMapper
+     * @param OrderToResponseDataMapper $orderToResponseMapper
      * @param PreauthHandler $preauthHandler
      * @param CaptureHandler $captureHandler
      * @param RefundHandler $refundHandler
+     * @param ArrayFormatter $arrayFormatter
      */
     public function __construct(
         LoggerInterface $logger,
-        OrderToResponseMapper $orderToResponseMapper,
+        OrderToResponseDataMapper $orderToResponseMapper,
         PreauthHandler $preauthHandler,
         CaptureHandler $captureHandler,
-        RefundHandler $refundHandler
+        RefundHandler $refundHandler,
+        ArrayFormatter $arrayFormatter
     ) {
         parent::__construct($logger);
         $this->orderToResponseMapper = $orderToResponseMapper;
         $this->preauthHandler = $preauthHandler;
         $this->captureHandler = $captureHandler;
         $this->refundHandler = $refundHandler;
+        $this->arrayFormatter = $arrayFormatter;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'application/json;charset=UTF-8');
@@ -120,11 +127,13 @@ class RequestController extends PspAbstractController implements PspRequestContr
      * @param PspEntityInterface $order
      * @param bool $withCreditCard
      * @return Response
+     * @throws \Exception
      */
     private function buildResponse(PspEntityInterface $order, bool $withCreditCard = false)
     {
         /** @var Order $order */
-        $this->response->setContent($this->orderToResponseMapper->map($order, $withCreditCard, false));
+        $orderDataArray = $this->orderToResponseMapper->map($order, $withCreditCard);
+        $this->response->setContent($this->arrayFormatter->format('string', $orderDataArray));
         return $this->response;
     }
 }

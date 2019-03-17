@@ -16,7 +16,7 @@ use TechDivision\PspMock\Entity\Heidelpay\Order;
  * @link       https://www.techdivision.com/
  * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class OrderToResponseMapper
+class OrderToResponseDataMapper
 {
     const HEIDELPAY_URL = 'https://test-heidelpay.hpcgw.net/ngw/whitelabel';
     const PAYMENT_FRAME = '/heidelpay/payment/frame';
@@ -41,23 +41,17 @@ class OrderToResponseMapper
      *
      * @param Order $order
      * @param bool $withCreditCard
-     * @param bool $json
-     * @return string
+     * @return array
      */
-    public function map(Order $order, bool $withCreditCard, bool $json)
+    public function map(Order $order, bool $withCreditCard): array
     {
         $orderData = $this->getDataFromOrder($order);
 
         if ($withCreditCard) {
             $additionalCreditCardData = $this->getAdditionalCreditCardData($order);
-            if ($json) {
-                return json_encode(array_merge($orderData, $additionalCreditCardData));
-            } else {
-                return $this->arrayToStringMapper->map(array_merge($orderData, $additionalCreditCardData));
-            }
+            return array_merge($orderData, $additionalCreditCardData);
         }
-
-        return $this->arrayToStringMapper->map($orderData);
+        return $orderData;
     }
 
     /**
