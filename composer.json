@@ -25,7 +25,8 @@
         "symfony/web-link": "^4.1",
         "symfony/webpack-encore-pack": "*",
         "symfony/yaml": "^4.1",
-        "twitter/bootstrap": "4.*"
+        "twitter/bootstrap": "4.*",
+      "ext-json": "*"
     },
     "require-dev": {
         "symfony/debug-pack": "*",

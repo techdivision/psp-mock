@@ -1,0 +1,22 @@
+{% extends 'default.html.twig' %}
+
+{% block main_title %}Settings for Heidelpay{% endblock %}
+
+{% block main_content %}
+    <form action="/settings/heidelpay/update" method="post">
+        {% for config in configArray %}
+            <div>
+                <h3>{{ config.getDisplayName }} </h3>
+                <label class="switch">
+                    {% if config.getValue == '0' %}
+                        <input type="checkbox" name="{{ config.getPath }}">
+                    {% else %}
+                        <input checked type="checkbox" name="{{ config.getPath }}">
+                    {% endif %}
+                    <span class="slider"></span>
+                </label>
+            </div>
+        {% endfor %}
+        <input class="settings-input btn btn-info " type="submit" value="save">
+    </form>
+{% endblock %}

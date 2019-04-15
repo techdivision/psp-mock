@@ -9,7 +9,7 @@
 
 namespace TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action;
 
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\ActionInterface;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\DataProvider;
 use TechDivision\PspMock\Service\Payone\CallbackUriProvider;
@@ -18,8 +18,8 @@ use TechDivision\PspMock\Service\Payone\CallbackUriProvider;
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Service
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
 class PayFull implements ActionInterface

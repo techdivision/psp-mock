@@ -8,17 +8,18 @@
  */
 
 namespace TechDivision\PspMock\Service;
-use TechDivision\PspMock\Repository\OrderRepository;
+
+use TechDivision\PspMock\Service\Interfaces\PspProviderInterface;
 
 /**
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Service
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class TransactionIdProvider
+class TransactionIdProvider implements PspProviderInterface
 {
     /**
      * @return string

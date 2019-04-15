@@ -9,7 +9,7 @@
 
 namespace TechDivision\PspMock\Service;
 
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\Appoint;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\PayFull;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\PayPartial;
@@ -19,8 +19,8 @@ use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\Refund;
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Service
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
 class StatusManager
@@ -39,6 +39,10 @@ class StatusManager
             [
                 'action' => PayFull::ACTION_KEY,
                 'label' => 'Paid',
+            ],
+            [
+                'action' => PayPartial::ACTION_KEY,
+                'label' => 'Pay Partial',
             ],
         ],
         Order::STATUS_UNDERPAID => [

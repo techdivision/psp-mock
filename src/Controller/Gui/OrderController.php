@@ -9,62 +9,84 @@
 
 namespace TechDivision\PspMock\Controller\Gui;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use TechDivision\PspMock\Entity\Order;
-use TechDivision\PspMock\Repository\OrderRepository;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
+use TechDivision\PspMock\Controller\Interfaces\PspGuiListControllerInterface;
+use TechDivision\PspMock\Repository\Payone\OrderRepository as PayoneOrderRepository;
 use TechDivision\PspMock\Service\StatusManager;
+use TechDivision\PspMock\Repository\Heidelpay\OrderRepository as HeidelpayOrderRepository;
 
 /**
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Controller
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
+ * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class OrderController extends AbstractController
+class OrderController extends PspAbstractController implements PspGuiListControllerInterface
 {
     /**
-     * @var OrderRepository
+     * @var PayoneOrderRepository
      */
-    private $orderRepository;
+    private $payoneOrderRepository;
+
+    /**
+     * @var HeidelpayOrderRepository
+     */
+    private $heidelpayOrderRepository;
+
     /**
      * @var StatusManager
      */
     private $statusManager;
 
     /**
-     * @param OrderRepository $orderRepository
+     * @param PayoneOrderRepository $payoneOrderRepository
+     * @param HeidelpayOrderRepository $heidelpayOrderRepository
      * @param StatusManager $statusManager
+     * @param LoggerInterface $logger
      */
     public function __construct(
-        OrderRepository $orderRepository,
-        StatusManager $statusManager
+        PayoneOrderRepository $payoneOrderRepository,
+        HeidelpayOrderRepository $heidelpayOrderRepository,
+        StatusManager $statusManager,
+        LoggerInterface $logger
     ) {
-        $this->orderRepository = $orderRepository;
+        parent::__construct($logger);
+        $this->payoneOrderRepository = $payoneOrderRepository;
+        $this->heidelpayOrderRepository = $heidelpayOrderRepository;
         $this->statusManager = $statusManager;
+        $this->logger = $logger;
     }
 
     /**
+     * @param Request $request
      * @return Response
      */
-    public function list()
+    public function list(Request $request)
     {
-        return $this->render('gui/order/list.html.twig', [
-            'orders' => $this->orderRepository->findBy([], ['created' => 'DESC'])
-        ]);
-    }
-
-    /**
-     * @param Order $order
-     * @return Response
-     */
-    public function detail(Order $order)
-    {
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/plain');
-        $response->setContent(var_export(json_decode($order->getRequestData(), true), true));
-        return $response;
+        try {
+            switch (strtolower($request->get('type'))) {
+                case '':
+                    // default is payone
+                case 'payone':
+                    return $this->render('gui/order/payone/list.html.twig', [
+                        'orders' => $this->payoneOrderRepository->findBy([], ['created' => 'DESC'])
+                    ]);
+                case 'heidelpay':
+                    return $this->render('gui/order/heidelpay/list.html.twig', [
+                        'orders' => $this->heidelpayOrderRepository->findBy([], ['created' => 'DESC'])
+                    ]);
+                default:
+                    throw new \Exception('No such type supported: ' . $request->get('type'));
+            }
+        } catch (\Exception $exception) {
+            $this->logger->error($exception);
+            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 }

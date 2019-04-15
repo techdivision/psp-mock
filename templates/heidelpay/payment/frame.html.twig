@@ -1,0 +1,99 @@
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/paymentFrame.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/ngw/cssbridge.css') }}">
+{% endblock %}
+
+{% block main_content %}
+    <body>
+    <div id="paymentFrameConf" frontend-payment-frame-origin="{{ paymentFrameOrigin }}" payment-frame-url="{{ baseUrl }}/ngw/paymentFrame/sendData?{{ state }}" lang="en"></div>
+    <form id="paymentFrameForm">
+        <input type="hidden" id="stateId" name="stateId" value="{{ state }}" />
+        <div id="accountHolderContainer" class="form-row">
+            <label for="cardName" class="form-label">Card holder</label>
+            <input tabindex="1" class="form-input fullWidth" id="cardName" name="account.holder" maxlength="50" type="text" value="Test Tester" autocomplete="off">
+        </div>
+        <div id="accountNumberContainer" class="form-row">
+            <label for="cardNumber" class="form-label">Card No.</label>
+            <input tabindex="2" class="form-input fullWidth" id="cardNumber" name="account.number" maxlength="20" type="text" autocomplete="off" value="4711100000000000">
+        </div>
+        <div id="accountBrandContainer" class="form-row">
+            <label for="brand" class="form-label">Card Brand</label>
+
+            <div class="creditCardSymbols">
+
+                {% block images %}
+                    <img class="creditCardImage" src="{{ asset('images/AMEX.gif') }}">
+
+                    <img class="creditCardImage" src="{{ asset('images/MASTER.gif') }}">
+
+                    <img class="creditCardImage" src="{{ asset('images/VISA.gif') }}">
+                {% endblock %}
+
+            </div>
+
+            <div class="fillWidth">
+                <select tabindex="3" id="brand" name="account.brand" class="form-select fullWidth">
+
+                    <option value="AMEX"  >American Express</option>
+
+                    <option value="MASTER"  >MasterCard</option>
+
+                    <option value="JCB"  >JCB</option>
+
+                    <option value="VISA" selected="selected"  >Visa</option>
+
+                    <option value="DISCOVERY"  >Discover</option>
+
+                    <option value="DINERS"  >Diners</option>
+
+                    <option value="CUP"  >China Union Pay</option>
+
+                </select>
+            </div>
+        </div>
+        <div id="accountVerificationContainer" class="form-row">
+            <label for="verification" class="form-label">CVV</label>
+            <div class="verificationInlineHintWrapper">
+                <input tabindex="6" class="form-input fullWidth" maxlength="4" value="123" id="verification" name="account.verification" type="text" autocomplete="off">
+                <a tabindex="7" id="verificationInlineHint" href="#"><img src="{{ asset('images/questionMark.png') }}"></a>
+            </div>
+            <br />
+        </div>
+        <div id="accountExpiryContainer" class="form-row fillWidth">
+            <label for="expirationMonth" class="form-label">Expiry Date</label>
+            <div class="halfWidth paddingRight5px">
+                <select tabindex="4" class="form-select fullWidth" id="expirationMonth" name="account.expiry_month">
+                    <option value="">Month</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3" selected="selected">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </div><!-- comment white space
+             --><div class="halfWidth">
+                <select tabindex="5" class="form-select fullWidth" id="expirationYear" name="account.expiry_year">
+                    <option value="" >Year</option>
+                    <option value="2025" selected="selected" >2025</option>
+                </select>
+            </div>
+        </div>
+        <a id="verificationHint" href="#">Where do I find the verification number?</a>
+    </form>
+    {% block javascripts %}
+        <script src="{{ asset('js/heidelpay/script/paymentFrame2.js') }}"></script>
+        <script src="{{ asset('js/heidelpay/script/inputValidation.js') }}"></script>
+        <script src="{{ asset('js/heidelpay/script/paymentFrame.js') }}"></script>
+        <script src="{{ asset('js/heidelpay/script/paymentFrameIE.js') }}"></script>
+        <script src="{{ asset('js/heidelpay/script/paymentFrameEvents.js') }}"></script>
+    {% endblock %}
+    </body>
+
+{% endblock %}

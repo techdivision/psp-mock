@@ -11,23 +11,20 @@ namespace TechDivision\PspMock\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Customer;
 
 /**
- * @category   TechDivision
- * @package    PspMock
- * @subpackage Repository
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
- * @author     Vadim Justus <v.justus@techdivision.com
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
+ * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class OrderRepository extends ServiceEntityRepository
+class CustomerRepository extends ServiceEntityRepository
 {
     /**
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Order::class);
+        parent::__construct($registry, Customer::class);
     }
 }

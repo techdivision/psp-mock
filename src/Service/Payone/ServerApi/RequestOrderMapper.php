@@ -10,18 +10,21 @@
 namespace TechDivision\PspMock\Service\Payone\ServerApi;
 
 use Symfony\Component\HttpFoundation\Request;
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Interfaces\PspEntityInterface;
+use TechDivision\PspMock\Entity\Payone\Order;
+use TechDivision\PspMock\Service\Interfaces\PspRequestToEntityMapperInterface;
 use TechDivision\PspMock\Service\TransactionIdProvider;
 
 /**
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Service
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class RequestToOrderMapper
+class RequestOrderMapper implements PspRequestToEntityMapperInterface
 {
     /**
      * @var TransactionIdProvider
@@ -38,9 +41,9 @@ class RequestToOrderMapper
 
     /**
      * @param Request $request
-     * @param $order
+     * @param PspEntityInterface $order
      */
-    public function map(Request $request, Order $order): void
+    public function map(Request $request, PspEntityInterface $order): void
     {
         $order->setAmount((string)$request->get('amount'));
         $order->setBalance($order->getAmount());
@@ -49,13 +52,6 @@ class RequestToOrderMapper
         $order->setRequestType((string)$request->get('request'));
         $order->setReference((string)$request->get('reference'));
         $order->setTransactionId($this->transactionIdProvider->get());
-
-        $order->setFirstName((string)$request->get('firstname'));
-        $order->setLastName((string)$request->get('lastname'));
-        $order->setStreet((string)$request->get('street'));
-        $order->setZip((string)$request->get('zip'));
-        $order->setCity((string)$request->get('city'));
-        $order->setCountry((string)$request->get('country'));
 
         $order->setSuccessUrl((string)$request->get('successurl'));
         $order->setBackUrl((string)$request->get('backurl'));

@@ -19,8 +19,8 @@ use TechDivision\PspMock\Service\Payone\ClientApi\Request\OutputInterface;
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Service
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
 class CreditCardCheck implements ProcessorInterface
@@ -72,7 +72,6 @@ class CreditCardCheck implements ProcessorInterface
     }
 
     /**
-     * @param Whitelist $card
      * @param InputInterface $input
      * @return array
      */
@@ -103,7 +102,7 @@ class CreditCardCheck implements ProcessorInterface
     }
 
     /**
-     * @param string $pan
+     * @param InputInterface $input
      * @return string
      */
     private function getCardExpireDate(InputInterface $input)

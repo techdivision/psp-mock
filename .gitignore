@@ -25,3 +25,6 @@ yarn-error.log
 ### Bootstrap assets
 /public/css/bootstrap.min.css
 /public/js/bootstrap.js
+
+## Custom
+.idea/

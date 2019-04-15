@@ -13,8 +13,8 @@ namespace TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action;
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Service
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
 class Result implements ResultInterface
@@ -23,14 +23,23 @@ class Result implements ResultInterface
      * @var string
      */
     private $url;
+
     /**
      * @var string
      */
     private $method;
+
     /**
      * @var array
      */
     private $options;
+
+    /**
+     * @var array
+     */
+    private $defaultOptions = [
+        'verify' => false
+    ];
 
     /**
      * @param string $url
@@ -44,7 +53,7 @@ class Result implements ResultInterface
     ) {
         $this->url = $url;
         $this->method = $method;
-        $this->options = $options;
+        $this->options = array_merge($this->defaultOptions, $options);
     }
 
     /**

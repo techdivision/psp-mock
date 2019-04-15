@@ -10,56 +10,54 @@
 namespace TechDivision\PspMock\Controller\Payone\ServerApi;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\Common\Persistence\ObjectManager;
-use TechDivision\PspMock\Entity\Order;
-use TechDivision\PspMock\Service\Payone\ServerApi\RequestToOrderMapper;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
+use TechDivision\PspMock\Controller\Interfaces\PspRequestControllerInterface;
+use TechDivision\PspMock\Entity\Address;
+use TechDivision\PspMock\Entity\Customer;
+use TechDivision\PspMock\Entity\Payone\Order;
+use TechDivision\PspMock\Service\EntitySaver;
+use TechDivision\PspMock\Service\RequestMapper;
 
 /**
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Controller
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class PostGatewayController extends AbstractController
+class PostGatewayController extends PspAbstractController implements PspRequestControllerInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
     /**
      * @var Response
      */
     private $response;
 
     /**
-     * @var ObjectManager
+     * @var EntitySaver
      */
-    private $objectManager;
+    private $entitySaver;
 
     /**
-     * @var RequestToOrderMapper
+     * @var RequestMapper
      */
-    private $requestToOrderMapper;
+    private $requestMapper;
 
     /**
      * @param LoggerInterface $logger
-     * @param ObjectManager $objectManager
-     * @param RequestToOrderMapper $requestToOrderMapper
+     * @param EntitySaver $entitySaver
+     * @param RequestMapper $requestMapper
      */
     public function __construct(
         LoggerInterface $logger,
-        ObjectManager $objectManager,
-        RequestToOrderMapper $requestToOrderMapper
+        EntitySaver $entitySaver,
+        RequestMapper $requestMapper
     ) {
-        $this->logger = $logger;
-        $this->objectManager = $objectManager;
-        $this->requestToOrderMapper = $requestToOrderMapper;
+        parent::__construct($logger);
+        $this->entitySaver = $entitySaver;
+        $this->requestMapper = $requestMapper;
 
         $this->response = new Response();
         $this->response->headers->set('Content-Type', 'text/plain');
@@ -80,9 +78,10 @@ class PostGatewayController extends AbstractController
             $requestType = $request->get('request');
             if (in_array($requestType, ['authorization', 'preauthorization'])) {
                 $order = new Order();
-                $this->requestToOrderMapper->map($request, $order);
-                $this->objectManager->persist($order);
-                $this->objectManager->flush();
+                $address = new Address();
+                $customer = new Customer();
+                $this->requestMapper->map($request, $order, $address, $customer);
+                $this->entitySaver->save([$order, $address, $address]);
                 $txId = $order->getTransactionId();
             }
             return $this->approve($txId);

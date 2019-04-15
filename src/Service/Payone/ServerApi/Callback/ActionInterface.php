@@ -9,15 +9,15 @@
 
 namespace TechDivision\PspMock\Service\Payone\ServerApi\Callback;
 
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Payone\Order;
 use TechDivision\PspMock\Service\Payone\ServerApi\Callback\Action\ResultInterface;
 
 /**
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Service
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
 interface ActionInterface

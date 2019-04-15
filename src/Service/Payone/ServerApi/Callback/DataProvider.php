@@ -9,24 +9,27 @@
 
 namespace TechDivision\PspMock\Service\Payone\ServerApi\Callback;
 
-use TechDivision\PspMock\Entity\Order;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
+use TechDivision\PspMock\Entity\Payone\Order;
+use TechDivision\PspMock\Service\Interfaces\PspEntityDataProviderInterface;
 
 /**
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Service
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class DataProvider
+class DataProvider implements PspEntityDataProviderInterface
 {
     /**
-     * @param Order $order
+     * @param PspOrderInterface $order
      * @return array
      */
-    public function get(Order $order)
+    public function get(PspOrderInterface $order): array
     {
+        /** @var Order $order */
         $data = [
             'reference' => $order->getReference(),
             'txid' => $order->getTransactionId(),
@@ -90,7 +93,7 @@ class DataProvider
      * @param string $default
      * @return string
      */
-    private function getParam(Order $order, $paramKey, $default = '')
+    private function getParam(Order $order, $paramKey, $default = ''): string
     {
         $data = json_decode($order->getRequestData(), true);
         return $data[$paramKey] ?? $default;

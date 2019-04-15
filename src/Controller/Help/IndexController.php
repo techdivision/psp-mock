@@ -9,19 +9,21 @@
 
 namespace TechDivision\PspMock\Controller\Help;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use TechDivision\PspMock\Controller\Interfaces\PspAbstractController;
+use TechDivision\PspMock\Controller\Interfaces\PspGuiIndexControllerInterface;
 use TechDivision\PspMock\Service\DomainProvider;
 
 /**
  * @category   TechDivision
  * @package    PspMock
  * @subpackage Controller
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  * @author     Vadim Justus <v.justus@techdivision.com
  */
-class IndexController extends AbstractController
+class IndexController extends PspAbstractController implements PspGuiIndexControllerInterface
 {
     /**
      * @var DomainProvider
@@ -30,20 +32,28 @@ class IndexController extends AbstractController
 
     /**
      * @param DomainProvider $domainProvider
+     * @param LoggerInterface $logger
      */
     public function __construct(
-        DomainProvider $domainProvider
+        DomainProvider $domainProvider,
+        LoggerInterface $logger
     ) {
+        parent::__construct($logger);
         $this->domainProvider = $domainProvider;
     }
 
     /**
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
-        return $this->render('help/index.html.twig', ['settings' => [
-            'domain' => $this->domainProvider->get(),
-        ]]);
+        try {
+            return $this->render('help/index.html.twig', ['settings' => [
+                'domain' => $this->domainProvider->get(),
+            ]]);
+        } catch (\Exception $exception) {
+            $this->logger->error($exception);
+            return new Response($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 }

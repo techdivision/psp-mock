@@ -11,20 +11,17 @@ namespace TechDivision\PspMock\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use TechDivision\PspMock\Service\StatusManager;
+use TechDivision\PspMock\Entity\Interfaces\PspOrderInterface;
 
 /**
- * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\OrderRepository")
- * @ORM\Table(name="payment_order")
+ * @ORM\Entity(repositoryClass="TechDivision\PspMock\Repository\Payone\OrderRepository")
+ * @ORM\Table(name="order")
  *
- * @category   TechDivision
- * @package    PspMock
- * @subpackage Entity
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
- * @author     Vadim Justus <v.justus@techdivision.com
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
+ * @author     Lukas Kiederle <l.kiederle@techdivision.com
  */
-class Order
+class Order implements PspOrderInterface
 {
     const STATUS_NEW = 'NEW';
     const STATUS_APPOINTED = 'APPOINTED';
@@ -50,53 +47,28 @@ class Order
     private $transactionId;
 
     /**
-     * @var string
+     * @var Customer
      *
-     * @ORM\Column(type="string", nullable=true)
+     * One Order has One Account.
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Customer", cascade={"persist"})
      */
-    private $reference;
+    private $customer;
 
     /**
-     * @var string
+     * @var address
      *
-     * @ORM\Column(type="string", nullable=true)
+     * One Order has One Address.
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Address", cascade={"persist"})
      */
-    private $firstName;
+    private $address;
 
     /**
-     * @var string
+     * @var account
      *
-     * @ORM\Column(type="string", nullable=true)
+     * One Order has One Account.
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Account", cascade={"persist"}, nullable=true)
      */
-    private $lastName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $street;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $zip;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $country;
+    private $account;
 
     /**
      * @var string
@@ -115,37 +87,9 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $successUrl;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $errorUrl;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $backUrl;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="float", nullable=true)
      */
     private $amount;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $balance;
 
     /**
      * @var string
@@ -170,14 +114,6 @@ class Order
     private $status;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(options={"default":0})
-     * @Assert\NotBlank
-     */
-    private $sequence;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=true)
@@ -185,104 +121,83 @@ class Order
     private $created;
 
     /**
-     * @var StatusManager
+     * @return int
      */
-    private $statusManager;
-
-    /**
-     * @return string
-     */
-    public function getCurrency(): string
+    public function getId(): int
     {
-        return $this->currency;
+        return $this->id;
     }
 
     /**
-     * @param string $currency
+     * @param int $id
      */
-    public function setCurrency(string $currency): void
+    public function setId(int $id): void
     {
-        $this->currency = $currency;
+        $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getAmount(): string
+    public function getTransactionId(): string
     {
-        return $this->amount;
+        return $this->transactionId;
     }
 
     /**
-     * @param string $amount
+     * @param string $transactionId
      */
-    public function setAmount(string $amount): void
+    public function setTransactionId(string $transactionId): void
     {
-        $this->amount = $amount;
+        $this->transactionId = $transactionId;
     }
 
     /**
-     * @return string
+     * @return Customer
      */
-    public function getBackUrl(): string
+    public function getCustomer(): Customer
     {
-        return $this->backUrl;
+        return $this->customer;
     }
 
     /**
-     * @param string $backUrl
+     * @param Customer $customer
      */
-    public function setBackUrl(string $backUrl): void
+    public function setCustomer(Customer $customer): void
     {
-        $this->backUrl = $backUrl;
+        $this->customer = $customer;
     }
 
     /**
-     * @return string
+     * @return address
      */
-    public function getErrorUrl(): string
+    public function getAddress(): address
     {
-        return $this->errorUrl;
+        return $this->address;
     }
 
     /**
-     * @param string $errorUrl
+     * @param address $address
      */
-    public function setErrorUrl(string $errorUrl): void
+    public function setAddress(address $address): void
     {
-        $this->errorUrl = $errorUrl;
+        $this->address = $address;
     }
 
     /**
-     * @return string
+     * @return account
      */
-    public function getSuccessUrl(): string
+    public function getAccount(): account
     {
-        return $this->successUrl;
+        return $this->account;
     }
 
     /**
-     * @param string $successUrl
+     * @param account $account
      */
-    public function setSuccessUrl(string $successUrl): void
+    public function setAccount(account $account): void
     {
-        $this->successUrl = $successUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClearingType(): string
-    {
-        return $this->clearingType;
-    }
-
-    /**
-     * @param string $clearingType
-     */
-    public function setClearingType(string $clearingType): void
-    {
-        $this->clearingType = $clearingType;
+        $this->account = $account;
     }
 
     /**
@@ -304,129 +219,49 @@ class Order
     /**
      * @return string
      */
-    public function getCountry(): string
+    public function getClearingType(): string
     {
-        return $this->country;
+        return $this->clearingType;
     }
 
     /**
-     * @param string $country
+     * @param string $clearingType
      */
-    public function setCountry(string $country): void
+    public function setClearingType(string $clearingType): void
     {
-        $this->country = $country;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCity(): string
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param string $city
-     */
-    public function setCity(string $city): void
-    {
-        $this->city = $city;
+        $this->clearingType = $clearingType;
     }
 
     /**
      * @return string
      */
-    public function getZip(): string
+    public function getAmount(): string
     {
-        return $this->zip;
+        return $this->amount;
     }
 
     /**
-     * @param string $zip
+     * @param string $amount
      */
-    public function setZip(string $zip): void
+    public function setAmount(string $amount): void
     {
-        $this->zip = $zip;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStreet(): string
-    {
-        return $this->street;
-    }
-
-    /**
-     * @param string $street
-     */
-    public function setStreet(string $street): void
-    {
-        $this->street = $street;
+        $this->amount = $amount;
     }
 
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getCurrency(): string
     {
-        return $this->lastName;
+        return $this->currency;
     }
 
     /**
-     * @param string $lastName
+     * @param string $currency
      */
-    public function setLastName(string $lastName): void
+    public function setCurrency(string $currency): void
     {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * @param string $firstName
-     */
-    public function setFirstName(string $firstName): void
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getReference(): string
-    {
-        return $this->reference;
-    }
-
-    /**
-     * @param string $reference
-     */
-    public function setReference(string $reference): void
-    {
-        $this->reference = $reference;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
+        $this->currency = $currency;
     }
 
     /**
@@ -443,15 +278,6 @@ class Order
     public function setRequestData(string $requestData): void
     {
         $this->requestData = $requestData;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTotal(): string
-    {
-        $amount = number_format($this->getAmount() / 100, 2);
-        return $amount . ' ' . $this->getCurrency();
     }
 
     /**
@@ -484,65 +310,5 @@ class Order
     public function setCreated(\DateTime $created): void
     {
         $this->created = $created;
-    }
-
-    /**
-     * @return StatusManager
-     */
-    public function getStatusManager(): StatusManager
-    {
-        if (!isset($this->statusManager)) {
-            $this->statusManager = new StatusManager();
-            $this->statusManager->setOrder($this);
-        }
-        return $this->statusManager;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBalance(): string
-    {
-        return $this->balance;
-    }
-
-    /**
-     * @param string $balance
-     */
-    public function setBalance(string $balance): void
-    {
-        $this->balance = $balance;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSequence(): int
-    {
-        return $this->sequence;
-    }
-
-    /**
-     * @param int $sequence
-     */
-    public function setSequence(int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransactionId(): string
-    {
-        return $this->transactionId;
-    }
-
-    /**
-     * @param string $transactionId
-     */
-    public function setTransactionId(string $transactionId): void
-    {
-        $this->transactionId = $transactionId;
     }
 }
