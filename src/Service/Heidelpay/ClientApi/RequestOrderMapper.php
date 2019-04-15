@@ -50,6 +50,7 @@ class RequestOrderMapper implements PspRequestToEntityMapperInterface
     /**
      * @param Request $request
      * @param PspEntityInterface $order
+     * @throws \Exception
      */
     public function map(Request $request, PspEntityInterface $order): void
     {

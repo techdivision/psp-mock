@@ -10,6 +10,9 @@
 namespace TechDivision\PspMock\Controller\Interfaces;
 
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
  * @link       https://www.techdivision.com/
@@ -17,4 +20,9 @@ namespace TechDivision\PspMock\Controller\Interfaces;
  */
 interface PspRequestStaticControllerInterface extends PspRequestBaseControllerInterface
 {
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function execute(Request $request): Response;
 }

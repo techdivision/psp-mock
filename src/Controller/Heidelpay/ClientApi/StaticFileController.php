@@ -46,7 +46,7 @@ class StaticFileController extends PspAbstractController implements PspRequestSt
      * @param Request $request
      * @return Response
      */
-    public function execute(Request $request)
+    public function execute(Request $request): Response
     {
         try {
             /** @var Order $order */
