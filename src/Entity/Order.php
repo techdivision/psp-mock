@@ -66,7 +66,7 @@ class Order implements PspOrderInterface
      * @var account
      *
      * One Order has One Account.
-     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Account", cascade={"persist"}, nullable=true)
+     * @ORM\ManyToOne(targetEntity="TechDivision\PspMock\Entity\Account", cascade={"persist"})
      */
     private $account;
 
